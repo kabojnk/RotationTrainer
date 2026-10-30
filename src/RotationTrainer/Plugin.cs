@@ -7,6 +7,7 @@ using RotationTrainer.Game;
 using RotationTrainer.GameData;
 using RotationTrainer.Services;
 using RotationTrainer.Ui;
+using RotationTrainer.Ui.Builder;
 using RotationTrainer.Ui.Settings;
 using RotationTrainer.Ui.Trail;
 
@@ -41,6 +42,7 @@ public sealed class Plugin : IDalamudPlugin
     private readonly SettingsWindow _settings;
     private readonly DebugWindow _debug;
     private readonly TrailWindow _trail;
+    private readonly BuilderWindow _builder;
 
     public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commands, IDataManager data,
         ITextureProvider textures, IClientState clientState, ICondition condition, IFramework framework,
@@ -60,7 +62,8 @@ public sealed class Plugin : IDalamudPlugin
         Log = log;
 
         Config = pluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
-        Catalog = new LuminaCatalog(data.Excel);
+        var catalog = new LuminaCatalog(data.Excel);
+        Catalog = catalog;
         Store = new LibraryStore(pluginInterface.GetPluginConfigDirectory(), Catalog, log);
         Library = Store.Load();
 
@@ -73,10 +76,12 @@ public sealed class Plugin : IDalamudPlugin
             _debug = new DebugWindow(Session, Actions, Countdown);
             _settings = new SettingsWindow(this);
             _trail = new TrailWindow(Config, Session, textures, clientState);
+            _builder = new BuilderWindow(this, catalog.Jobs);
 
             _windows.AddWindow(_trail);
             _windows.AddWindow(_settings);
             _windows.AddWindow(_debug);
+            _windows.AddWindow(_builder);
             pluginInterface.UiBuilder.Draw += DrawUi;
             pluginInterface.UiBuilder.OpenConfigUi += _settings.Toggle;
             pluginInterface.UiBuilder.OpenMainUi += _settings.Toggle;
@@ -109,10 +114,8 @@ public sealed class Plugin : IDalamudPlugin
         Session.Rebuild();
     }
 
-    /// <summary>Opens the rotation builder on a document. The builder window arrives in a later task.</summary>
-    public void OpenBuilder(BuilderDocument document) =>
-        Log.Information("The builder is not yet available (asked to open \"{Name}\" for {Job}).", document.Name,
-            document.Job);
+    /// <summary>Opens the rotation builder on a document.</summary>
+    public void OpenBuilder(BuilderDocument document) => _builder.Open(document);
 
     private void DrawUi()
     {
@@ -136,7 +139,10 @@ public sealed class Plugin : IDalamudPlugin
                 Log.Information("Trail {State}.", Config.ShowTrail ? "shown" : "hidden");
                 break;
             case "builder":
-                Log.Information("{Command} {Sub} is not yet available.", Command, args.Trim());
+                if (Session.Job is { } job)
+                    OpenBuilder(new BuilderDocument(job, RotationKind.Opener, "New opener", Catalog));
+                else
+                    Log.Information("Log in to a combat job first.");
                 break;
             default:
                 Log.Warning("Unknown subcommand \"{Args}\". Try: /rtrain, /rtrain trail, /rtrain builder, /rtrain debug.",

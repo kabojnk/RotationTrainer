@@ -21,6 +21,13 @@ public class LuminaCatalogTests(GameDataFixture data)
     }
 
     [SqpackFact]
+    public void JobsListsTheCombatJobs()
+    {
+        Assert.Equal(data.CombatJobs, data.Catalog.Jobs);
+        Assert.All(data.Catalog.Jobs, job => Assert.True(Catalog.IsKnownJob(job)));
+    }
+
+    [SqpackFact]
     public void ChargedGcdIsGcd()
     {
         var drill = Catalog.FindActionByName("MCH", "Drill");
