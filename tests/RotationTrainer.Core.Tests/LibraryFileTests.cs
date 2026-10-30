@@ -27,8 +27,10 @@ public sealed class LibraryFileTests : IDisposable
     [Fact]
     public void MissingFileGivesEmptyLibraryThatSaves()
     {
-        var library = NewFile().Load();
+        var file = NewFile();
+        var library = file.Load();
         Assert.Empty(library.All);
+        Assert.False(file.SaveBlocked);
         library.Save(Loop("l1"));
         Assert.Contains("\"l1\"", File.ReadAllText(LibraryPath));
         Assert.Empty(Backups());
@@ -74,6 +76,7 @@ public sealed class LibraryFileTests : IDisposable
 
         Assert.Empty(library.All);
         Assert.Contains(_warnings, w => w.StartsWith("Could not read"));
+        Assert.True(file.SaveBlocked);
 
         library.Save(Loop("l1"));
         file.Save(library);

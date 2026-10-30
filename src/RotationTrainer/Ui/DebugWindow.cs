@@ -15,16 +15,13 @@ public sealed class DebugWindow : Window, IDisposable
     private readonly PracticeSession _session;
     private readonly ActionListener _listener;
     private readonly CountdownSource _countdown;
-    private readonly IAbilityCatalog _catalog;
     private Use? _lastUse;
 
-    public DebugWindow(PracticeSession session, ActionListener listener, CountdownSource countdown,
-        IAbilityCatalog catalog) : base("Rotation Trainer Debug")
+    public DebugWindow(PracticeSession session, ActionListener listener, CountdownSource countdown) : base("Rotation Trainer Debug")
     {
         _session = session;
         _listener = listener;
         _countdown = countdown;
-        _catalog = catalog;
         Size = new Vector2(360, 260) * ImGuiHelpers.GlobalScale;
         SizeCondition = ImGuiCond.FirstUseEver;
         _listener.ActionUsed += OnActionUsed;
@@ -58,9 +55,7 @@ public sealed class DebugWindow : Window, IDisposable
         }
 
         ImGui.Separator();
-        var gcd = _session.Job == null
-            ? null
-            : _catalog.Palette(_session.Job).FirstOrDefault(a => a.IsGcd && a.Group == PaletteGroup.Gcd && a.BaseRecastMs == 2500);
+        var gcd = _session.ReferenceGcd;
         ImGui.TextUnformatted(gcd == null
             ? "GCD: -"
             : $"GCD: {_session.Timing.RecastSeconds(gcd):0.00} s ({gcd.Name}{(_session.Timing is GameTimingSource ? "" : ", custom speed")})");
