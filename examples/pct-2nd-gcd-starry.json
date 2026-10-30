@@ -1,0 +1,104 @@
+{
+  "format": "rotation-trainer/1",
+  "rotations": [
+    {
+      "id": "5c0f3d2a-8e41-4b7a-9f26-1d3e7a9b2c40",
+      "job": "PCT",
+      "level": 100,
+      "kind": "opener",
+      "name": "2nd GCD Starry Opener",
+      "source": "https://www.thebalanceffxiv.com/jobs/casters/pictomancer/openers/",
+      "patch": "7.2",
+      "steps": [
+        {
+          "action": 34688,
+          "name": "Rainbow Drip",
+          "at": -4.5
+        },
+        {
+          "pull": true
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 34670,
+          "name": "Pom Muse"
+        },
+        {
+          "action": 34674,
+          "name": "Striking Muse"
+        },
+        {
+          "action": 34665,
+          "name": "Wing Motif"
+        },
+        {
+          "action": 34675,
+          "name": "Starry Muse"
+        },
+        {
+          "action": 34678,
+          "name": "Hammer Stamp"
+        },
+        {
+          "action": 34683,
+          "name": "Subtractive Palette"
+        },
+        {
+          "action": 34653,
+          "name": "Blizzard in Cyan"
+        },
+        {
+          "action": 34654,
+          "name": "Stone in Yellow"
+        },
+        {
+          "action": 34655,
+          "name": "Thunder in Magenta"
+        },
+        {
+          "action": 34663,
+          "name": "Comet in Black"
+        },
+        {
+          "action": 34671,
+          "name": "Winged Muse"
+        },
+        {
+          "action": 34676,
+          "name": "Mog of the Ages"
+        },
+        {
+          "action": 34681,
+          "name": "Star Prism"
+        },
+        {
+          "action": 34679,
+          "name": "Hammer Brush"
+        },
+        {
+          "action": 34680,
+          "name": "Polishing Hammer"
+        },
+        {
+          "action": 34688,
+          "name": "Rainbow Drip"
+        },
+        {
+          "action": 34650,
+          "name": "Fire in Red"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 34651,
+          "name": "Aero in Green"
+        }
+      ]
+    }
+  ]
+}

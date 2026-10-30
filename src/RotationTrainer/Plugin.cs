@@ -3,8 +3,10 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using RotationTrainer.Core;
+using RotationTrainer.Game;
 using RotationTrainer.GameData;
 using RotationTrainer.Services;
+using RotationTrainer.Ui;
 using RotationTrainer.Ui.Settings;
 
 namespace RotationTrainer;
@@ -29,9 +31,13 @@ public sealed class Plugin : IDalamudPlugin
     public IAbilityCatalog Catalog { get; }
     public LibraryStore Store { get; }
     public RotationLibrary Library { get; }
+    public ActionListener Actions { get; }
+    public CountdownSource Countdown { get; } = new();
+    public PracticeSession Session { get; }
 
     private readonly WindowSystem _windows = new("RotationTrainer");
     private readonly SettingsWindow _settings = new();
+    private readonly DebugWindow _debug;
 
     public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commands, IDataManager data,
         ITextureProvider textures, IClientState clientState, ICondition condition, IFramework framework,
@@ -54,7 +60,13 @@ public sealed class Plugin : IDalamudPlugin
         Store = new LibraryStore(pluginInterface.GetPluginConfigDirectory(), Catalog, log);
         Library = Store.Load();
 
+        Actions = new ActionListener(interop, playerState, log);
+        Session = new PracticeSession(Config, Library, Catalog, data, clientState, playerState, condition, framework,
+            gamepad, log, Actions, Countdown);
+        _debug = new DebugWindow(Session, Actions, Countdown, Catalog);
+
         _windows.AddWindow(_settings);
+        _windows.AddWindow(_debug);
         pluginInterface.UiBuilder.Draw += _windows.Draw;
         pluginInterface.UiBuilder.OpenConfigUi += _settings.Toggle;
         pluginInterface.UiBuilder.OpenMainUi += _settings.Toggle;
@@ -65,7 +77,12 @@ public sealed class Plugin : IDalamudPlugin
         });
     }
 
-    public void SaveConfig() => PluginInterface.SavePluginConfig(Config);
+    /// <summary>Saves the configuration and rebuilds the practice session from it.</summary>
+    public void SaveConfig()
+    {
+        PluginInterface.SavePluginConfig(Config);
+        Session.Rebuild();
+    }
 
     private void OnCommand(string command, string args)
     {
@@ -74,9 +91,11 @@ public sealed class Plugin : IDalamudPlugin
             case "":
                 _settings.Toggle();
                 break;
+            case "debug":
+                _debug.Toggle();
+                break;
             case "trail":
             case "builder":
-            case "debug":
                 Log.Information("{Command} {Sub} is not yet available.", Command, args.Trim());
                 break;
             default:
@@ -93,5 +112,8 @@ public sealed class Plugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenConfigUi -= _settings.Toggle;
         PluginInterface.UiBuilder.OpenMainUi -= _settings.Toggle;
         _windows.RemoveAllWindows();
+        _debug.Dispose();
+        Session.Dispose();
+        Actions.Dispose();
     }
 }
