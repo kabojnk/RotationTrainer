@@ -37,7 +37,7 @@ public sealed class Scheduler
         var ready = a.IsGcd ? Math.Max(_nextGcdAt, _nextActionAt) : _nextActionAt;
         double t;
         if (step.At.HasValue) t = step.At.Value;
-        else if (_first) t = -_lock;
+        else if (_first && step.IsPrepull) t = -_lock;
         else t = ready;
         _first = false;
 
