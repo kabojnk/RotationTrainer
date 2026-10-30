@@ -38,6 +38,7 @@ public sealed class LuminaCatalog : IAbilityCatalog
         var jobs = excel.GetSheet<ClassJob>(Language.English)
             .Where(j => j.JobIndex > 0 && j.DohDolJobIndex < 0)
             .ToList();
+        Jobs = jobs.Select(j => j.Abbreviation.ExtractText()).ToList();
         var medicine = LoadMedicine(excel, jobs);
         var actions = excel.GetSheet<LuminaAction>()
             .Where(a => !a.IsPvP && a.ClassJobLevel is >= 1 and <= MaxLevel && a.CooldownGroup != 0
@@ -86,6 +87,9 @@ public sealed class LuminaCatalog : IAbilityCatalog
             _itemsByName.TryAdd(Norm(ability.Name), ability);
         }
     }
+
+    /// <summary>The combat job abbreviations, in ClassJob sheet order.</summary>
+    public IReadOnlyList<string> Jobs { get; }
 
     public bool IsKnownJob(string job) => _kits.ContainsKey(job);
 
