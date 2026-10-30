@@ -6,8 +6,8 @@ namespace RotationTrainer.Game;
 
 /// <summary>
 /// Reads the 10 standard hotbars (12 slots) and 8 cross hotbars (16 slots) of the current job.
-/// Only slots that look like an action or item (directly, or through a macro's icon) are reported.
-/// Item ids are normalized (HQ +1,000,000 removed). Call on the framework thread only.
+/// Only slots that show or run an action or item (directly, or a macro with an action's icon) are reported.
+/// Item ids are normalized (HQ +1,000,000 removed); a command that is not the slot's type is reported as 0. Call on the framework thread only.
 /// </summary>
 public sealed unsafe class HotbarScanner
 {
@@ -37,15 +37,24 @@ public sealed unsafe class HotbarScanner
         {
             ref var slot = ref bar.Slots[i];
             if (slot.IsEmpty) continue;
-            var apparent = slot.ApparentSlotType switch
+            // Type comes from what the slot shows (a macro can show an action); slots showing anything else are skipped.
+            StepType type;
+            uint apparent;
+            switch (slot.ApparentSlotType)
             {
-                SlotType.Action => slot.ApparentActionId,
-                SlotType.Item => ItemIds.Normalize(slot.ApparentActionId),
-                _ => 0u,
-            };
-            var command = slot.CommandType == SlotType.Item ? ItemIds.Normalize(slot.CommandId) : slot.CommandId;
-            if (apparent == 0 && slot.CommandType is not (SlotType.Action or SlotType.Item)) continue;
-            into.Add(new HotbarObservation(barIndex, i, isCross, command, apparent, Hint(slot.PopUpKeybindHintString)));
+                case SlotType.Action: type = StepType.Action; apparent = slot.ApparentActionId; break;
+                case SlotType.Item: type = StepType.Item; apparent = ItemIds.Normalize(slot.ApparentActionId); break;
+                default:
+                    if (slot.CommandType is not (SlotType.Action or SlotType.Item)) continue;
+                    type = slot.CommandType == SlotType.Item ? StepType.Item : StepType.Action;
+                    apparent = 0;
+                    break;
+            }
+            // CommandId only counts when the command is the same kind as the type (not a macro number, say).
+            var commandType = type == StepType.Item ? SlotType.Item : SlotType.Action;
+            var command = slot.CommandType != commandType ? 0u
+                : type == StepType.Item ? ItemIds.Normalize(slot.CommandId) : slot.CommandId;
+            into.Add(new HotbarObservation(barIndex, i, isCross, type, command, apparent, Hint(slot.PopUpKeybindHintString)));
         }
     }
 
