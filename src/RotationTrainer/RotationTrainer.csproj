@@ -1,0 +1,19 @@
+<Project Sdk="Dalamud.NET.Sdk/15.0.0">
+
+  <PropertyGroup>
+    <Version>0.1.0.0</Version>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(DALAMUD_HOME)' != ''">
+    <DalamudLibPath>$(DALAMUD_HOME)/</DalamudLibPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RotationTrainer.Core\RotationTrainer.Core.csproj" />
+    <ProjectReference Include="..\RotationTrainer.GameData\RotationTrainer.GameData.csproj" />
+  </ItemGroup>
+
+</Project>
