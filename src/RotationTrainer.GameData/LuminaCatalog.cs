@@ -22,10 +22,37 @@ public sealed class LuminaCatalog : IAbilityCatalog
     private const uint WeaponskillCategory = 3;
     private const uint AbilityCategoryRow = 4;
 
+    // GCD locks that differ from both the sheet's Recast100ms and the 2.5 s default (see GcdRecastMs).
+    private static readonly Dictionary<uint, int> GcdLockOverridesMs = new()
+    {
+        [15997] = 1500, // DNC Standard Step
+        [15998] = 1500, // DNC Technical Step
+        [15999] = 1000, // DNC Emboite
+        [16000] = 1000, // DNC Entrechat
+        [16001] = 1000, // DNC Jete
+        [16002] = 1000, // DNC Pirouette
+        [2259] = 500,   // NIN Ten (the sheet's charge timer is 20 s)
+        [2261] = 500,   // NIN Chi
+        [2263] = 500,   // NIN Jin
+    };
+
+    // Buttons that fire a differently named action: variant id -> the id guides and the palette use.
+    // (Same-named variants, e.g. NIN's second mudra, are matched by name.)
+    private static readonly Dictionary<uint, uint> VariantFamilies = new()
+    {
+        [16191] = 16003, // Single Standard Finish -> Standard Finish
+        [16192] = 16003, // Double Standard Finish
+        [16193] = 16004, // Single Technical Finish -> Technical Finish
+        [16194] = 16004, // Double Technical Finish
+        [16195] = 16004, // Triple Technical Finish
+        [16196] = 16004, // Quadruple Technical Finish
+    };
+
     private sealed class Kit
     {
         public readonly Dictionary<uint, Ability> ById = new();
         public readonly Dictionary<string, Ability> ByName = new();
+        public readonly Dictionary<uint, uint> Canonical = new();
         public IReadOnlyList<Ability> Palette = Array.Empty<Ability>();
     }
 
@@ -72,6 +99,15 @@ public sealed class LuminaCatalog : IAbilityCatalog
                 kit.ByName.TryAdd(Norm(ability.Name), ability);
             }
 
+            // Same name within the kit = same button (the first by the order above, player actions first).
+            foreach (var (id, ability) in kit.ById)
+                kit.Canonical[id] = kit.ByName[Norm(ability.Name)].Id;
+            foreach (var (variant, canonical) in VariantFamilies)
+            {
+                if (kit.ById.ContainsKey(variant) && kit.Canonical.TryGetValue(canonical, out var root))
+                    kit.Canonical[variant] = root;
+            }
+
             var primary = PrimaryStatName(excel, job);
             kit.Palette = kit.ByName.Values
                 .OrderBy(a => a.Group)
@@ -106,6 +142,9 @@ public sealed class LuminaCatalog : IAbilityCatalog
     public IReadOnlyList<Ability> Palette(string job) =>
         _kits.TryGetValue(job, out var kit) ? kit.Palette : Array.Empty<Ability>();
 
+    public uint CanonicalId(string job, uint id) =>
+        _kits.TryGetValue(job, out var kit) && kit.Canonical.TryGetValue(id, out var canonical) ? canonical : id;
+
     private static Ability ToAbility(LuminaAction row)
     {
         // Charged GCDs (e.g. MCH Drill) keep their charge timer in CooldownGroup and the GCD in
@@ -119,7 +158,18 @@ public sealed class LuminaCatalog : IAbilityCatalog
         };
         var group = row.IsRoleAction ? PaletteGroup.Role : isGcd ? PaletteGroup.Gcd : PaletteGroup.Weave;
         return new Ability(StepType.Action, row.RowId, row.Name.ExtractText(), row.Icon, category,
-            isGcd, row.Cast100ms * 100, row.Recast100ms * 100, group);
+            isGcd, row.Cast100ms * 100, isGcd ? GcdRecastMs(row) : row.Recast100ms * 100, group);
+    }
+
+    /// <summary>
+    /// How long a GCD action locks the GCD. Charged or cooldown GCDs (Drill, Gnashing Fang, Standard Step…) keep
+    /// their charge timer in Recast100ms, so they get the 2.5 s base instead. DNC steps and NIN mudras use
+    /// fixed approximations of their special locks (see <see cref="GcdLockOverridesMs"/>).
+    /// </summary>
+    private static int GcdRecastMs(LuminaAction row)
+    {
+        if (GcdLockOverridesMs.TryGetValue(row.RowId, out var ms)) return ms;
+        return row.CooldownGroup == GcdCooldownGroup ? row.Recast100ms * 100 : 2500;
     }
 
     private static string PrimaryStatName(ExcelModule excel, ClassJob job) =>
