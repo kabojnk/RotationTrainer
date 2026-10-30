@@ -21,6 +21,15 @@ public class LuminaCatalogTests(GameDataFixture data)
     }
 
     [SqpackFact]
+    public void ChargedGcdIsGcd()
+    {
+        var drill = Catalog.FindActionByName("MCH", "Drill");
+        Assert.NotNull(drill);
+        Assert.True(drill.IsGcd);
+        Assert.Equal(PaletteGroup.Gcd, drill.Group);
+    }
+
+    [SqpackFact]
     public void PctMusesAreWeaves()
     {
         var pom = Catalog.FindActionByName("PCT", "pom   MUSE");
