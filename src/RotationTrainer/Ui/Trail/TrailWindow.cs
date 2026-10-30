@@ -15,7 +15,8 @@ namespace RotationTrainer.Ui.Trail;
 
 /// <summary>
 /// The on-screen trail of upcoming steps (<c>/rtrain trail</c>). Geometry comes from <see cref="TrailLayout"/>;
-/// this window adds the icons, keybind chips, the slide, pop and flash animations and the caption.
+/// this window adds the icons, keybind chips, the slide, pop, press and flash animations and the caption.
+/// In Auto every style scrolls with the clock, and popped steps ride the track off to the left as they fade.
 /// Sizes are unscaled pixels from the approved mockup; everything is multiplied by the UI scale when drawn.
 /// </summary>
 public sealed class TrailWindow : Window, IDisposable
@@ -34,12 +35,18 @@ public sealed class TrailWindow : Window, IDisposable
     private const float MinWidth = MarkerX + 360f;
     private const float ChipHeight = 16f;
     private const float ChipGap = 3f;
-    private const float FocusChipLift = 10f;
-    private const int FocusMaxAhead = 5;
+    private const float CompactChipLift = 10f;
+    private const int CompactMaxAhead = 5;
+    /// <summary>How many popped steps back Auto looks for the step the clock is on.</summary>
+    private const int FlowLookBack = 16;
 
     private const double SlideSeconds = 0.28;
     private const float WidthEaseSeconds = 0.07f;
     private const double PopSeconds = 0.22;
+    /// <summary>Auto: how long a popped step takes to fade as it slides off.</summary>
+    private const double FadeSeconds = 0.9;
+    private const double PressSeconds = 0.3;
+    private const float PressDip = 0.88f;
     private const float PopScale = 1.35f;
     private const float PopLift = 6f;
     private const double FlashSeconds = 0.4;
@@ -60,6 +67,7 @@ public sealed class TrailWindow : Window, IDisposable
     private readonly IClientState _clientState;
     // Engine events arrive on the framework update; they are applied on the next draw.
     private readonly ConcurrentQueue<EngineEvent> _events = new();
+    private readonly ConcurrentQueue<int> _presses = new();
 
     private double _time;
     private PracticeEngine? _engine;
@@ -72,6 +80,8 @@ public sealed class TrailWindow : Window, IDisposable
     private double _slideStart = double.NegativeInfinity;
     private int _flashIndex = -1;
     private double _flashStart = double.NegativeInfinity;
+    private int _pressIndex = -1;
+    private double _pressStart = double.NegativeInfinity;
     private double? _lastClock;
     private double _startShown = double.NegativeInfinity;
     private float _width;
@@ -98,6 +108,7 @@ public sealed class TrailWindow : Window, IDisposable
         AllowPinning = false;
         AllowClickthrough = false;
         _session.EngineEvent += OnEngineEvent;
+        _session.StepPressed += OnStepPressed;
     }
 
     private static float Scale => ImGuiHelpers.GlobalScale;
@@ -114,8 +125,9 @@ public sealed class TrailWindow : Window, IDisposable
 
     private Vector4 Accent => GlassTheme.AccentColor(_config.Accent);
 
-    private bool FollowsClock =>
-        _config.Style == TrailStyle.Timeline && _config.Advance == AdvanceMode.Auto && _engine?.Clock != null;
+    private bool FollowsClock => _config.Advance == AdvanceMode.Auto && _engine?.Clock != null;
+
+    private double PopDuration => _config.Advance == AdvanceMode.Auto ? FadeSeconds : PopSeconds;
 
     public override bool DrawConditions()
     {
@@ -128,6 +140,8 @@ public sealed class TrailWindow : Window, IDisposable
     {
         if (e.Kind is EngineEventKind.Popped or EngineEventKind.WrongPress) _events.Enqueue(e);
     }
+
+    private void OnStepPressed(int index) => _presses.Enqueue(index);
 
     public override void PreDraw()
     {
@@ -188,17 +202,29 @@ public sealed class TrailWindow : Window, IDisposable
         var extent = (IReadOnlyList<TrailItem>)Array.Empty<TrailItem>();
         if (!engine.IsFinished)
         {
-            var ahead = _config.Style == TrailStyle.Focus
-                ? Math.Min(_config.AbilitiesAhead, FocusMaxAhead)
+            var ahead = _config.Style == TrailStyle.CompactRail
+                ? Math.Min(_config.AbilitiesAhead, CompactMaxAhead)
                 : _config.AbilitiesAhead;
             var inputs = new List<TrailInput>(ahead + 1);
             for (var i = current; i <= current + ahead && _session.Sequence[i] is { } step; i++)
-                inputs.Add(new TrailInput(i, step.Ability.IsGcd, engine.ExpectedTime(i)));
-            _reference = _config.Advance == AdvanceMode.Auto && clock != null ? clock.Value : engine.ExpectedTime(current);
-            _items = TrailLayout.Layout(_config.Style, _config.Size, inputs, _reference, MarkerX);
-            // The window is sized from the layout at the current step's expected time, so a Timeline following
+                inputs.Add(Input(engine, i));
+            var auto = _config.Advance == AdvanceMode.Auto && clock != null;
+            _reference = auto ? clock!.Value : engine.ExpectedTime(current);
+            if (auto && _config.Style != TrailStyle.Timeline)
+            {
+                // Back up to the step the clock is on, so the track scrolls from it even after early presses.
+                var first = current;
+                while (first > 0 && current - first < FlowLookBack && engine.ExpectedTime(first) > clock) first--;
+                var steps = Enumerable.Range(first, current - first).Select(i => Input(engine, i)).Concat(inputs).ToList();
+                _items = TrailLayout.Flow(_config.Style, _config.Size, steps, current, clock!.Value, MarkerX);
+            }
+            else
+            {
+                _items = TrailLayout.Layout(_config.Style, _config.Size, inputs, _reference, MarkerX);
+            }
+            // In Auto the window is sized from the layout at the current step's expected time, so a track following
             // the clock (e.g. early in a long countdown) never widens it; the clip rect hides the overflow.
-            extent = _config.Style == TrailStyle.Timeline && _config.Advance == AdvanceMode.Auto
+            extent = _config.Advance == AdvanceMode.Auto
                 ? TrailLayout.Layout(_config.Style, _config.Size, inputs, engine.ExpectedTime(current), MarkerX)
                 : _items;
         }
@@ -241,7 +267,12 @@ public sealed class TrailWindow : Window, IDisposable
                 _flashStart = _time;
             }
         }
-        _pops.RemoveAll(p => _time - p.Start >= PopSeconds);
+        _pops.RemoveAll(p => _time - p.Start >= PopDuration);
+        while (_presses.TryDequeue(out var pressed))
+        {
+            _pressIndex = pressed;
+            _pressStart = _time;
+        }
 
         _current = current;
         _last = _items.ToDictionary(i => i.Index);
@@ -255,6 +286,9 @@ public sealed class TrailWindow : Window, IDisposable
         _width = _width <= 0 ? right : _width + (right - _width) * (1f - MathF.Exp(-dt / WidthEaseSeconds));
     }
 
+    private TrailInput Input(PracticeEngine engine, int index) =>
+        new(index, _session.Sequence[index]!.Ability.IsGcd, engine.ExpectedTime(index));
+
     private void ResetAnimation()
     {
         _current = -1;
@@ -263,10 +297,12 @@ public sealed class TrailWindow : Window, IDisposable
         _slideFrom = 0;
         _slideStart = double.NegativeInfinity;
         _flashIndex = -1;
+        _pressIndex = -1;
         _lastClock = null;
         _startShown = double.NegativeInfinity;
         _pullX = null;
         _events.Clear();
+        _presses.Clear();
     }
 
     private float CurrentSlide()
@@ -315,13 +351,24 @@ public sealed class TrailWindow : Window, IDisposable
 
         foreach (var pop in _pops)
         {
-            var t = EaseOut((float)((_time - pop.Start) / PopSeconds));
-            DrawStep(dl, origin, pop.Step, pop.Item with { CenterX = pop.X }, 1f - t, t);
+            var item = pop.Item with { CenterX = pop.X, IsCurrent = false };
+            if (_config.Advance == AdvanceMode.Auto)
+            {
+                // Rides the track off to the left, fading with time and as it nears the left edge.
+                var fade = 1f - (float)((_time - pop.Start) / FadeSeconds);
+                var edge = Math.Clamp((pop.X + _offset + item.Size / 2) / MarkerX, 0f, 1f);
+                DrawStep(dl, origin, pop.Step, item, Math.Clamp(fade, 0f, 1f) * edge, 0f, false);
+            }
+            else
+            {
+                var t = EaseOut((float)((_time - pop.Start) / PopSeconds));
+                DrawStep(dl, origin, pop.Step, item, 1f - t, t, false);
+            }
         }
         for (var i = _items.Count - 1; i >= 0; i--)
         {
             var item = _items[i];
-            if (_session.Sequence[item.Index] is { } step) DrawStep(dl, origin, step, item, 1f, 0f);
+            if (_session.Sequence[item.Index] is { } step) DrawStep(dl, origin, step, item, 1f, 0f, true);
         }
         if (_config.Style == TrailStyle.Timeline) DrawMarker(dl, origin);
         dl.PopClipRect();
@@ -332,7 +379,7 @@ public sealed class TrailWindow : Window, IDisposable
 
     private void DrawStrip(ImDrawListPtr dl, Vector2 min, Vector2 max)
     {
-        var o = Math.Clamp(_config.GlassOpacity, 0f, 1f);
+        var o = Math.Clamp(_config.TrailOpacity, 0f, 1f);
         var s = Scale;
         var rounding = StripRounding * s;
 
@@ -348,6 +395,12 @@ public sealed class TrailWindow : Window, IDisposable
             dl.AddRect(min - new Vector2(grow) + offset, max + new Vector2(grow) + offset, U32(new Vector4(0, 0, 0, alpha)),
                 rounding + grow, ImDrawFlags.None, reach / rings + Scale);
         }
+
+        // A dark glass base whose alpha is the opacity (1 = opaque), then the highlight on top.
+        var baseStart = dl.VtxBuffer.Size;
+        dl.AddRectFilled(min, max, U32(new Vector4(1, 1, 1, o)), rounding);
+        ImGuiP.ShadeVertsLinearColorGradientKeepAlpha(dl, baseStart, dl.VtxBuffer.Size, min, new Vector2(min.X, max.Y),
+            U32(new Vector4(40 / 255f, 46 / 255f, 64 / 255f, 1)), U32(new Vector4(18 / 255f, 20 / 255f, 30 / 255f, 1)));
 
         // Vertical gradient rgba(255,255,255,.14) → .05, drawn as whole-pixel bands of the same rounded shape.
         const int bands = 8;
@@ -425,17 +478,23 @@ public sealed class TrailWindow : Window, IDisposable
 
     /// <param name="alpha">Overall opacity (fades popped steps).</param>
     /// <param name="pop">0..1 progress of the pop animation; 0 for live steps.</param>
-    private void DrawStep(ImDrawListPtr dl, Vector2 origin, PlannedStep step, TrailItem item, float alpha, float pop)
+    /// <param name="live">Not yet popped: gets the current-step ring, the press and the wrong flash.</param>
+    private void DrawStep(ImDrawListPtr dl, Vector2 origin, PlannedStep step, TrailItem item, float alpha, float pop,
+        bool live)
     {
         var s = Scale;
         var top = item.Row == TrailRow.Gcd ? GcdTop : GcdTop - Raise;
         var center = origin + new Vector2(item.CenterX + _offset, top + item.Size / 2) * s;
-        var tileScale = item.Scale * (1 + (PopScale - 1) * pop);
+        // A press dips the tile and springs it back, like the game's hotbar.
+        var press = live && item.Index == _pressIndex && _time - _pressStart < PressSeconds
+            ? 1f - (float)((_time - _pressStart) / PressSeconds)
+            : 0f;
+        var dip = press > 0 ? 1f - (1f - PressDip) * MathF.Sin(MathF.PI * (1f - press)) : 1f;
+        var tileScale = item.Scale * (1 + (PopScale - 1) * pop) * dip;
         var half = item.Size * tileScale / 2 * s;
         var min = center - new Vector2(half);
         var max = center + new Vector2(half);
         var rounding = item.Size * tileScale * 0.22f * s;
-        var live = pop == 0f;
 
         // Drop shadow, then the current-step ring and glow (gold and pulsing once a pre-pull step is due).
         if (alpha > 0.01f) DrawGlow(dl, min + new Vector2(0, 3 * s), max + new Vector2(0, 3 * s), rounding, Vector4.Zero, 8 * s, 0.45f * alpha);
@@ -455,6 +514,15 @@ public sealed class TrailWindow : Window, IDisposable
         dl.AddImageRounded(wrap.Handle, min, max, Vector2.Zero, Vector2.One, U32(new Vector4(1, 1, 1, alpha)), rounding);
         dl.AddRect(min, max, U32(GlassTheme.White(0.35f * alpha)), rounding, ImDrawFlags.None, s);
 
+        if (press > 0)
+        {
+            // White flash on the icon and an accent ring that bursts outward.
+            dl.AddRectFilled(min, max, U32(GlassTheme.White(0.45f * press * press)), rounding);
+            var burst = (1f - press) * 10f * s;
+            dl.AddRect(min - new Vector2(burst), max + new Vector2(burst), U32(GlassTheme.WithAlpha(Accent, press)),
+                rounding + burst, ImDrawFlags.None, 2.5f * s);
+        }
+
         if (live && item.Index == _flashIndex && _time - _flashStart < FlashSeconds)
         {
             var f = 1f - (float)((_time - _flashStart) / FlashSeconds);
@@ -471,7 +539,7 @@ public sealed class TrailWindow : Window, IDisposable
             var label = _session.Keybinds.Label(step.Ability.Type, step.Ability.Id, _session.InputMode);
             var textSize = TextSize(label, 11f);
             var chip = new Vector2(Math.Max(16 * s, textSize.X + 10 * s), ChipHeight * s);
-            var chipLift = _config.Style == TrailStyle.Focus && item.IsCurrent ? FocusChipLift : 0f;
+            var chipLift = _config.Style == TrailStyle.CompactRail && item.IsCurrent ? CompactChipLift : 0f;
             var chipMin = new Vector2(center.X - chip.X / 2,
                 origin.Y + (top - ChipGap - ChipHeight - chipLift) * s - lift);
             dl.AddRectFilled(chipMin, chipMin + chip, U32(new Vector4(10 / 255f, 12 / 255f, 20 / 255f, 0.7f * textAlpha)), 5 * s);
@@ -565,5 +633,9 @@ public sealed class TrailWindow : Window, IDisposable
 
     private static uint U32(Vector4 color) => ImGui.GetColorU32(color);
 
-    public void Dispose() => _session.EngineEvent -= OnEngineEvent;
+    public void Dispose()
+    {
+        _session.EngineEvent -= OnEngineEvent;
+        _session.StepPressed -= OnStepPressed;
+    }
 }

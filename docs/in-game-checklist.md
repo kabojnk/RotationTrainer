@@ -35,7 +35,7 @@ Load the dev plugin (`src/RotationTrainer/bin/Debug/RotationTrainer.dll`), impor
 8. With a locked or corrupt library.json, the warning banner appears on the Rotation library tab.
 
 ## Trail overlay (Task 12)
-For each of Rail, Timeline and Focus, in both Big and Small, compare against the mockup:
+For each of Rail, Compact Rail and Timeline, in both Big and Small, compare against the mockup:
 1. The real icons and keybinds show; "?" appears when an ability is not on a bar; Off hides the chips.
 2. Weaves sit higher than GCDs.
 3. Steps pop on use (scale and fade), and the trail slides left about 280 ms after each press.
@@ -44,10 +44,10 @@ For each of Rail, Timeline and Focus, in both Big and Small, compare against the
 6. In Auto, the trail pauses when you stop pressing and resumes when you press; Timeline in Auto scrolls with the clock.
 7. Leaving combat resets the trail, with no slide from the old position.
 8. With potions off, the Gemdraught step is absent; with them on, it is present and captioned POTION.
-9. Also check: LockTrail on makes the window click-through and immovable; with it off, the window is outlined and draggable, and dragging does not take the game's keyboard input. `/rtrain trail` toggles the window and the setting persists. The glass strip toggle, Accent and Glass opacity all apply. A job with nothing selected shows "Pick an opener and loop with /rtrain". An opener with no loop ends with "Opener complete".
+9. Also check: LockTrail on makes the window click-through and immovable; with it off, the window is outlined and draggable, and dragging does not take the game's keyboard input. `/rtrain trail` toggles the window and the setting persists. The glass strip toggle, Accent, Window opacity and Trail opacity all apply. A job with nothing selected shows "Pick an opener and loop with /rtrain". An opener with no loop ends with "Opener complete".
 
 10. On Timeline, Auto, Big, AbilitiesAhead 8+, `/countdown 15`: the window keeps a sensible width (about the Manual width), steps further out are clipped at the edge, and the countdown number stays at the window's right edge. Afterwards the width shrinks back as content narrows, e.g. "Opener complete" or switching to Small.
-11. In Rail and Focus, the Pull divider stays on the track after the last pre-pull step pops and slides off to the left.
+11. In Rail and Compact Rail, the Pull divider stays on the track after the last pre-pull step pops and slides off to the left.
 12. Hide the trail (`/rtrain trail`), make wrong presses or use abilities, then show it again: there is no red flash and no slide from old positions.
 
 ## Rotation builder (Task 13)
@@ -81,6 +81,14 @@ For each of Rail, Timeline and Focus, in both Big and Small, compare against the
 8. **Builder:** clear the name, or remove all steps. Save is disabled and the reason is shown. Typing 0 as the countdown time clears it.
 9. **Show/Hide trail button** in the Practice tab: toggling mid-run keeps the current step.
 10. **Debug window:** first open at 100% and 150% UI scale gives a sensible size (not double-scaled).
+
+## Opacity, styles, Auto scrolling and press feedback
+1. **Opacity:** Appearance has separate Window opacity and Trail opacity sliders. At 100% the settings and builder windows, and the trail's glass strip, are fully opaque; nothing behind them shows through. At 20% both are faint. Changing one does not change the other.
+2. **Style names:** the Trail tab offers Rail, Compact Rail and Timeline, in that order. A config saved with the old Focus style opens as Compact Rail.
+3. **Auto, Rail and Compact Rail:** once the clock starts (countdown or first press), the whole track moves left continuously at the rotation's pace, like an editing timeline. Each step reaches the highlight at its expected time. A popped step keeps moving left with the track and fades out instead of growing. When you fall behind, the track stops and waits, then continues once you press.
+4. **Auto, early press:** pressing a step before it reaches the highlight pops it where it is (it fades off as the track carries it left); the track does not jump forward.
+5. **Auto, Timeline:** popped steps also fade off to the left instead of growing.
+6. **Press feedback (both advance modes):** pressing the current step's button while it is still on cooldown or the GCD is rolling makes its tile dip and flash with an accent ring, even though nothing pops. Pressing it from a macro does the same. A queued action firing on its own does not flash a second time. Pressing a different ability does not show the press flash.
 
 ## Known limitations to watch for
 - After switching cross hotbar sets, controller labels can name the previous set's button for up to 0.5 s.

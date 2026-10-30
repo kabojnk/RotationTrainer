@@ -27,6 +27,9 @@ public sealed class Configuration : IPluginConfiguration
     /// <summary>Animation lock = 0.6 s + LatencyMs / 1000.</summary>
     public int LatencyMs { get; set; } = 50;
     public Accent Accent { get; set; } = Accent.Sky;
+    /// <summary>Opacity of the settings and builder windows (1 = opaque).</summary>
     public float GlassOpacity { get; set; } = 0.7f;
+    /// <summary>Opacity of the trail's glass strip (1 = opaque).</summary>
+    public float TrailOpacity { get; set; } = 0.7f;
     public bool TrailGlassStrip { get; set; } = true;
 }

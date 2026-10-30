@@ -286,6 +286,21 @@ public class PracticeEngineTests
     }
 
     [Fact]
+    public void IsStepMatchesVariantsAndItemsWithoutChangingTheRun()
+    {
+        const uint variant = 99;
+        static uint Canonical(uint id) => id == variant ? RD : id;
+        var (e, ev) = Make(sameAction: (a, b) => Canonical(a) == Canonical(b));
+        Assert.True(e.IsStep(0, StepType.Action, variant));
+        Assert.False(e.IsStep(0, StepType.Action, Pom));
+        Assert.False(e.IsStep(0, StepType.Item, RD));
+        Assert.True(e.IsStep(1, StepType.Item, 49235 + 1_000_000)); // HQ id
+        Assert.False(e.IsStep(99, StepType.Action, RD));
+        Assert.Empty(ev);
+        Assert.Equal(0, e.CurrentIndex);
+    }
+
+    [Fact]
     public void WithoutVariantsADifferentIdIsWrong()
     {
         var (e, ev) = Make();
