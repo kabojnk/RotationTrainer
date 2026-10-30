@@ -8,6 +8,7 @@ using RotationTrainer.GameData;
 using RotationTrainer.Services;
 using RotationTrainer.Ui;
 using RotationTrainer.Ui.Settings;
+using RotationTrainer.Ui.Trail;
 
 namespace RotationTrainer;
 
@@ -39,6 +40,7 @@ public sealed class Plugin : IDalamudPlugin
     private readonly WindowSystem _windows = new("RotationTrainer");
     private readonly SettingsWindow _settings;
     private readonly DebugWindow _debug;
+    private readonly TrailWindow _trail;
 
     public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commands, IDataManager data,
         ITextureProvider textures, IClientState clientState, ICondition condition, IFramework framework,
@@ -70,7 +72,9 @@ public sealed class Plugin : IDalamudPlugin
                 framework, gamepad, keys, log, Actions, Countdown);
             _debug = new DebugWindow(Session, Actions, Countdown);
             _settings = new SettingsWindow(this);
+            _trail = new TrailWindow(Config, Session, textures, clientState);
 
+            _windows.AddWindow(_trail);
             _windows.AddWindow(_settings);
             _windows.AddWindow(_debug);
             pluginInterface.UiBuilder.Draw += DrawUi;
@@ -90,6 +94,7 @@ public sealed class Plugin : IDalamudPlugin
                 pluginInterface.UiBuilder.OpenConfigUi -= _settings.Toggle;
                 pluginInterface.UiBuilder.OpenMainUi -= _settings.Toggle;
             }
+            _trail?.Dispose();
             _debug?.Dispose();
             Session?.Dispose();
             Actions.Dispose();
@@ -126,6 +131,10 @@ public sealed class Plugin : IDalamudPlugin
                 _debug.Toggle();
                 break;
             case "trail":
+                Config.ShowTrail = !Config.ShowTrail;
+                PluginInterface.SavePluginConfig(Config);
+                Log.Information("Trail {State}.", Config.ShowTrail ? "shown" : "hidden");
+                break;
             case "builder":
                 Log.Information("{Command} {Sub} is not yet available.", Command, args.Trim());
                 break;
@@ -143,6 +152,7 @@ public sealed class Plugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenConfigUi -= _settings.Toggle;
         PluginInterface.UiBuilder.OpenMainUi -= _settings.Toggle;
         _windows.RemoveAllWindows();
+        _trail.Dispose();
         _debug.Dispose();
         Session.Dispose();
         Actions.Dispose();
