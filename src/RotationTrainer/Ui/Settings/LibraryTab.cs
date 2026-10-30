@@ -137,6 +137,7 @@ internal sealed class LibraryTab(Plugin plugin)
     {
         var scale = ImGuiHelpers.GlobalScale;
         Action? afterTable = null;
+        using var cellPadding = ImRaii.PushStyle(ImGuiStyleVar.CellPadding, new Vector2(8, 7) * scale);
         using (var table = ImRaii.Table("##rotations", 5,
                    ImGuiTableFlags.RowBg | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.SizingStretchProp))
         {
@@ -145,13 +146,13 @@ internal sealed class LibraryTab(Plugin plugin)
             ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch, 3);
             ImGui.TableSetupColumn("Kind", ImGuiTableColumnFlags.WidthFixed, 64 * scale);
             ImGui.TableSetupColumn("Notes", ImGuiTableColumnFlags.WidthStretch, 2);
-            ImGui.TableSetupColumn("##actions", ImGuiTableColumnFlags.WidthFixed, 170 * scale);
+            ImGui.TableSetupColumn("##actions", ImGuiTableColumnFlags.WidthFixed, ActionsWidth());
             ImGui.TableHeadersRow();
 
             foreach (var r in library.All)
             {
                 using var rowId = ImRaii.PushId(r.Id);
-                ImGui.TableNextRow();
+                ImGui.TableNextRow(ImGuiTableRowFlags.None, ImGui.GetFrameHeight());
 
                 ImGui.TableNextColumn();
                 GlassWidgets.Chip(r.Job, r.Job == plugin.Session.Job ? GlassTheme.CurrentAccent : GlassTheme.Dim);
@@ -189,6 +190,17 @@ internal sealed class LibraryTab(Plugin plugin)
             if (i > 0) ImGui.SameLine(0, 4 * ImGuiHelpers.GlobalScale);
             GlassWidgets.Chip(chips[i].Item1, chips[i].Item2);
         }
+    }
+
+    /// <summary>Wide enough for the row's buttons, or the delete confirmation, at any font size.</summary>
+    private static float ActionsWidth()
+    {
+        var pad = ImGui.GetStyle().FramePadding.X * 2;
+        var gap = ImGui.GetStyle().ItemSpacing.X;
+        static float Text(string s) => ImGui.CalcTextSize(s).X;
+        var buttons = Text("Edit") + Text("Export") + Text("Delete") + pad * 3 + gap * 2;
+        var confirm = Text("Delete?") + Text("Yes") + Text("No") + pad * 2 + gap * 2;
+        return MathF.Ceiling(Math.Max(buttons, confirm)) + 2 * ImGuiHelpers.GlobalScale;
     }
 
     /// <summary>Draws the row's buttons; returns the library change to apply after the table, if any.</summary>
