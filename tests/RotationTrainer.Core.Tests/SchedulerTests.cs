@@ -52,4 +52,32 @@ public class SchedulerTests
         s.Reset();
         Assert.Equal(first, Run(s, seq));
     }
+
+    [Fact]
+    public void PostPullFirstStepStartsAtZero()
+    {
+        var t = Run(Make(), Seq(A(4), A(3)));
+        Assert.Equal(0.0, t[0], 6);
+        Assert.Equal(2.5, t[1], 6); // GCD timer (Fire in Red recast)
+    }
+
+    [Fact]
+    public void LoopOnlySequenceStartsAtZero()
+    {
+        var loop = new Rotation("l", "PCT", 100, RotationKind.Loop, "l", new[] { A(4), A(3) });
+        var seq = PracticeSequence.Build(null, loop, true, Cat);
+        var s = Make();
+        Assert.Equal(0.0, s.Next(seq[0]!), 6);
+        Assert.Equal(2.5, s.Next(seq[1]!), 6);
+    }
+
+    [Fact]
+    public void GcdTimerFollowsRecastActionTimerFollowsCastOrLock()
+    {
+        // Fire in Red: cast 1.5, recast 2.5. Weave waits for cast end, next GCD for recast end.
+        var t = Run(Make(), Seq(A(4), A(10), A(4)));
+        Assert.Equal(0.0, t[0], 6);
+        Assert.Equal(1.5, t[1], 6);
+        Assert.Equal(2.5, t[2], 6);
+    }
 }
