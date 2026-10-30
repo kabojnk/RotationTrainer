@@ -50,7 +50,7 @@ public sealed class SettingsWindow : Window
         _appearance = new AppearanceTab(plugin);
 
         var v = typeof(Plugin).Assembly.GetName().Version;
-        _version = v == null ? "" : $"v{v.Major}.{v.Minor}";
+        _version = v == null ? "" : $"v{v.Major}.{v.Minor}.{v.Build}";
 
         Size = new Vector2(820, 560);
         SizeCondition = ImGuiCond.FirstUseEver;

@@ -4,7 +4,7 @@ None of these have been run yet. The plugin builds and every automated test pass
 
 ## Setup and plugin shell (Task 9)
 1. Build on Windows (`dotnet build src/RotationTrainer -c Debug`) or use the WSL build output.
-2. /xlsettings → Experimental → Dev Plugin Locations: add `C:\Projects\RotationTrainer\src\RotationTrainer\bin\Debug\RotationTrainer.dll` (note: bin\Debug, not bin\x64\Debug).
+2. /xlsettings → Experimental → Dev Plugin Locations: add `C:\Projects\RotationTrainer\src\RotationTrainer\bin\x64\Debug\RotationTrainer.dll`.
 3. Enable "Rotation Trainer" in the dev plugins list; check /xllog shows no errors on load. Catalog build reads the Action and Item sheets at load.
 4. `/rtrain` → a "Rotation Trainer" window opens; run it again → it closes. The plugin installer's settings/main buttons also toggle it.
 5. `/rtrain trail` toggles the trail, `/rtrain builder` opens a new opener for your job, and `/rtrain debug` opens the debug window.
@@ -12,7 +12,7 @@ None of these have been run yet. The plugin builds and every automated test pass
 
 
 ## Action detection, countdown, keybinds (Task 10)
-Load the dev plugin (`src/RotationTrainer/bin/Debug/RotationTrainer.dll`), import `examples/pct-2nd-gcd-starry.json` from the Rotation library tab and pick it as the PCT opener on the Practice tab. Turn on Use potions if you want the potion step. On PCT at a striking dummy, `/rtrain debug`:
+Load the dev plugin (`src/RotationTrainer/bin/x64/Debug/RotationTrainer.dll`), import `examples/pct-2nd-gcd-starry.json` from the Rotation library tab and pick it as the PCT opener on the Practice tab. Turn on Use potions if you want the potion step. On PCT at a striking dummy, `/rtrain debug`:
 1. Using Rainbow Drip advances the index by one.
 2. Sprint changes nothing.
 3. A party member's actions change nothing.
