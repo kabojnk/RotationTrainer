@@ -7,8 +7,8 @@ public class KeybindIndexTests
     private const uint Fire = 100, Blizzard = 200, Other = 300;
 
     private static HotbarObservation Obs(int bar, int slot, uint command, uint apparent, string? hint, bool cross = false,
-        StepType type = StepType.Action) =>
-        new(bar, slot, cross, type, command, apparent, hint);
+        StepType type = StepType.Action, bool reachable = true) =>
+        new(bar, slot, cross, type, command, apparent, hint, reachable);
 
     private static KeybindIndex With(params HotbarObservation[] obs)
     {
@@ -58,7 +58,32 @@ public class KeybindIndexTests
 
     [Fact]
     public void EmptyHintDoesNotFallThrough() =>
-        Assert.Equal("?", With(Obs(0, 0, Fire, Fire, ""), Obs(1, 0, Other, Fire, "9")).Label(StepType.Action, Fire, InputMode.Keyboard));
+        // The apparent match has no hint; the command-only match is a later rule and is not used.
+        Assert.Equal("?", With(Obs(0, 0, Fire, Fire, ""), Obs(1, 0, Fire, Other, "9")).Label(StepType.Action, Fire, InputMode.Keyboard));
+
+    [Fact]
+    public void NonEmptyHintPreferredWithinTheSameRule() =>
+        Assert.Equal("9", With(Obs(0, 0, Fire, Fire, ""), Obs(1, 0, Fire, Fire, "9")).Label(StepType.Action, Fire, InputMode.Keyboard));
+
+    [Fact]
+    public void InactiveCrossSetsAreIgnored()
+    {
+        var index = With(
+            Obs(0, 0, Fire, Fire, "LT-A", cross: true, reachable: false),
+            Obs(3, 0, Fire, Fire, "RT-A", cross: true),
+            Obs(1, 0, Blizzard, Blizzard, "LT-B", cross: true, reachable: false));
+        Assert.Equal("RT-A", index.Label(StepType.Action, Fire, InputMode.Controller));
+        Assert.Equal("?", index.Label(StepType.Action, Blizzard, InputMode.Controller));
+    }
+
+    [Fact]
+    public void UnreachableSlotsTeachNothingUsable()
+    {
+        // Learned from an inactive set: the label must still come from a reachable slot.
+        var index = With(Obs(0, 0, Fire, Blizzard, "LT-A", cross: true, reachable: false));
+        index.Update(new[] { Obs(0, 0, Fire, Fire, "LT-A", cross: true, reachable: false) });
+        Assert.Equal("?", index.Label(StepType.Action, Blizzard, InputMode.Controller));
+    }
 
     [Fact]
     public void ModeFiltersBarType()
