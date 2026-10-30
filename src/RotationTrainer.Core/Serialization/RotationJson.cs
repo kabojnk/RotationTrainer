@@ -72,7 +72,55 @@ public static class RotationJson
         return new ImportResult(rotations, errors);
     }
 
-    public static string Export(IEnumerable<Rotation> rotations) => throw new NotImplementedException();
+    public static string Export(IEnumerable<Rotation> rotations)
+    {
+        using var ms = new MemoryStream();
+        using (var w = new Utf8JsonWriter(ms, new JsonWriterOptions { Indented = true }))
+        {
+            w.WriteStartObject();
+            w.WriteString("format", Format);
+            w.WriteStartArray("rotations");
+            foreach (var r in rotations)
+            {
+                w.WriteStartObject();
+                w.WriteString("id", r.Id);
+                w.WriteString("job", r.Job);
+                w.WriteNumber("level", r.Level);
+                w.WriteString("kind", r.Kind.ToString().ToLowerInvariant());
+                w.WriteString("name", r.Name);
+                if (r.Source != null) w.WriteString("source", r.Source);
+                if (r.Patch != null) w.WriteString("patch", r.Patch);
+                w.WriteStartArray("steps");
+                foreach (var s in r.Steps) WriteStep(w, s);
+                w.WriteEndArray();
+                w.WriteEndObject();
+            }
+            w.WriteEndArray();
+            w.WriteEndObject();
+        }
+        return System.Text.Encoding.UTF8.GetString(ms.ToArray());
+    }
+
+    private static void WriteStep(Utf8JsonWriter w, Step s)
+    {
+        w.WriteStartObject();
+        switch (s.Type)
+        {
+            case StepType.Pull:
+                w.WriteBoolean("pull", true);
+                break;
+            case StepType.Item:
+                w.WriteNumber("item", s.Id);
+                w.WriteString("name", s.Name);
+                break;
+            default:
+                w.WriteNumber("action", s.Id);
+                w.WriteString("name", s.Name);
+                break;
+        }
+        if (s.At != null) w.WriteNumber("at", s.At.Value);
+        w.WriteEndObject();
+    }
 
     private static Rotation? ParseRotation(JsonElement el, int index, IAbilityCatalog catalog, Func<string> newId,
         List<ImportError> errors)
