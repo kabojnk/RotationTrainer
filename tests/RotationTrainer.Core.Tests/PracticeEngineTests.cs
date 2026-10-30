@@ -17,17 +17,23 @@ public class PracticeEngineTests
             new[] { A(RD, -4.5), Pull, Potion, A(Pom), A(Striking), A(Wing), A(Starry), A(Hammer) }),
         null, true, Cat);
 
+    /// <summary>Instant steps only: Pom Muse at -4.5, then Hammer Stamp after the pull.</summary>
+    private static PracticeSequence InstantOpener() => PracticeSequence.Build(
+        new Rotation("i", "PCT", 100, RotationKind.Opener, "i", new[] { A(Pom, -4.5), Pull, A(Hammer) }),
+        null, true, Cat);
+
     private static PracticeSequence LoopSeq() => PracticeSequence.Build(
         null,
         new Rotation("l", "PCT", 100, RotationKind.Loop, "l", new[] { A(FireInRed) }),
         true, Cat);
 
     private static (PracticeEngine e, List<EngineEvent> ev) Make(AdvanceMode mode = AdvanceMode.Manual,
-        PracticeSequence? seq = null, Func<StepType, uint, bool>? relevant = null)
+        PracticeSequence? seq = null, Func<StepType, uint, bool>? relevant = null,
+        Func<uint, uint, bool>? sameAction = null, double latency = 0)
     {
         var e = new PracticeEngine(seq ?? Opener(),
             new Scheduler(new StatTimingSource(new SpeedProfile(420, 420)), 0.65), mode,
-            relevant ?? ((t, id) => id != Sprint));
+            relevant ?? ((t, id) => id != Sprint), sameAction, latency);
         var ev = new List<EngineEvent>();
         e.Event += ev.Add;
         return (e, ev);
@@ -86,11 +92,20 @@ public class PracticeEngineTests
     }
 
     [Fact]
-    public void FirstPressStartsClockAtItsExpectedTime()
+    public void FirstPressStartsClockWhenTheCastLands()
     {
+        // Rainbow Drip (4 s cast) is expected at -4.5; its effect arrives when the cast ends.
         var (e, _) = Make();
         Assert.Null(e.Clock);
         Use(e, RD);
+        Assert.Equal(-0.5, e.Clock!.Value, 6);
+    }
+
+    [Fact]
+    public void FirstInstantPressStartsClockAtItsExpectedTime()
+    {
+        var (e, _) = Make(seq: InstantOpener());
+        Use(e, Pom);
         Assert.Equal(-4.5, e.Clock!.Value, 6);
     }
 
@@ -119,9 +134,9 @@ public class PracticeEngineTests
     }
 
     [Fact]
-    public void AutoPausesWhenStepReachesMarker()
+    public void AutoPausesWhenInstantStepReachesMarker()
     {
-        var (e, ev) = Make(AdvanceMode.Auto);
+        var (e, ev) = Make(AdvanceMode.Auto, InstantOpener(), latency: 0.1);
         e.OnCountdown(5);
         e.Tick(0.5);
         Assert.True(e.IsPaused);
@@ -134,11 +149,11 @@ public class PracticeEngineTests
     [Fact]
     public void AutoResumesAfterLatePress()
     {
-        var (e, ev) = Make(AdvanceMode.Auto);
+        var (e, ev) = Make(AdvanceMode.Auto, InstantOpener());
         e.OnCountdown(5);
         e.Tick(0.5);
         e.Tick(1);
-        Use(e, RD);
+        Use(e, Pom);
         Assert.Equal(EngineEventKind.Popped, ev[1].Kind);
         Assert.Equal(new EngineEvent(EngineEventKind.Resumed, 0), ev[2]);
         Assert.False(e.IsPaused);
@@ -162,7 +177,7 @@ public class PracticeEngineTests
         var (e, ev) = Make(AdvanceMode.Auto);
         e.OnCountdown(5);
         e.Tick(0.5);
-        Use(e, RD); // clock -4.5, next step (Gemdraught) expected at 0.0
+        Use(e, RD); // clock -4.5 (an early pop), next step (Gemdraught) expected at 0.0
         e.Tick(10);
         Assert.True(e.IsPaused);
         Assert.Equal(0.0, e.Clock!.Value, 6);
@@ -216,6 +231,68 @@ public class PracticeEngineTests
         Assert.Equal(-4.5, e.ExpectedTime(0), 6); // scheduler cache restarted
     }
 
+    [Fact]
+    public void AutoCastStepPoppedWhenItLandsDoesNotPauseOrDrift()
+    {
+        // Rainbow Drip: expected at -4.5, 4 s cast, so it lands at -0.5; due (with 0.1 s allowance) at -0.4.
+        var (e, ev) = Make(AdvanceMode.Auto, latency: 0.1);
+        e.OnCountdown(5);
+        for (var i = 0; i < 45; i++) e.Tick(0.1);
+        Assert.False(e.IsPaused);
+        Use(e, RD);
+        Assert.Equal(-0.5, e.Clock!.Value, 6);
+        Assert.DoesNotContain(ev, x => x.Kind == EngineEventKind.Paused);
+        e.Tick(0.3);
+        Assert.Equal(-0.2, e.Clock!.Value, 6); // still the real time since the countdown started
+    }
+
+    [Fact]
+    public void AutoLateCastStepPausesAtItsDueTimeAndResumesFromThere()
+    {
+        var (e, ev) = Make(AdvanceMode.Auto, latency: 0.1);
+        e.OnCountdown(5);
+        e.Tick(4.4);
+        Assert.False(e.IsPaused);
+        e.Tick(2);
+        Assert.True(e.IsPaused);
+        Assert.Equal(-0.4, e.Clock!.Value, 6);
+        Assert.Equal(new EngineEvent(EngineEventKind.Paused, 0), Assert.Single(ev));
+        Use(e, RD);
+        Assert.False(e.IsPaused);
+        Assert.Equal(-0.4, e.Clock!.Value, 6);
+        e.Tick(0.2);
+        Assert.Equal(-0.2, e.Clock!.Value, 6);
+    }
+
+    [Fact]
+    public void AutoPopNeverMovesTheClockBack()
+    {
+        var (e, _) = Make(AdvanceMode.Auto, latency: 0.1);
+        e.OnCountdown(5);
+        e.Tick(4.45);
+        Use(e, RD);
+        Assert.Equal(-0.55, e.Clock!.Value, 6);
+    }
+
+    [Fact]
+    public void VariantIdPopsTheStep()
+    {
+        const uint variant = 99;
+        static uint Canonical(uint id) => id == variant ? RD : id;
+        var (e, ev) = Make(sameAction: (a, b) => Canonical(a) == Canonical(b));
+        Use(e, variant);
+        Assert.Equal(new EngineEvent(EngineEventKind.Popped, 0), Assert.Single(ev));
+        Assert.Equal(RD, e.RunLog[0].AbilityId);
+    }
+
+    [Fact]
+    public void WithoutVariantsADifferentIdIsWrong()
+    {
+        var (e, ev) = Make();
+        Use(e, 99);
+        Assert.Equal(new EngineEvent(EngineEventKind.WrongPress, 0), Assert.Single(ev));
+    }
+
     private static void PlayOpener(PracticeEngine e)
     {
         Use(e, RD);
@@ -259,7 +336,7 @@ public class PracticeEngineTests
     {
         var (e, _) = Make(AdvanceMode.Auto);
         e.OnCountdown(5);
-        e.Tick(1);
+        e.Tick(5);
         Assert.True(e.IsPaused);
         Use(e, Swiftcast);
         e.Reset();

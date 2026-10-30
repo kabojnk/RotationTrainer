@@ -24,6 +24,9 @@ public sealed class Scheduler
         _pulled = false;
     }
 
+    /// <summary>The cast time this scheduler uses for an ability (0 for instants).</summary>
+    public double CastSeconds(Ability a) => _timing.CastSeconds(a);
+
     /// <summary>Expected clock time of this step; call in sequence order.</summary>
     public double Next(PlannedStep step)
     {
