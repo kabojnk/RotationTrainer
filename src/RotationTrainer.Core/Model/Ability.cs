@@ -17,6 +17,11 @@ public interface IAbilityCatalog
     Ability? FindItem(uint id);
     Ability? FindItemByName(string name);
     IReadOnlyList<Ability> Palette(string job);
+    /// <summary>
+    /// One id per button: variants a button can fire (e.g. NIN's second mudra, DNC's Double Standard Finish)
+    /// map to the id of the action they stand for. Unknown ids map to themselves.
+    /// </summary>
+    uint CanonicalId(string job, uint id) => id;
 }
 
 public static class ItemIds

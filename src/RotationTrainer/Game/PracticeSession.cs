@@ -40,7 +40,7 @@ public sealed class PracticeSession : IDisposable
     private readonly ActionListener _listener;
     private readonly CountdownSource _countdown;
     private readonly HotbarScanner _scanner = new();
-    private readonly GameTimingSource _gameTiming = new();
+    private readonly GameTimingSource _gameTiming;
     private readonly ConcurrentQueue<(StepType Type, uint Id)> _pending = new();
 
     private uint _jobRowId;
@@ -72,6 +72,7 @@ public sealed class PracticeSession : IDisposable
         _log = log;
         _listener = listener;
         _countdown = countdown;
+        _gameTiming = new GameTimingSource(() => Job == null ? Array.Empty<Ability>() : _catalog.Palette(Job));
         Timing = _gameTiming;
 
         _listener.ActionUsed += OnActionUsed;

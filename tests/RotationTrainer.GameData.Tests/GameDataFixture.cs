@@ -18,18 +18,19 @@ public sealed class GameDataFixture
 {
     public static string? SqpackPath => Environment.GetEnvironmentVariable("FFXIV_SQPACK");
 
-    private readonly Lazy<(LuminaCatalog Catalog, string[] CombatJobs)> _data = new(() =>
+    private readonly Lazy<(LuminaCatalog Catalog, string[] CombatJobs, Lumina.Excel.ExcelModule Excel)> _data = new(() =>
     {
         var gameData = new Lumina.GameData(SqpackPath!);
         var jobs = gameData.Excel.GetSheet<ClassJob>(Lumina.Data.Language.English)
             .Where(j => j.JobIndex > 0 && j.DohDolJobIndex < 0)
             .Select(j => j.Abbreviation.ExtractText())
             .ToArray();
-        return (new LuminaCatalog(gameData.Excel), jobs);
+        return (new LuminaCatalog(gameData.Excel), jobs, gameData.Excel);
     });
 
     public LuminaCatalog Catalog => _data.Value.Catalog;
     public string[] CombatJobs => _data.Value.CombatJobs;
+    public Lumina.Excel.ExcelModule Excel => _data.Value.Excel;
 }
 
 [CollectionDefinition("GameData")]
