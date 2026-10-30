@@ -38,6 +38,7 @@ public sealed class TrailWindow : Window, IDisposable
     private const int FocusMaxAhead = 5;
 
     private const double SlideSeconds = 0.28;
+    private const float WidthEaseSeconds = 0.07f;
     private const double PopSeconds = 0.22;
     private const float PopScale = 1.35f;
     private const float PopLift = 6f;
@@ -74,6 +75,8 @@ public sealed class TrailWindow : Window, IDisposable
     private double? _lastClock;
     private double _startShown = double.NegativeInfinity;
     private float _width;
+    private float? _pullX;
+    private bool _hidden = true;
 
     // This frame's model, built in PreDraw and drawn in Draw.
     private IReadOnlyList<TrailItem> _items = Array.Empty<TrailItem>();
@@ -114,7 +117,12 @@ public sealed class TrailWindow : Window, IDisposable
     private bool FollowsClock =>
         _config.Style == TrailStyle.Timeline && _config.Advance == AdvanceMode.Auto && _engine?.Clock != null;
 
-    public override bool DrawConditions() => _config.ShowTrail && _clientState.IsLoggedIn;
+    public override bool DrawConditions()
+    {
+        var visible = _config.ShowTrail && _clientState.IsLoggedIn;
+        if (!visible) _hidden = true;
+        return visible;
+    }
 
     private void OnEngineEvent(EngineEvent e)
     {
@@ -123,9 +131,17 @@ public sealed class TrailWindow : Window, IDisposable
 
     public override void PreDraw()
     {
-        _time += ImGui.GetIO().DeltaTime;
+        var dt = ImGui.GetIO().DeltaTime;
+        _time += dt;
+        if (_hidden)
+        {
+            // Shown again: drop anything that happened while hidden instead of replaying it.
+            _hidden = false;
+            _width = 0;
+            ResetAnimation();
+        }
         Flags = BaseFlags | (_config.LockTrail ? ImGuiWindowFlags.NoInputs | ImGuiWindowFlags.NoMove : 0);
-        UpdateModel();
+        UpdateModel(dt);
 
         var viewport = ImGui.GetMainViewport();
         ImGui.SetNextWindowPos(viewport.Pos + new Vector2(viewport.Size.X * 0.5f, viewport.Size.Y * 0.62f),
@@ -142,7 +158,7 @@ public sealed class TrailWindow : Window, IDisposable
     }
 
     /// <summary>Builds this frame's items and advances the slide, pop and flash state.</summary>
-    private void UpdateModel()
+    private void UpdateModel(float dt)
     {
         var engine = _session.Engine;
         if (!ReferenceEquals(engine, _engine) || _config.Style != _style || _config.Size != _size)
@@ -153,7 +169,6 @@ public sealed class TrailWindow : Window, IDisposable
             _size = _config.Size;
             _width = 0;
             ResetAnimation();
-            _events.Clear();
         }
 
         _items = Array.Empty<TrailItem>();
@@ -170,6 +185,7 @@ public sealed class TrailWindow : Window, IDisposable
         if (_lastClock is < 0 && clock >= 0) _startShown = _time;
         _lastClock = clock;
 
+        var extent = (IReadOnlyList<TrailItem>)Array.Empty<TrailItem>();
         if (!engine.IsFinished)
         {
             var ahead = _config.Style == TrailStyle.Focus
@@ -180,6 +196,11 @@ public sealed class TrailWindow : Window, IDisposable
                 inputs.Add(new TrailInput(i, step.Ability.IsGcd, engine.ExpectedTime(i)));
             _reference = _config.Advance == AdvanceMode.Auto && clock != null ? clock.Value : engine.ExpectedTime(current);
             _items = TrailLayout.Layout(_config.Style, _config.Size, inputs, _reference, MarkerX);
+            // The window is sized from the layout at the current step's expected time, so a Timeline following
+            // the clock (e.g. early in a long countdown) never widens it; the clip rect hides the overflow.
+            extent = _config.Style == TrailStyle.Timeline && _config.Advance == AdvanceMode.Auto
+                ? TrailLayout.Layout(_config.Style, _config.Size, inputs, engine.ExpectedTime(current), MarkerX)
+                : _items;
         }
 
         // How far the track moved since last frame, measured on the current step.
@@ -194,6 +215,17 @@ public sealed class TrailWindow : Window, IDisposable
                 _slideStart = _time;
             }
             foreach (var pop in _pops) pop.X -= shift;
+            _pullX -= shift;
+        }
+        if (_config.Style != TrailStyle.Timeline)
+        {
+            for (var i = 1; i < _items.Count; i++)
+            {
+                var a = _items[i - 1];
+                var b = _items[i];
+                if (_session.Sequence[a.Index]?.IsPrepull == true && _session.Sequence[b.Index]?.IsPrepull == false)
+                    _pullX = (a.CenterX + a.Size * a.Scale / 2 + b.CenterX - b.Size * b.Scale / 2) / 2;
+            }
         }
 
         while (_events.TryDequeue(out var e))
@@ -214,11 +246,13 @@ public sealed class TrailWindow : Window, IDisposable
         _current = current;
         _last = _items.ToDictionary(i => i.Index);
         _offset = FollowsClock ? 0f : CurrentSlide();
+        if (_pullX + _offset < 0) _pullX = null; // scrolled off the left edge
 
         var right = MinWidth;
-        foreach (var item in _items)
+        foreach (var item in extent)
             right = Math.Max(right, item.CenterX + item.Size * item.Scale / 2 + 24f + StripInset);
-        _width = Math.Max(_width, right);
+        // Grows and shrinks with the content, easing so a pop does not make the strip jump.
+        _width = _width <= 0 ? right : _width + (right - _width) * (1f - MathF.Exp(-dt / WidthEaseSeconds));
     }
 
     private void ResetAnimation()
@@ -231,6 +265,8 @@ public sealed class TrailWindow : Window, IDisposable
         _flashIndex = -1;
         _lastClock = null;
         _startShown = double.NegativeInfinity;
+        _pullX = null;
+        _events.Clear();
     }
 
     private float CurrentSlide()
@@ -275,7 +311,7 @@ public sealed class TrailWindow : Window, IDisposable
         dl.PushClipRect(stripMin - new Vector2(StripInset, TrackTop) * s, stripMax + new Vector2(StripInset, 0) * s, true);
         if (_config.Style == TrailStyle.Rail) DrawRail(dl, origin, stripMin, stripMax);
         if (_config.Style == TrailStyle.Timeline) DrawTicks(dl, origin, stripMin, stripMax);
-        if (_config.Style != TrailStyle.Focus) DrawPull(dl, origin);
+        DrawPull(dl, origin);
 
         foreach (var pop in _pops)
         {
@@ -310,7 +346,7 @@ public sealed class TrailWindow : Window, IDisposable
             var offset = new Vector2(0, 10 * s * t);
             var alpha = 0.35f * o * (1 - t) * (1 - t) / 2.5f;
             dl.AddRect(min - new Vector2(grow) + offset, max + new Vector2(grow) + offset, U32(new Vector4(0, 0, 0, alpha)),
-                rounding + grow, ImDrawFlags.None, reach / rings + 1);
+                rounding + grow, ImDrawFlags.None, reach / rings + Scale);
         }
 
         // Vertical gradient rgba(255,255,255,.14) → .05, drawn as whole-pixel bands of the same rounded shape.
@@ -366,13 +402,7 @@ public sealed class TrailWindow : Window, IDisposable
         }
         else
         {
-            for (var i = 1; i < _items.Count && x == null; i++)
-            {
-                var a = _items[i - 1];
-                var b = _items[i];
-                if (_session.Sequence[a.Index]?.IsPrepull == true && _session.Sequence[b.Index]?.IsPrepull == false)
-                    x = (a.CenterX + a.Size * a.Scale / 2 + b.CenterX - b.Size * b.Scale / 2) / 2;
-            }
+            x = _pullX; // anchored on the track, so it outlives the last pre-pull step until it scrolls off
         }
         if (x == null) return;
 
@@ -520,7 +550,7 @@ public sealed class TrailWindow : Window, IDisposable
             var grow = reach * t;
             var a = alpha * (1 - t) * (1 - t) / 2f;
             dl.AddRect(min - new Vector2(grow), max + new Vector2(grow), U32(GlassTheme.WithAlpha(color, a)),
-                rounding + grow, ImDrawFlags.None, reach / rings + 1);
+                rounding + grow, ImDrawFlags.None, reach / rings + Scale);
         }
     }
 
