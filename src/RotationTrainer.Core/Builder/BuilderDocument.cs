@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace RotationTrainer.Core;
 
 public sealed record BuilderWarning(int? StepIndex, string Message);
@@ -78,6 +80,8 @@ public sealed class BuilderDocument
 
     public void SetAt(int index, double? at)
     {
+        // Zero (or -0) means "no time": an "at" of 0 is not before the pull.
+        if (at == 0) at = null;
         if (IsPrepull(index)) _steps[index] = _steps[index] with { At = at };
     }
 
@@ -122,6 +126,39 @@ public sealed class BuilderDocument
         foreach (var (first, last, gcd) in ClippingRuns())
             list.Add(new BuilderWarning(first, $"{last - first + 1} weaves after {gcd} may clip your GCD"));
         return list;
+    }
+
+    /// <summary>
+    /// Why this document can't be saved yet (empty when it can). Mirrors the import rules, so a saved
+    /// rotation always loads back.
+    /// </summary>
+    public IReadOnlyList<string> Validate()
+    {
+        var reasons = new List<string>();
+        if (string.IsNullOrWhiteSpace(Name)) reasons.Add("Give the rotation a name.");
+        if (!_steps.Any(s => s.Type != StepType.Pull)) reasons.Add("Add at least one step.");
+        for (var i = 0; i < _steps.Count; i++)
+        {
+            if (IsPrepull(i) && _steps[i].At is { } at && !(at < 0))
+                reasons.Add($"Step {i + 1}: the countdown time must be above 0 seconds.");
+        }
+        return reasons;
+    }
+
+    /// <summary>
+    /// Reads a countdown entry in seconds left ("4.5") as a negative clock time. Empty and zero mean no time.
+    /// False when the text is not a number.
+    /// </summary>
+    public static bool TryParseCountdown(string text, out double? at)
+    {
+        at = null;
+        text = text.Trim();
+        if (text.Length == 0) return true;
+        if (!double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out var seconds)
+            || !double.IsFinite(seconds))
+            return false;
+        if (seconds != 0) at = -Math.Abs(seconds);
+        return true;
     }
 
     public Rotation ToRotation(Func<string> newId)
