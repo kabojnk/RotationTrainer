@@ -7,7 +7,7 @@ until the opener is automatic.
 ## Install
 
 1. In game, open `/xlsettings` → **Experimental** → **Custom Plugin Repositories**.
-2. Add `https://raw.githubusercontent.com/OWNER/REPO/main/repo.json` (this repository's `repo.json`), tick
+2. Add `https://raw.githubusercontent.com/kabojnk/RotationTrainer/main/repo.json` (this repository's `repo.json`), tick
    **Enabled**, and save.
 3. Install **Rotation Trainer** from `/xlplugins`, then open it with `/rtrain`.
 
