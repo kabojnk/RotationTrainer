@@ -238,11 +238,12 @@ public static class RotationJson
 
         if (hasItem)
         {
-            Ability? found;
+            // The id wins; the name is the fallback when the id is missing or unknown.
+            Ability? found = null;
             if (item.ValueKind == JsonValueKind.Number && item.TryGetUInt32(out var raw))
                 found = catalog.FindItem(ItemIds.Normalize(raw));
-            else
-                found = !string.IsNullOrWhiteSpace(nameText) ? catalog.FindItemByName(nameText) : null;
+            if (found == null && !string.IsNullOrWhiteSpace(nameText))
+                found = catalog.FindItemByName(nameText);
             if (found == null) { error = $"Item {Describe(item, nameText)} is not a known medicine."; return null; }
             return new Step(StepType.Item, found.Id, found.Name, at);
         }
@@ -250,7 +251,7 @@ public static class RotationJson
         Ability? ab = null;
         if (hasAction && action.ValueKind == JsonValueKind.Number && action.TryGetUInt32(out var aid))
             ab = catalog.FindAction(job, aid);
-        else if (!string.IsNullOrWhiteSpace(nameText))
+        if (ab == null && !string.IsNullOrWhiteSpace(nameText))
             ab = catalog.FindActionByName(job, nameText);
         if (ab == null)
         {

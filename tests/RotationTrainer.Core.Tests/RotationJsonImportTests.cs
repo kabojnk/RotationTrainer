@@ -64,6 +64,31 @@ public class RotationJsonImportTests
     }
 
     [Fact]
+    public void FallsBackToNameWhenActionIdIsNotInKit()
+    {
+        var r = Import(PctWith("""{"action":99999,"name":"Hammer Stamp"},{"action":"abc","name":"Fire in Red"}"""));
+        Assert.Empty(r.Errors);
+        Assert.Equal(new[] { new Step(StepType.Action, 3, "Hammer Stamp"), new Step(StepType.Action, 4, "Fire in Red") },
+            r.Rotations.Single().Steps);
+    }
+
+    [Fact]
+    public void FallsBackToNameWhenItemIdIsNotMedicine()
+    {
+        var r = Import(PctWith("""{"item":12345,"name":"Gemdraught of Intelligence"}"""));
+        Assert.Empty(r.Errors);
+        Assert.Equal(new Step(StepType.Item, 49235, "Gemdraught of Intelligence"), r.Rotations.Single().Steps[0]);
+    }
+
+    [Fact]
+    public void FailsWhenBothIdAndNameFail()
+    {
+        var r = Import(PctWith("""{"action":99999,"name":"Not An Action"}"""));
+        Assert.Empty(r.Rotations);
+        Assert.Contains("not a PCT action", Assert.Single(r.Errors).Message);
+    }
+
+    [Fact]
     public void NormalizesHqItemId()
     {
         var r = Import(PctWith("""{"item":1049235}"""));
