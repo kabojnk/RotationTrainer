@@ -104,7 +104,9 @@ public sealed class LuminaCatalog : IAbilityCatalog
 
     private static Ability ToAbility(LuminaAction row)
     {
-        var isGcd = row.CooldownGroup == GcdCooldownGroup;
+        // Charged GCDs (e.g. MCH Drill) keep their charge timer in CooldownGroup and the GCD in
+        // AdditionalCooldownGroup.
+        var isGcd = row.CooldownGroup == GcdCooldownGroup || row.AdditionalCooldownGroup == GcdCooldownGroup;
         var category = row.ActionCategory.RowId switch
         {
             SpellCategory => AbilityCategory.Spell,
