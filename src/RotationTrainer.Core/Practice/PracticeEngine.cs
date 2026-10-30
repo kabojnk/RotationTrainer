@@ -14,17 +14,25 @@ public sealed class PracticeEngine
     private readonly Scheduler _scheduler;
     private readonly AdvanceMode _mode;
     private readonly Func<StepType, uint, bool> _isRelevant;
-    private readonly List<double> _expected = new();
+    private readonly Func<uint, uint, bool> _sameAction;
+    private readonly double _latency;
+    /// <summary>Per step: when it should start, and how long its cast takes.</summary>
+    private readonly List<(double Expected, double Cast)> _timing = new();
     private readonly List<StepResult> _runLog = new();
     private int _wrongPresses;
 
+    /// <param name="sameAction">Whether a used action id counts as a step's action id (button variants);
+    /// plain equality when null.</param>
+    /// <param name="latencySeconds">How late a hard cast's effect may arrive after its cast ends before Auto pauses.</param>
     public PracticeEngine(PracticeSequence sequence, Scheduler scheduler, AdvanceMode mode,
-        Func<StepType, uint, bool> isRelevant)
+        Func<StepType, uint, bool> isRelevant, Func<uint, uint, bool>? sameAction = null, double latencySeconds = 0)
     {
         _sequence = sequence;
         _scheduler = scheduler;
         _mode = mode;
         _isRelevant = isRelevant;
+        _sameAction = sameAction ?? ((a, b) => a == b);
+        _latency = latencySeconds;
         IsFinished = _sequence[0] == null;
     }
 
@@ -35,12 +43,28 @@ public sealed class PracticeEngine
     public IReadOnlyList<StepResult> RunLog => _runLog;
     public event Action<EngineEvent>? Event;
 
-    public double ExpectedTime(int index)
+    /// <summary>When the step should be started (pressed).</summary>
+    public double ExpectedTime(int index) => Timing(index).Expected;
+
+    /// <summary>
+    /// When the step's use is reported: its effect arrives when the cast ends, so a hard cast is due at
+    /// expected + cast + latency allowance. An instant is due at its expected time.
+    /// </summary>
+    public double DueTime(int index)
+    {
+        var (expected, cast) = Timing(index);
+        return cast > 0 ? expected + cast + _latency : expected;
+    }
+
+    private (double Expected, double Cast) Timing(int index)
     {
         if (_sequence[index] == null) throw new ArgumentOutOfRangeException(nameof(index));
-        while (_expected.Count <= index)
-            _expected.Add(_scheduler.Next(_sequence[_expected.Count]!));
-        return _expected[index];
+        while (_timing.Count <= index)
+        {
+            var step = _sequence[_timing.Count]!;
+            _timing.Add((_scheduler.Next(step), _scheduler.CastSeconds(step.Ability)));
+        }
+        return _timing[index];
     }
 
     public void OnActionUsed(StepType type, uint id)
@@ -51,7 +75,9 @@ public sealed class PracticeEngine
 
         if (type == StepType.Item) id = ItemIds.Normalize(id);
         var stepId = step.Ability.Type == StepType.Item ? ItemIds.Normalize(step.Ability.Id) : step.Ability.Id;
-        if (step.Ability.Type != type || stepId != id)
+        var matches = step.Ability.Type == type
+            && (type == StepType.Item ? stepId == id : _sameAction(id, stepId));
+        if (!matches)
         {
             if (_isRelevant(type, id))
             {
@@ -61,8 +87,10 @@ public sealed class PracticeEngine
             return;
         }
 
-        var expected = ExpectedTime(CurrentIndex);
-        Clock ??= expected;
+        var (expected, cast) = Timing(CurrentIndex);
+        // The first use starts the clock at the moment it was reported: when its cast ended.
+        // A use never moves a running clock.
+        Clock ??= expected + cast;
         var index = CurrentIndex;
         _runLog.Add(new StepResult(index, step.Ability.Id, expected, Clock.Value, _wrongPresses));
         _wrongPresses = 0;
@@ -94,10 +122,10 @@ public sealed class PracticeEngine
         var target = Clock.Value + deltaSeconds;
         if (_mode == AdvanceMode.Auto)
         {
-            var expected = ExpectedTime(CurrentIndex);
-            if (target >= expected)
+            var due = DueTime(CurrentIndex);
+            if (target >= due)
             {
-                Clock = Math.Max(Clock.Value, expected);
+                Clock = Math.Max(Clock.Value, due);
                 IsPaused = true;
                 Raise(EngineEventKind.Paused, CurrentIndex);
                 return;
@@ -119,7 +147,7 @@ public sealed class PracticeEngine
         IsFinished = _sequence[0] == null;
         _wrongPresses = 0;
         _runLog.Clear();
-        _expected.Clear();
+        _timing.Clear();
         _scheduler.Reset();
     }
 

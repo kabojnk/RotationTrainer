@@ -123,10 +123,13 @@ public sealed class PracticeSession : IDisposable
         if (Sequence.IsEmpty) return;
 
         var job = Job;
-        Engine = new PracticeEngine(Sequence, new Scheduler(Timing, 0.6 + _config.LatencyMs / 1000.0), _config.Advance,
+        var latency = _config.LatencyMs / 1000.0;
+        Engine = new PracticeEngine(Sequence, new Scheduler(Timing, 0.6 + latency), _config.Advance,
             (type, id) => type == StepType.Item
                 ? _catalog.FindItem(ItemIds.Normalize(id)) != null
-                : _catalog.FindAction(job, id) != null);
+                : _catalog.FindAction(job, id) != null,
+            (used, step) => _catalog.CanonicalId(job, used) == _catalog.CanonicalId(job, step),
+            latency);
         Engine.Event += OnEngineEvent;
     }
 
