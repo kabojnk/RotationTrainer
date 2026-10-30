@@ -1,3 +1,4 @@
+using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Misc;
 using RotationTrainer.Core;
 using SlotType = FFXIVClientStructs.FFXIV.Client.UI.Misc.RaptureHotbarModule.HotbarSlotType;
@@ -7,7 +8,9 @@ namespace RotationTrainer.Game;
 /// <summary>
 /// Reads the 10 standard hotbars (12 slots) and 8 cross hotbars (16 slots) of the current job.
 /// Only slots that show or run an action or item (directly, or a macro with an action's icon) are reported.
-/// Item ids are normalized (HQ +1,000,000 removed); a command that is not the slot's type is reported as 0. Call on the framework thread only.
+/// Item ids are normalized (HQ +1,000,000 removed); a command that is not the slot's type is reported as 0.
+/// Only the cross hotbar set the cross hotbar is showing is reachable; other sets (and the expanded hold bars, whose
+/// hints aren't known to match their buttons) are reported as unreachable. Call on the framework thread only.
 /// </summary>
 public sealed unsafe class HotbarScanner
 {
@@ -24,14 +27,29 @@ public sealed unsafe class HotbarScanner
 
         var bars = module->Hotbars;
         for (var bar = 0; bar < StandardBars; bar++)
-            Read(ref bars[bar], bar, StandardSlots, false, result);
+            Read(ref bars[bar], bar, StandardSlots, false, true, result);
+        var active = ActiveCrossBar();
         for (var bar = 0; bar < CrossBars; bar++)
-            Read(ref bars[StandardBars + bar], bar, CrossSlots, true, result);
+            Read(ref bars[StandardBars + bar], bar, CrossSlots, true, bar == active, result);
         return result;
     }
 
+    /// <summary>
+    /// The cross hotbar set (0-7) the cross hotbar addon is showing, or -1 when it isn't loaded, shows the pet bar
+    /// or reports something else.
+    /// </summary>
+    private static int ActiveCrossBar()
+    {
+        var manager = RaptureAtkUnitManager.Instance();
+        if (manager == null) return -1;
+        var addon = (AddonActionCross*)manager->GetAddonByName("_ActionCross");
+        if (addon == null || !addon->IsReady || addon->DisplayPetBar) return -1;
+        var bar = addon->RaptureHotbarId - StandardBars;
+        return bar is >= 0 and < CrossBars ? bar : -1;
+    }
+
     private static void Read(ref RaptureHotbarModule.Hotbar bar, int barIndex, int slotCount, bool isCross,
-        List<HotbarObservation> into)
+        bool reachable, List<HotbarObservation> into)
     {
         for (var i = 0; i < slotCount; i++)
         {
@@ -54,7 +72,8 @@ public sealed unsafe class HotbarScanner
             var commandType = type == StepType.Item ? SlotType.Item : SlotType.Action;
             var command = slot.CommandType != commandType ? 0u
                 : type == StepType.Item ? ItemIds.Normalize(slot.CommandId) : slot.CommandId;
-            into.Add(new HotbarObservation(barIndex, i, isCross, type, command, apparent, Hint(slot.PopUpKeybindHintString)));
+            into.Add(new HotbarObservation(barIndex, i, isCross, type, command, apparent, Hint(slot.PopUpKeybindHintString),
+                reachable));
         }
     }
 
