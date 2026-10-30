@@ -57,7 +57,8 @@ internal sealed class PracticeTab(Plugin plugin, Action importFile)
         if (GlassWidgets.PrimaryButton(config.ShowTrail ? "Hide trail" : "Show trail"))
         {
             config.ShowTrail = !config.ShowTrail;
-            plugin.SaveConfig();
+            // Visibility only: save without rebuilding, so the current run is kept (like /rtrain trail).
+            plugin.PluginInterface.SavePluginConfig(config);
         }
         ImGui.SameLine();
         using (ImRaii.Disabled(plugin.Session.Engine == null))

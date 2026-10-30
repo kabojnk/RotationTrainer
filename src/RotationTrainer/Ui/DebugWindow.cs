@@ -1,6 +1,5 @@
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
-using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 using RotationTrainer.Core;
 using RotationTrainer.Game;
@@ -22,7 +21,7 @@ public sealed class DebugWindow : Window, IDisposable
         _session = session;
         _listener = listener;
         _countdown = countdown;
-        Size = new Vector2(360, 260) * ImGuiHelpers.GlobalScale;
+        Size = new Vector2(360, 260);
         SizeCondition = ImGuiCond.FirstUseEver;
         _listener.ActionUsed += OnActionUsed;
     }
