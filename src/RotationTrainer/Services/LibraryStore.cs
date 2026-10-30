@@ -16,5 +16,8 @@ public sealed class LibraryStore
     /// <summary>Reads the library (empty if missing or unreadable) and saves it whenever it changes.</summary>
     public RotationLibrary Load() => _file.Load();
 
+    /// <summary>True when the library file could not be read safely, so changes are not saved this session.</summary>
+    public bool SaveBlocked => _file.SaveBlocked;
+
     public void Save(RotationLibrary library) => _file.Save(library);
 }

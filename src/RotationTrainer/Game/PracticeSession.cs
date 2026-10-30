@@ -91,6 +91,14 @@ public sealed class PracticeSession : IDisposable
     public ITimingSource Timing { get; private set; }
     public event Action<EngineEvent>? EngineEvent;
 
+    /// <summary>Timing as the game computes it for the current character, whatever the speed source setting.</summary>
+    public ITimingSource GameTiming => _gameTiming;
+
+    /// <summary>A 2.5 s GCD from the current job's kit, for showing the GCD; null without a job.</summary>
+    public Ability? ReferenceGcd => Job == null
+        ? null
+        : _catalog.Palette(Job).FirstOrDefault(a => a.IsGcd && a.Group == PaletteGroup.Gcd && a.BaseRecastMs == 2500);
+
     /// <summary>Builds a fresh engine from the current job, selection, library and configuration.</summary>
     public void Rebuild()
     {

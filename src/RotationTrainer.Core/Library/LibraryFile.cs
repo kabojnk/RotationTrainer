@@ -19,6 +19,9 @@ public sealed class LibraryFile
         _warn = warn;
     }
 
+    /// <summary>True when the last load could not read or back up the file, so saves are skipped.</summary>
+    public bool SaveBlocked => _saveBlocked;
+
     /// <summary>Reads the library (empty if there is no file yet) and saves it whenever it changes.</summary>
     public RotationLibrary Load()
     {

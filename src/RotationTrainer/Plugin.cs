@@ -37,7 +37,7 @@ public sealed class Plugin : IDalamudPlugin
     public PracticeSession Session { get; }
 
     private readonly WindowSystem _windows = new("RotationTrainer");
-    private readonly SettingsWindow _settings = new();
+    private readonly SettingsWindow _settings;
     private readonly DebugWindow _debug;
 
     public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commands, IDataManager data,
@@ -68,11 +68,12 @@ public sealed class Plugin : IDalamudPlugin
         {
             Session = new PracticeSession(Config, Library, Catalog, data, clientState, playerState, condition,
                 framework, gamepad, keys, log, Actions, Countdown);
-            _debug = new DebugWindow(Session, Actions, Countdown, Catalog);
+            _debug = new DebugWindow(Session, Actions, Countdown);
+            _settings = new SettingsWindow(this);
 
             _windows.AddWindow(_settings);
             _windows.AddWindow(_debug);
-            pluginInterface.UiBuilder.Draw += _windows.Draw;
+            pluginInterface.UiBuilder.Draw += DrawUi;
             pluginInterface.UiBuilder.OpenConfigUi += _settings.Toggle;
             pluginInterface.UiBuilder.OpenMainUi += _settings.Toggle;
 
@@ -83,9 +84,12 @@ public sealed class Plugin : IDalamudPlugin
         }
         catch
         {
-            pluginInterface.UiBuilder.Draw -= _windows.Draw;
-            pluginInterface.UiBuilder.OpenConfigUi -= _settings.Toggle;
-            pluginInterface.UiBuilder.OpenMainUi -= _settings.Toggle;
+            pluginInterface.UiBuilder.Draw -= DrawUi;
+            if (_settings != null)
+            {
+                pluginInterface.UiBuilder.OpenConfigUi -= _settings.Toggle;
+                pluginInterface.UiBuilder.OpenMainUi -= _settings.Toggle;
+            }
             _debug?.Dispose();
             Session?.Dispose();
             Actions.Dispose();
@@ -98,6 +102,17 @@ public sealed class Plugin : IDalamudPlugin
     {
         PluginInterface.SavePluginConfig(Config);
         Session.Rebuild();
+    }
+
+    /// <summary>Opens the rotation builder on a document. The builder window arrives in a later task.</summary>
+    public void OpenBuilder(BuilderDocument document) =>
+        Log.Information("The builder is not yet available (asked to open \"{Name}\" for {Job}).", document.Name,
+            document.Job);
+
+    private void DrawUi()
+    {
+        _windows.Draw();
+        _settings.DrawDialogs();
     }
 
     private void OnCommand(string command, string args)
@@ -124,7 +139,7 @@ public sealed class Plugin : IDalamudPlugin
     public void Dispose()
     {
         Commands.RemoveHandler(Command);
-        PluginInterface.UiBuilder.Draw -= _windows.Draw;
+        PluginInterface.UiBuilder.Draw -= DrawUi;
         PluginInterface.UiBuilder.OpenConfigUi -= _settings.Toggle;
         PluginInterface.UiBuilder.OpenMainUi -= _settings.Toggle;
         _windows.RemoveAllWindows();
