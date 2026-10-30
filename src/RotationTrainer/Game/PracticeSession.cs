@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using Dalamud.Game;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.GamePad;
+using Dalamud.Game.ClientState.Keys;
 using Dalamud.Plugin.Services;
 using Lumina.Excel.Sheets;
 using RotationTrainer.Core;
@@ -15,8 +16,6 @@ namespace RotationTrainer.Game;
 public sealed class PracticeSession : IDisposable
 {
     private static readonly TimeSpan ScanInterval = TimeSpan.FromMilliseconds(500);
-    /// <summary>Auto keybinds show controller buttons while the gamepad was used within this window.</summary>
-    private static readonly TimeSpan GamepadRecent = TimeSpan.FromSeconds(10);
     private const float StickDeadzone = 0.3f;
     /// <summary>A countdown that rises by more than this (or appears) is a new countdown.</summary>
     private const double CountdownRise = 0.05;
@@ -35,6 +34,8 @@ public sealed class PracticeSession : IDisposable
     private readonly ICondition _condition;
     private readonly IFramework _framework;
     private readonly IGamepadState _gamepad;
+    private readonly IKeyState _keys;
+    private readonly VirtualKey[] _keyboardKeys;
     private readonly IPluginLog _log;
     private readonly ActionListener _listener;
     private readonly CountdownSource _countdown;
@@ -46,11 +47,12 @@ public sealed class PracticeSession : IDisposable
     private double? _lastCountdown;
     private bool _wasInCombat;
     private DateTime _nextScan = DateTime.MinValue;
-    private DateTime _lastGamepadUse = DateTime.MinValue;
+    /// <summary>The last device the player pressed something on (Auto keybinds); Keyboard until a pad is used.</summary>
+    private InputMode _lastDevice = InputMode.Keyboard;
 
     public PracticeSession(Configuration config, RotationLibrary library, IAbilityCatalog catalog, IDataManager data,
         IClientState clientState, IPlayerState player, ICondition condition, IFramework framework,
-        IGamepadState gamepad, IPluginLog log, ActionListener listener, CountdownSource countdown)
+        IGamepadState gamepad, IKeyState keys, IPluginLog log, ActionListener listener, CountdownSource countdown)
     {
         _config = config;
         _library = library;
@@ -61,6 +63,12 @@ public sealed class PracticeSession : IDisposable
         _condition = condition;
         _framework = framework;
         _gamepad = gamepad;
+        _keys = keys;
+        // Mouse buttons are excluded: a controller player may still click UI.
+        _keyboardKeys = keys.GetValidVirtualKeys()
+            .Where(k => k is not (VirtualKey.NO_KEY or VirtualKey.LBUTTON or VirtualKey.RBUTTON or VirtualKey.MBUTTON
+                or VirtualKey.XBUTTON1 or VirtualKey.XBUTTON2))
+            .ToArray();
         _log = log;
         _listener = listener;
         _countdown = countdown;
@@ -137,7 +145,7 @@ public sealed class PracticeSession : IDisposable
             // Covers login/logout too, which raise no ClassJobChanged.
             SetJob(_player.IsLoaded ? _player.ClassJob.RowId : 0);
 
-            UpdateInputMode(now);
+            UpdateInputMode();
             if (now >= _nextScan)
             {
                 _nextScan = now + ScanInterval;
@@ -188,16 +196,23 @@ public sealed class PracticeSession : IDisposable
         _lastCountdown = remaining;
     }
 
-    private void UpdateInputMode(DateTime now)
+    /// <summary>
+    /// Auto follows the last device used and is sticky: gamepad input switches to Controller, a keyboard key
+    /// switches to Keyboard, and idling (e.g. through a countdown) never changes it, so labels never flip to the
+    /// other device's bars on their own.
+    /// </summary>
+    private void UpdateInputMode()
     {
         if (_gamepad.LeftStick.Length() > StickDeadzone || _gamepad.RightStick.Length() > StickDeadzone
             || Buttons.Any(b => _gamepad.Raw(b) > 0))
-            _lastGamepadUse = now;
+            _lastDevice = InputMode.Controller;
+        else if (_keyboardKeys.Any(k => _keys[k]))
+            _lastDevice = InputMode.Keyboard;
 
         InputMode = _config.Keybinds switch
         {
             KeybindMode.Controller => InputMode.Controller,
-            KeybindMode.Auto when now - _lastGamepadUse < GamepadRecent => InputMode.Controller,
+            KeybindMode.Auto => _lastDevice,
             _ => InputMode.Keyboard,
         };
     }

@@ -25,6 +25,7 @@ public sealed class Plugin : IDalamudPlugin
     public IGameInteropProvider Interop { get; }
     public IPlayerState PlayerState { get; }
     public IGamepadState Gamepad { get; }
+    public IKeyState Keys { get; }
     public IPluginLog Log { get; }
 
     public Configuration Config { get; }
@@ -41,7 +42,7 @@ public sealed class Plugin : IDalamudPlugin
 
     public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commands, IDataManager data,
         ITextureProvider textures, IClientState clientState, ICondition condition, IFramework framework,
-        IGameInteropProvider interop, IPlayerState playerState, IGamepadState gamepad, IPluginLog log)
+        IGameInteropProvider interop, IPlayerState playerState, IGamepadState gamepad, IKeyState keys, IPluginLog log)
     {
         PluginInterface = pluginInterface;
         Commands = commands;
@@ -53,6 +54,7 @@ public sealed class Plugin : IDalamudPlugin
         Interop = interop;
         PlayerState = playerState;
         Gamepad = gamepad;
+        Keys = keys;
         Log = log;
 
         Config = pluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
@@ -60,21 +62,35 @@ public sealed class Plugin : IDalamudPlugin
         Store = new LibraryStore(pluginInterface.GetPluginConfigDirectory(), Catalog, log);
         Library = Store.Load();
 
+        // The hook is live from here on: if the rest of construction fails, Dispose never runs, so undo it here.
         Actions = new ActionListener(interop, playerState, log);
-        Session = new PracticeSession(Config, Library, Catalog, data, clientState, playerState, condition, framework,
-            gamepad, log, Actions, Countdown);
-        _debug = new DebugWindow(Session, Actions, Countdown, Catalog);
-
-        _windows.AddWindow(_settings);
-        _windows.AddWindow(_debug);
-        pluginInterface.UiBuilder.Draw += _windows.Draw;
-        pluginInterface.UiBuilder.OpenConfigUi += _settings.Toggle;
-        pluginInterface.UiBuilder.OpenMainUi += _settings.Toggle;
-
-        commands.AddHandler(Command, new CommandInfo(OnCommand)
+        try
         {
-            HelpMessage = "Toggle settings. Subcommands: trail, builder, debug.",
-        });
+            Session = new PracticeSession(Config, Library, Catalog, data, clientState, playerState, condition,
+                framework, gamepad, keys, log, Actions, Countdown);
+            _debug = new DebugWindow(Session, Actions, Countdown, Catalog);
+
+            _windows.AddWindow(_settings);
+            _windows.AddWindow(_debug);
+            pluginInterface.UiBuilder.Draw += _windows.Draw;
+            pluginInterface.UiBuilder.OpenConfigUi += _settings.Toggle;
+            pluginInterface.UiBuilder.OpenMainUi += _settings.Toggle;
+
+            commands.AddHandler(Command, new CommandInfo(OnCommand)
+            {
+                HelpMessage = "Toggle settings. Subcommands: trail, builder, debug.",
+            });
+        }
+        catch
+        {
+            pluginInterface.UiBuilder.Draw -= _windows.Draw;
+            pluginInterface.UiBuilder.OpenConfigUi -= _settings.Toggle;
+            pluginInterface.UiBuilder.OpenMainUi -= _settings.Toggle;
+            _debug?.Dispose();
+            Session?.Dispose();
+            Actions.Dispose();
+            throw;
+        }
     }
 
     /// <summary>Saves the configuration and rebuilds the practice session from it.</summary>

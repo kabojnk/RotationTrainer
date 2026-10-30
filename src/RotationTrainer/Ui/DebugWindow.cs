@@ -54,7 +54,7 @@ public sealed class DebugWindow : Window, IDisposable
             ImGui.TextUnformatted($"Paused: {engine.IsPaused}   Finished: {engine.IsFinished}");
             ImGui.TextUnformatted($"Step: {step?.Ability.Name ?? "-"}");
             ImGui.TextUnformatted(
-                $"Keybind: {(step == null ? "-" : _session.Keybinds.Label(step.Ability.Id, _session.InputMode))}");
+                $"Keybind: {(step == null ? "-" : _session.Keybinds.Label(step.Ability.Type, step.Ability.Id, _session.InputMode))}");
         }
 
         ImGui.Separator();
