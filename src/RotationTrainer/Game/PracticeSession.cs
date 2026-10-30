@@ -42,6 +42,7 @@ public sealed class PracticeSession : IDisposable
     private readonly HotbarScanner _scanner = new();
     private readonly GameTimingSource _gameTiming;
     private readonly ConcurrentQueue<(StepType Type, uint Id)> _pending = new();
+    private readonly ConcurrentQueue<(StepType Type, uint Id)> _attempts = new();
 
     private uint _jobRowId;
     private double? _lastCountdown;
@@ -76,6 +77,7 @@ public sealed class PracticeSession : IDisposable
         Timing = _gameTiming;
 
         _listener.ActionUsed += OnActionUsed;
+        _listener.ActionAttempted += OnActionAttempted;
         _clientState.ClassJobChanged += OnClassJobChanged;
         _library.Changed += Rebuild;
         _framework.Update += OnUpdate;
@@ -91,6 +93,8 @@ public sealed class PracticeSession : IDisposable
     /// <summary>The timing the current engine schedules with.</summary>
     public ITimingSource Timing { get; private set; }
     public event Action<EngineEvent>? EngineEvent;
+    /// <summary>The player pressed the current step's action (index given), whether or not it was ready yet.</summary>
+    public event Action<int>? StepPressed;
 
     /// <summary>Timing as the game computes it for the current character, whatever the speed source setting.</summary>
     public ITimingSource GameTiming => _gameTiming;
@@ -107,6 +111,7 @@ public sealed class PracticeSession : IDisposable
         Engine = null;
         Sequence = PracticeSequence.Empty;
         _pending.Clear();
+        _attempts.Clear();
         // An active countdown is re-applied to the new engine on the next frame.
         _lastCountdown = null;
 
@@ -137,11 +142,14 @@ public sealed class PracticeSession : IDisposable
     public void Restart()
     {
         _pending.Clear();
+        _attempts.Clear();
         Engine?.Reset();
     }
 
     // Raised on the game's thread by the hook; handled in OnUpdate.
     private void OnActionUsed(StepType type, uint id) => _pending.Enqueue((type, id));
+
+    private void OnActionAttempted(StepType type, uint id) => _attempts.Enqueue((type, id));
 
     private void OnClassJobChanged(uint classJobId) => SetJob(classJobId);
 
@@ -166,6 +174,11 @@ public sealed class PracticeSession : IDisposable
 
             Engine?.Tick(dt);
             PollCountdown(dt);
+            while (_attempts.TryDequeue(out var pressed))
+            {
+                if (Engine is { IsFinished: false } engine && engine.IsStep(engine.CurrentIndex, pressed.Type, pressed.Id))
+                    StepPressed?.Invoke(engine.CurrentIndex);
+            }
             while (_pending.TryDequeue(out var used))
                 Engine?.OnActionUsed(used.Type, used.Id);
 
@@ -244,6 +257,7 @@ public sealed class PracticeSession : IDisposable
         _library.Changed -= Rebuild;
         _clientState.ClassJobChanged -= OnClassJobChanged;
         _listener.ActionUsed -= OnActionUsed;
+        _listener.ActionAttempted -= OnActionAttempted;
         if (Engine != null) Engine.Event -= OnEngineEvent;
     }
 }

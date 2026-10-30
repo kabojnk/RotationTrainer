@@ -18,7 +18,7 @@ public static class GlassWidgets
     /// <summary>
     /// Draws the translucent window background (no blur) behind the current window's contents: a diagonal
     /// gradient, a 1 px border, a top highlight and a soft shadow outside the edges. Call first in Draw.
-    /// <paramref name="opacity"/> multiplies every alpha.
+    /// <paramref name="opacity"/> is the fill's alpha (1 = opaque) and multiplies the other alphas.
     /// </summary>
     public static void DrawGlassBackground(float opacity)
     {
@@ -42,9 +42,9 @@ public static class GlassWidgets
         }
         dl.PopClipRect();
 
-        // Gradient rgba(40,46,64,.78) → rgba(18,20,30,.82) at about 160°; alpha held at the midpoint.
+        // Gradient rgb(40,46,64) → rgb(18,20,30) at about 160°.
         var start = dl.VtxBuffer.Size;
-        dl.AddRectFilled(min, max, U32(new Vector4(1, 1, 1, 0.80f * o)), rounding);
+        dl.AddRectFilled(min, max, U32(new Vector4(1, 1, 1, o)), rounding);
         var end = dl.VtxBuffer.Size;
         var height = max.Y - min.Y;
         ImGuiP.ShadeVertsLinearColorGradientKeepAlpha(dl, start, end, min, new Vector2(min.X + height * 0.36f, max.Y),

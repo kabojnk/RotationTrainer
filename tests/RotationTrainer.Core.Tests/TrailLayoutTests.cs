@@ -25,9 +25,9 @@ public class TrailLayoutTests
     }
 
     [Fact]
-    public void FocusUsesGap22AndScalesCurrent()
+    public void CompactRailUsesGap22AndScalesCurrent()
     {
-        var items = TrailLayout.Layout(TrailStyle.Focus, TrailSize.Big, new[] { G(0), G(1) }, 0, 110f);
+        var items = TrailLayout.Layout(TrailStyle.CompactRail, TrailSize.Big, new[] { G(0), G(1) }, 0, 110f);
         Assert.Equal(110f, items[0].CenterX);
         Assert.Equal(188f, items[1].CenterX);
         Assert.Equal(1.3f, items[0].Scale);
@@ -64,5 +64,44 @@ public class TrailLayoutTests
     public void EmptyReturnsEmpty()
     {
         Assert.Empty(TrailLayout.Layout(TrailStyle.Rail, TrailSize.Big, new TrailInput[0], 0, 0f));
+    }
+
+    [Fact]
+    public void FlowPutsAStepOnTheMarkerAtItsExpectedTime()
+    {
+        var items = TrailLayout.Flow(TrailStyle.Rail, TrailSize.Big, new[] { G(0, 0), G(1, 2.5), G(2, 5) }, 1, 2.5, 110f);
+        Assert.Equal(new[] { 1, 2 }, items.Select(i => i.Index).ToArray());
+        Assert.Equal(new[] { 110f, 198f }, items.Select(i => i.CenterX).ToArray());
+        Assert.True(items[0].IsCurrent);
+    }
+
+    [Fact]
+    public void FlowScrollsEvenlyBetweenSteps()
+    {
+        var items = TrailLayout.Flow(TrailStyle.Rail, TrailSize.Big, new[] { G(0, 0), G(1, 2.5), G(2, 5) }, 1, 1.25, 110f);
+        Assert.Equal(154f, items[0].CenterX);
+    }
+
+    [Fact]
+    public void FlowHoldsTheFirstStepOnTheMarkerBeforeItsTime()
+    {
+        var items = TrailLayout.Flow(TrailStyle.Rail, TrailSize.Big, new[] { G(0, -4.5), G(1, 0) }, 0, -10, 110f);
+        Assert.Equal(110f, items[0].CenterX);
+    }
+
+    [Fact]
+    public void FlowPassesTheMarkerWhileTheCurrentStepIsLate()
+    {
+        var items = TrailLayout.Flow(TrailStyle.Rail, TrailSize.Big, new[] { G(0, 0), G(1, 2.5) }, 0, 1.25, 110f);
+        Assert.Equal(66f, items[0].CenterX);
+        Assert.True(items[0].IsCurrent);
+    }
+
+    [Fact]
+    public void FlowScalesTheCurrentStepInCompactRail()
+    {
+        var items = TrailLayout.Flow(TrailStyle.CompactRail, TrailSize.Big, new[] { G(0, 0), G(1, 2.5), G(2, 5) }, 1, 0, 110f);
+        Assert.Equal(1.3f, items[0].Scale);
+        Assert.Equal(1f, items[1].Scale);
     }
 }

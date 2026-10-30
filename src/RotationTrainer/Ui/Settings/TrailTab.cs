@@ -17,7 +17,7 @@ internal sealed class TrailTab(Plugin plugin)
             SettingsWindow.RowLabel("Style");
             var style = config.Style;
             if (GlassWidgets.Segmented("style", ref style,
-                    (TrailStyle.Rail, "Rail"), (TrailStyle.Timeline, "Timeline"), (TrailStyle.Focus, "Focus")))
+                    (TrailStyle.Rail, "Rail"), (TrailStyle.CompactRail, "Compact Rail"), (TrailStyle.Timeline, "Timeline")))
             {
                 config.Style = style;
                 plugin.SaveConfig();

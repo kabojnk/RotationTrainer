@@ -73,11 +73,7 @@ public sealed class PracticeEngine
         var step = _sequence[CurrentIndex];
         if (step == null) return;
 
-        if (type == StepType.Item) id = ItemIds.Normalize(id);
-        var stepId = step.Ability.Type == StepType.Item ? ItemIds.Normalize(step.Ability.Id) : step.Ability.Id;
-        var matches = step.Ability.Type == type
-            && (type == StepType.Item ? stepId == id : _sameAction(id, stepId));
-        if (!matches)
+        if (!IsStep(CurrentIndex, type, id))
         {
             if (_isRelevant(type, id))
             {
@@ -106,6 +102,15 @@ public sealed class PracticeEngine
             IsFinished = true;
             Raise(EngineEventKind.Finished, index);
         }
+    }
+
+    /// <summary>Whether using this action or item would count as step <paramref name="index"/> (button variants included).</summary>
+    public bool IsStep(int index, StepType type, uint id)
+    {
+        var step = _sequence[index];
+        if (step == null || step.Ability.Type != type) return false;
+        if (type == StepType.Item) return ItemIds.Normalize(id) == ItemIds.Normalize(step.Ability.Id);
+        return _sameAction(id, step.Ability.Id);
     }
 
     public void OnCountdown(double secondsRemaining)
