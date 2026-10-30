@@ -37,12 +37,20 @@ public class BuilderValidationTests
 
     [Theory]
     [InlineData(0.0)]
-    [InlineData(-0.0)]
     [InlineData(1.5)]
     public void PrepullAtNotNegativeIsInvalid(double at)
     {
         var d = BuilderDocument.Edit(new Rotation("r", "PCT", 100, RotationKind.Opener, "O",
             new[] { A(1, "Rainbow Drip", at), Pull, Hammer }), Cat);
+        Assert.NotEmpty(d.Validate());
+    }
+
+    [Fact]
+    public void PrepullAtNegativeZeroIsInvalid()
+    {
+        // -0.0 is what a countdown of 0 used to store; it fails the importer's "at < 0" rule.
+        var d = BuilderDocument.Edit(new Rotation("r", "PCT", 100, RotationKind.Opener, "O",
+            new[] { A(1, "Rainbow Drip", -0.0), Pull, Hammer }), Cat);
         Assert.NotEmpty(d.Validate());
     }
 
