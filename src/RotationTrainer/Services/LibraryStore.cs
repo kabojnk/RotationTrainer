@@ -19,5 +19,8 @@ public sealed class LibraryStore
     /// <summary>True when the library file could not be read safely, so changes are not saved this session.</summary>
     public bool SaveBlocked => _file.SaveBlocked;
 
+    /// <summary>What the last load had to leave out; null after a clean load.</summary>
+    public LibraryLoadReport? LastLoad => _file.LastLoad;
+
     public void Save(RotationLibrary library) => _file.Save(library);
 }

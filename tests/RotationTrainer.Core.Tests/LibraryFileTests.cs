@@ -50,6 +50,47 @@ public sealed class LibraryFileTests : IDisposable
     }
 
     [Fact]
+    public void LoadWithErrorsReportsDroppedRotationsAndBackup()
+    {
+        File.WriteAllText(LibraryPath, $"[{Good},{Bad},{Bad.Replace("Broken", "Broken 2")}]");
+        var file = NewFile();
+
+        file.Load();
+
+        var report = file.LastLoad;
+        Assert.NotNull(report);
+        Assert.Equal(2, report.Dropped);
+        Assert.Equal(new[] { "Broken", "Broken 2" }, report.Errors.Select(e => e.Rotation));
+        Assert.Equal(Assert.Single(Backups()), report.BackupPath);
+    }
+
+    [Fact]
+    public void CleanLoadReportsNothing()
+    {
+        File.WriteAllText(LibraryPath, $"[{Bad}]");
+        var file = NewFile();
+        file.Load();
+        Assert.NotNull(file.LastLoad);
+
+        File.WriteAllText(LibraryPath, $"[{Good}]");
+        file.Load();
+        Assert.Null(file.LastLoad);
+    }
+
+    [Fact]
+    public void UnparsableFileReportsAFileError()
+    {
+        File.WriteAllText(LibraryPath, "{ not json");
+        var file = NewFile();
+        file.Load();
+        var report = file.LastLoad;
+        Assert.NotNull(report);
+        Assert.Equal(0, report.Dropped);
+        Assert.Equal(RotationJson.FileScope, Assert.Single(report.Errors).Rotation);
+        Assert.NotNull(report.BackupPath);
+    }
+
+    [Fact]
     public void LaterErrorLoadNeverOverwritesEarlierBackup()
     {
         var original = $"[{Good},{Bad}]";
