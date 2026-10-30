@@ -1,5 +1,8 @@
 namespace RotationTrainer.Core;
 
+/// <summary>What the last load had to leave out. <paramref name="Dropped"/> is 0 when the whole file failed.</summary>
+public sealed record LibraryLoadReport(int Dropped, IReadOnlyList<ImportError> Errors, string? BackupPath);
+
 /// <summary>
 /// Reads and writes the rotation library file. A load that drops rotations first copies the
 /// original to a new timestamped backup (never overwriting an older one). If the file cannot be
@@ -22,10 +25,14 @@ public sealed class LibraryFile
     /// <summary>True when the last load could not read or back up the file, so saves are skipped.</summary>
     public bool SaveBlocked => _saveBlocked;
 
+    /// <summary>Set when the last load left rotations out; null after a clean load.</summary>
+    public LibraryLoadReport? LastLoad { get; private set; }
+
     /// <summary>Reads the library (empty if there is no file yet) and saves it whenever it changes.</summary>
     public RotationLibrary Load()
     {
         _saveBlocked = false;
+        LastLoad = null;
         var rotations = new List<Rotation>();
         if (File.Exists(_path))
         {
@@ -45,9 +52,11 @@ public sealed class LibraryFile
 
             if (result.Errors.Count > 0)
             {
+                LastLoad = new LibraryLoadReport(result.Dropped, result.Errors, null);
                 try
                 {
                     var backup = Backup();
+                    LastLoad = LastLoad with { BackupPath = backup };
                     _warn($"{Path.GetFileName(_path)} had errors; the original was copied to {backup}.");
                 }
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)

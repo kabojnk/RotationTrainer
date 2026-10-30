@@ -4,18 +4,24 @@ namespace RotationTrainer.Core;
 
 public sealed record ImportError(string Rotation, int? Step, string Message);
 
-public sealed record ImportResult(IReadOnlyList<Rotation> Rotations, IReadOnlyList<ImportError> Errors);
+public sealed record ImportResult(IReadOnlyList<Rotation> Rotations, IReadOnlyList<ImportError> Errors)
+{
+    /// <summary>How many rotations in the input were left out because of errors.</summary>
+    public int Dropped { get; init; }
+}
 
 public static class RotationJson
 {
     public const string Format = "rotation-trainer/1";
 
-    private const string FileScope = "(file)";
+    /// <summary>The rotation name of errors about the whole input.</summary>
+    public const string FileScope = "(file)";
 
     public static ImportResult Import(string json, IAbilityCatalog catalog, Func<string> newId)
     {
         var rotations = new List<Rotation>();
         var errors = new List<ImportError>();
+        var dropped = 0;
         try
         {
             using var doc = JsonDocument.Parse(json);
@@ -61,15 +67,17 @@ public static class RotationJson
                 n++;
                 var rot = ParseRotation(item, n, catalog, newId, errors);
                 if (rot != null) rotations.Add(rot);
+                else dropped++;
             }
         }
         catch (JsonException ex)
         {
             rotations.Clear();
             errors.Clear();
+            dropped = 0;
             errors.Add(new ImportError(FileScope, null, $"Invalid JSON: {ex.Message}"));
         }
-        return new ImportResult(rotations, errors);
+        return new ImportResult(rotations, errors) { Dropped = dropped };
     }
 
     public static string Export(IEnumerable<Rotation> rotations)

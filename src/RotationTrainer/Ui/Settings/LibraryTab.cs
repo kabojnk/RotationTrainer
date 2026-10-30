@@ -61,6 +61,8 @@ internal sealed class LibraryTab(Plugin plugin)
             }
         }
 
+        if (plugin.Store.LastLoad is { } report) DrawLoadReport(report);
+
         DrawButtons(library);
         ImGui.Spacing();
         using (GlassWidgets.Card("table"))
@@ -72,6 +74,28 @@ internal sealed class LibraryTab(Plugin plugin)
         }
         DrawStatus();
         DrawConflicts(library);
+    }
+
+    private static void DrawLoadReport(LibraryLoadReport report)
+    {
+        using (GlassWidgets.Card("load-report"))
+        {
+            using (ImRaii.PushColor(ImGuiCol.Text, GlassTheme.Warning))
+            {
+                var what = report.Dropped > 0
+                    ? $"{report.Dropped} rotation(s) couldn't be loaded and were left out."
+                    : "Your rotation library file couldn't be loaded, so its rotations were left out.";
+                var backup = report.BackupPath != null
+                    ? $" A backup of the original file is at {report.BackupPath}."
+                    : " No backup of the original file could be made.";
+                ImGui.TextWrapped(what + backup);
+            }
+            using (ImRaii.PushColor(ImGuiCol.Text, GlassTheme.Dim))
+            {
+                foreach (var e in report.Errors)
+                    ImGui.TextWrapped($"{e.Rotation}{(e.Step is { } step ? $", step {step}" : "")}: {e.Message}");
+            }
+        }
     }
 
     private void DrawButtons(RotationLibrary library)
