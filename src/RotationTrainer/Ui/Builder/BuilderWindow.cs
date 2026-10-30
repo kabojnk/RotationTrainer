@@ -329,7 +329,18 @@ public sealed class BuilderWindow : Window
         if (right > ImGui.GetCursorPosX()) ImGui.SetCursorPosX(right);
         if (ImGui.Button("Clear")) Clear();
         ImGui.SameLine();
-        if (GlassWidgets.PrimaryButton(saveLabel)) Save();
+        // Anything the importer would reject is never saved: it would be dropped on the next load.
+        var problems = Doc.Validate();
+        using (ImRaii.Disabled(problems.Count > 0))
+        {
+            if (GlassWidgets.PrimaryButton(saveLabel)) Save();
+        }
+
+        if (problems.Count > 0)
+        {
+            using (ImRaii.PushColor(ImGuiCol.Text, GlassTheme.Warning))
+                ImGui.TextWrapped("Can't save yet: " + string.Join(" ", problems));
+        }
 
         if (_plugin.Store.SaveBlocked)
         {
@@ -371,6 +382,7 @@ public sealed class BuilderWindow : Window
     private void Save()
     {
         CommitAt();
+        if (Doc.Validate().Count > 0) return;
         var rotation = Doc.ToRotation(() => Guid.NewGuid().ToString());
         _plugin.Library.Save(rotation);
         if (Doc.Id == null)
@@ -740,13 +752,8 @@ public sealed class BuilderWindow : Window
         _atActive = false;
         var index = _atIndex;
         if (!Doc.IsPrepull(index)) return;
-        var text = _atBuffer.Trim();
-        double? value = null;
-        if (text.Length > 0)
-        {
-            if (!double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out var seconds)) return;
-            value = -Math.Abs(seconds);
-        }
+        // Empty and 0 both mean "no countdown time".
+        if (!BuilderDocument.TryParseCountdown(_atBuffer, out var value)) return;
         if (Doc.Steps[index].At == value) return;
         Doc.SetAt(index, value);
         Changed();
