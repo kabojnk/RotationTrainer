@@ -13,6 +13,16 @@ public sealed class SqpackFactAttribute : FactAttribute
     }
 }
 
+/// <summary>A [Theory] that is skipped unless FFXIV_SQPACK points at a game install's sqpack folder.</summary>
+public sealed class SqpackTheoryAttribute : TheoryAttribute
+{
+    public SqpackTheoryAttribute()
+    {
+        if (string.IsNullOrEmpty(GameDataFixture.SqpackPath))
+            Skip = "FFXIV_SQPACK is not set.";
+    }
+}
+
 /// <summary>Loads the game data once for every test (opening sqpack is slow).</summary>
 public sealed class GameDataFixture
 {

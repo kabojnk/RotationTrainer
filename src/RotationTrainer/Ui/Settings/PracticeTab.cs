@@ -37,6 +37,20 @@ internal sealed class PracticeTab(Plugin plugin, Action importFile)
                 config.UsePotions = potions;
                 plugin.SaveConfig();
             }
+            if (config.UsePotions)
+            {
+                SettingsWindow.RowLabel("Potion counts");
+                var match = config.PotionMatch;
+                if (GlassWidgets.Segmented("potionMatch", ref match,
+                        (PotionMatch.AnyPotion, "Any potion"), (PotionMatch.Exact, "Exact potion")))
+                {
+                    config.PotionMatch = match;
+                    plugin.SaveConfig();
+                }
+                if (ImGui.IsItemHovered())
+                    GlassWidgets.Tooltip("Any potion: any main-stat tincture or gemdraught counts, so you can practise with "
+                        + "cheap ones.\nExact potion: only the one the rotation names counts.");
+            }
 
             var countdown = config.StartWithCountdown;
             if (GlassWidgets.Toggle("countdown", "Start with in-game countdown",
@@ -157,7 +171,7 @@ internal sealed class PracticeTab(Plugin plugin, Action importFile)
             ImGui.SetCursorPosY(rowTop + (gcdSize.Y - size.Y) / 2);
             var wrap = plugin.Textures.GetFromGameIcon(new GameIconLookup(a.IconId)).GetWrapOrEmpty();
             ImGui.Image(wrap.Handle, size);
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip(a.Name);
+            if (ImGui.IsItemHovered()) GlassWidgets.Tooltip(a.Name);
             ImGui.SameLine(0, 4 * scale);
         }
         if (abilities.Count > PreviewSteps)

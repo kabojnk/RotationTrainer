@@ -8,6 +8,7 @@ using RotationTrainer.GameData;
 using RotationTrainer.Services;
 using RotationTrainer.Ui;
 using RotationTrainer.Ui.Builder;
+using RotationTrainer.Ui.Glass;
 using RotationTrainer.Ui.Settings;
 using RotationTrainer.Ui.Trail;
 
@@ -76,10 +77,12 @@ public sealed class Plugin : IDalamudPlugin
         try
         {
             Session = new PracticeSession(Config, Library, Catalog, data, clientState, playerState, condition,
-                framework, gamepad, keys, log, Actions, Countdown);
+                framework, gamepad, keys, log, Actions, Countdown,
+                () => pluginInterface.SavePluginConfig(Config));
             _debug = new DebugWindow(Session, Actions, Countdown);
             _settings = new SettingsWindow(this);
-            _trail = new TrailWindow(Config, Session, textures, clientState, _settings.Toggle);
+            _trail = new TrailWindow(Config, Session, textures, clientState, _settings.Toggle,
+                () => pluginInterface.SavePluginConfig(Config));
             _builder = new BuilderWindow(this, catalog.Jobs);
 
             _windows.AddWindow(_trail);
@@ -133,6 +136,7 @@ public sealed class Plugin : IDalamudPlugin
 
     private void DrawUi()
     {
+        GlassTheme.Use(Config.Theme);
         _windows.Draw();
         _settings.DrawDialogs();
     }

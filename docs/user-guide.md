@@ -55,13 +55,15 @@ The trail is a strip on screen showing what to press next.
 
 ### What you see
 
+- **The title bar** along the top of the strip: "Rotation Trainer" and your job on the left, and four buttons on the right (see [Title bar buttons](#title-bar-buttons)).
 - **Icons** for your upcoming abilities, in order. The one at the front is your current step.
 - **Two rows.** GCD abilities sit on the lower row and weaves (oGCDs, potions) sit higher and smaller.
-- **Keybind chips** above each icon, showing the key or button you have that ability on. A `?` means the plugin could not find the ability on any hotbar you can press right now.
+- **Keybind chips** above each icon, showing the key or button you have that ability on. On a controller, the chip shows the trigger to hold (LT or RT) and a small glyph: a D-pad with the direction to press lit, or the four face buttons with the one to press lit, like the game's own cross hotbar hints. For an ability that appears on another button when its turn comes (Pom Muse on Living Muse, Aero in Green on Fire in Red, Midare Setsugekka on Iaijutsu), the chip shows that button's key even before the button changes, for the families the plugin knows. Any other one shows its key as soon as your hotbar shows it, and the plugin remembers that button per job from then on. A `?` means the plugin could not find the ability on any hotbar you can press right now.
 - **Pre-pull steps.** Steps before the pull, like a hard-cast opener, show a gold countdown tag under the icon, such as `-4.5s`, meaning "cast this when the countdown reaches 4.5". The tile pulses when it is due.
 - **The Pull line.** A divider labelled "Pull" marks the moment the fight starts. Everything before it is pre-pull. In Rail and Compact Rail it stays on the track after the last pre-pull step and slides away.
-- **The caption** along the bottom: a small tag (`GCD`, `WEAVE` or `POTION`) and "Next:" followed by the ability name. For a pre-pull step before its time, it adds "cast in 2.3s". When you finish an opener with no loop, it says "Opener complete".
-- **The countdown number** at the right edge. During a `/countdown` it shows the seconds left. It then briefly shows "Start" when the countdown reaches zero.
+- **The caption** along the bottom: a small tag (`GCD`, `WEAVE` or `POTION`) and "Next:" followed by the ability name. For a pre-pull step before its time, it adds "cast in 2.3s". When you finish an opener with no loop, it says "Opener complete". With **Potion counts** set to **Any potion**, a potion step reads "Next: any potion".
+- **The Skip button** at the right end of the caption. It moves past the current step as if you had used it. Use it for an ability that isn't on your hotbar or keybound.
+- **The countdown number** at the right edge, left of Skip. During a `/countdown` it shows the seconds left. It then briefly shows "Start" when the countdown reaches zero.
 
 If the opener is followed by a loop, the trail carries on into the loop and repeats it for as long as you like.
 
@@ -98,9 +100,16 @@ If you use a different ability from your rotation's kit, the current step **flas
 - With **Lock position** on, the outline disappears and the trail ignores the mouse completely, so clicks pass through to the game.
 - The trail starts near the lower middle of the screen and remembers where you put it.
 
-### Settings button (gear)
+### Title bar buttons
 
-A small **gear button** in the top-right corner of the trail opens the settings window. It stays clickable even when the trail is locked, so you can always reach your settings without typing a command.
+The buttons at the top right of the trail work like a window's title bar buttons. They, and Skip, stay clickable even when the trail is locked.
+
+| Button | What it does |
+|---|---|
+| **Restart** (circular arrow) | Starts the run over from the first step, like **Restart opener** on the Practice tab. |
+| **Lock** (padlock) | Toggles **Lock position**. Unlocked, you can drag the trail; locked, clicks pass through to the game. |
+| **Settings** (gear) | Opens the settings window, like `/rtrain`. |
+| **Hide** (no sign, far right) | Hides the trail. Bring it back with `/rtrain trail` or **Show trail** on the Practice tab. Your progress is kept. |
 
 ### When the trail is hidden
 
@@ -121,6 +130,7 @@ Choose what to drill on your current job.
 | **Then loop** | A loop to continue into after the opener, or "None". |
 | (preview) | A row of icons showing the start of the chosen opener, with "+N more" if it is longer. Hover for names. |
 | **Use potions** | Adds potion weaves to openers that have them. Off by default because potions are consumed. |
+| **Potion counts** | Shown when Use potions is on. **Any potion** (the default) counts any main-stat tincture or gemdraught for a potion step, so you can practise with cheap ones instead of burning your best. **Exact potion** counts only the potion the rotation names. |
 | **Start with in-game countdown** | Typing `/countdown` lines up pre-pull steps (for example, a cast at 4.5). On by default. |
 | **Reset when leaving combat** | Starts your run over when combat ends. On by default. |
 | **Hide trail** / **Show trail** | Toggles the trail, same as `/rtrain trail`. |
@@ -153,7 +163,8 @@ The glass look for the trail and the plugin's windows. 100% opacity is fully opa
 
 | Option | What it does |
 |---|---|
-| **Accent** | Highlight colour: **Sky**, **Violet**, **Mint** or **Gold**. |
+| **Theme** | The glass itself: **Midnight** (dark navy), **Graphite** (dark grey) or **Sakura** (light cherry-blossom pink with dark text). Picking Sakura also sets the Sakura accent and raises both opacities to at least 90%, since light glass looks muddy with the game showing through. |
+| **Accent** | Highlight colour: **Sky**, **Violet**, **Mint**, **Gold** or **Sakura** (pastel pink). The trail's glass strip is tinted with it too. |
 | **Window opacity** | How see-through the settings and builder windows are (20% to 100%). |
 | **Trail opacity** | How see-through the trail's glass strip is (20% to 100%). |
 | **Trail backing** | **Glass strip** draws a backing behind the trail. **None** shows icons straight over the game. |
@@ -263,7 +274,7 @@ Each step is an `action` id, an `item` id (potions), or `{ "pull": true }`. A ne
 - It may be off-screen or tiny against your UI scale. Unlock it and drag it back.
 
 **The trail ignores my mouse.**
-That is **Lock position** being on. Turn it off on the Trail tab to move it. The gear button in the trail's corner still works either way.
+That is **Lock position** being on. Turn it off on the Trail tab to move it. The title bar buttons still work either way, and the padlock button unlocks it.
 
 **Nothing happens on the Practice tab.**
 Practice needs a combat job. The tab says "Log in to a combat job to pick rotations." when it cannot find one. The same goes for `/rtrain builder` and **New in builder**.
@@ -284,6 +295,12 @@ Make sure **Start with in-game countdown** is on in the Practice tab, and that t
 
 **The potion step is missing.**
 Turn on **Use potions** on the Practice tab.
+
+**My potion flashes as wrong.**
+**Potion counts** is set to **Exact potion** and you used a different one. Set it to **Any potion**, or use the potion the rotation names.
+
+**An ability isn't on my hotbar.**
+Click **Skip** at the right end of the caption to move past it.
 
 **My run reset by itself.**
 **Reset when leaving combat** restarts the run when combat ends. Turn it off if you would rather keep your place.

@@ -139,4 +139,49 @@ public class KeybindIndexTests
         index.Update(new[] { Obs(0, 0, 0, Fire, "1") });
         Assert.Equal("?", index.Label(StepType.Action, Blizzard, InputMode.Keyboard));
     }
+
+    [Fact]
+    public void HostButtonGivesTheHintForAReplacementNotShowingYet()
+    {
+        // Living Muse (Fire here) is on the bar; Pom Muse (Blizzard) only appears there later.
+        var index = With(Obs(0, 0, Fire, Fire, "Shift-1"));
+        Assert.Equal("?", index.Label(StepType.Action, Blizzard, InputMode.Keyboard));
+        Assert.Equal("Shift-1", index.Label(StepType.Action, Blizzard, InputMode.Keyboard, new[] { Fire }));
+    }
+
+    [Fact]
+    public void HostMatchesAnUpgradedSlotByWhatItShows()
+    {
+        var index = With(Obs(0, 3, Other, Fire, "4"));
+        Assert.Equal("4", index.Label(StepType.Action, Blizzard, InputMode.Keyboard, new[] { Fire }));
+    }
+
+    [Fact]
+    public void ExactSlotBeatsHostSlot()
+    {
+        var index = With(Obs(0, 0, Fire, Fire, "1"), Obs(2, 0, Blizzard, Blizzard, "B"));
+        Assert.Equal("B", index.Label(StepType.Action, Blizzard, InputMode.Keyboard, new[] { Fire }));
+    }
+
+    [Fact]
+    public void LearnedSlotsSurviveExportAndImport()
+    {
+        var index = With(Obs(0, 0, Fire, Blizzard, "1"), Obs(0, 1, Other, Other, "2"));
+        var learned = index.Export();
+        Assert.Single(learned); // a slot showing its own command teaches nothing new
+
+        var fresh = new KeybindIndex();
+        fresh.Import(learned);
+        fresh.Update(new[] { Obs(0, 0, Fire, Fire, "1") });
+        Assert.Equal("1", fresh.Label(StepType.Action, Blizzard, InputMode.Keyboard));
+    }
+
+    [Fact]
+    public void UpdateReportsWhenItLearnsSomethingNew()
+    {
+        var index = new KeybindIndex();
+        Assert.True(index.Update(new[] { Obs(0, 0, Fire, Blizzard, "1") }));
+        Assert.False(index.Update(new[] { Obs(0, 0, Fire, Blizzard, "1") }));
+        Assert.False(index.Update(new[] { Obs(0, 0, Fire, Fire, "1") }));
+    }
 }

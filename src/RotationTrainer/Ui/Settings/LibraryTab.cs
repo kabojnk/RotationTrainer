@@ -107,7 +107,7 @@ internal sealed class LibraryTab(Plugin plugin)
                 plugin.OpenBuilder(new BuilderDocument(job, RotationKind.Opener, "New opener", plugin.Catalog));
         }
         if (job == null && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled))
-            ImGui.SetTooltip("Log in to a combat job to build a rotation for it.");
+            GlassWidgets.Tooltip("Log in to a combat job to build a rotation for it.");
 
         ImGui.SameLine();
         if (ImGui.Button("Import JSON…")) StartFileImport();
@@ -130,7 +130,7 @@ internal sealed class LibraryTab(Plugin plugin)
                 Export(library.All.Where(r => _selected.Contains(r.Id)).ToList(), "rotations");
         }
         if (_selected.Count == 0 && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled))
-            ImGui.SetTooltip("Click rows to select them.");
+            GlassWidgets.Tooltip("Click rows to select them.");
 
         ImGui.SameLine();
         if (ImGui.Button("Restore built-ins"))
@@ -141,7 +141,7 @@ internal sealed class LibraryTab(Plugin plugin)
                 : "All built-in rotations are already in your library.", GlassTheme.Ink));
         }
         if (ImGui.IsItemHovered())
-            ImGui.SetTooltip("Adds back any of the openers that come with the plugin that you've deleted.\n"
+            GlassWidgets.Tooltip("Adds back any of the openers that come with the plugin that you've deleted.\n"
                 + "Ones you've edited are left as they are.");
     }
 

@@ -1,3 +1,5 @@
+using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Misc;
 using RotationTrainer.Core;
@@ -19,9 +21,13 @@ public sealed unsafe class HotbarScanner
     private const int CrossBars = 8;
     private const int CrossSlots = 16;
 
+    /// <summary>What the last scan saw of the cross hotbar, for the debug window.</summary>
+    public string CrossDiagnostics { get; private set; } = "-";
+
     public IReadOnlyList<HotbarObservation> Scan()
     {
         var result = new List<HotbarObservation>();
+        CrossDiagnostics = "hotbar module not loaded";
         var module = RaptureHotbarModule.Instance();
         if (module == null) return result;
 
@@ -31,6 +37,13 @@ public sealed unsafe class HotbarScanner
         var active = ActiveCrossBar();
         for (var bar = 0; bar < CrossBars; bar++)
             Read(ref bars[StandardBars + bar], bar, CrossSlots, true, bar == active, result);
+
+        var sample = active < 0 ? null : FirstFilled(ref bars[StandardBars + active]);
+        CrossDiagnostics = $"set {(active < 0 ? "none" : (active + 1).ToString())}, "
+            + $"{result.Count(o => o.IsCross && o.Reachable)} slots"
+            + (sample is { } i
+                ? $"; slot {i + 1} ({PadButton.ForSlot(i)}) hint [{Convert.ToHexString(HintBytes(ref bars[StandardBars + active].Slots[i]))}]"
+                : "");
         return result;
     }
 
@@ -72,15 +85,57 @@ public sealed unsafe class HotbarScanner
             var commandType = type == StepType.Item ? SlotType.Item : SlotType.Action;
             var command = slot.CommandType != commandType ? 0u
                 : type == StepType.Item ? ItemIds.Normalize(slot.CommandId) : slot.CommandId;
-            into.Add(new HotbarObservation(barIndex, i, isCross, type, command, apparent, Hint(slot.PopUpKeybindHintString),
-                reachable));
+            var hint = isCross ? (PadHint(ref slot) ?? PadButton.ForSlot(i))?.ToString() : Hint(ref slot);
+            into.Add(new HotbarObservation(barIndex, i, isCross, type, command, apparent, hint, reachable));
         }
     }
 
-    /// <summary>The pop-up hint reads like " [Ctrl-3]"; the label is just "Ctrl-3".</summary>
-    private static string? Hint(string raw)
+    private static int? FirstFilled(ref RaptureHotbarModule.Hotbar bar)
     {
-        var text = raw.Trim().TrimStart('[').TrimEnd(']').Trim();
+        for (var i = 0; i < CrossSlots; i++)
+            if (!bar.Slots[i].IsEmpty) return i;
+        return null;
+    }
+
+    private static byte[] HintBytes(ref RaptureHotbarModule.HotbarSlot slot)
+    {
+        var raw = slot.PopUpKeybindHint;
+        var end = raw.IndexOf((byte)0);
+        return (end < 0 ? raw : raw[..end]).ToArray();
+    }
+
+    /// <summary>The pop-up hint reads like " [Ctrl-3]" on a keyboard bar; the label is just "Ctrl-3".</summary>
+    private static string? Hint(ref RaptureHotbarModule.HotbarSlot slot)
+    {
+        var text = string.Concat(SeString.Parse(HintBytes(ref slot)).Payloads.OfType<TextPayload>().Select(t => t.Text))
+            .Trim().TrimStart('[').TrimEnd(']').Trim();
         return text.Length == 0 ? null : text;
+    }
+
+    /// <summary>
+    /// A cross hotbar slot's button from the game glyphs in its pop-up hint (a trigger and a D-pad or face button),
+    /// or null when the hint doesn't name one; the slot's position gives it then (<see cref="PadButton.ForSlot"/>).
+    /// </summary>
+    private static PadButton? PadHint(ref RaptureHotbarModule.HotbarSlot slot)
+    {
+        string? trigger = null;
+        (bool Face, PadDirection Direction)? button = null;
+        foreach (var icon in SeString.Parse(HintBytes(ref slot)).Payloads.OfType<IconPayload>().Select(p => p.Icon))
+        {
+            switch (icon)
+            {
+                case BitmapFontIcon.ControllerTriggerLeft: trigger = "LT"; break;
+                case BitmapFontIcon.ControllerTriggerRight: trigger = "RT"; break;
+                case BitmapFontIcon.ControllerDPadLeft: button = (false, PadDirection.Left); break;
+                case BitmapFontIcon.ControllerDPadUp: button = (false, PadDirection.Up); break;
+                case BitmapFontIcon.ControllerDPadRight: button = (false, PadDirection.Right); break;
+                case BitmapFontIcon.ControllerDPadDown: button = (false, PadDirection.Down); break;
+                case BitmapFontIcon.ControllerButton3: button = (true, PadDirection.Left); break;  // X / square
+                case BitmapFontIcon.ControllerButton0: button = (true, PadDirection.Up); break;    // Y / triangle
+                case BitmapFontIcon.ControllerButton1: button = (true, PadDirection.Right); break; // B / circle
+                case BitmapFontIcon.ControllerButton2: button = (true, PadDirection.Down); break;  // A / cross
+            }
+        }
+        return trigger != null && button is { } b ? new PadButton(trigger, b.Face, b.Direction) : null;
     }
 }

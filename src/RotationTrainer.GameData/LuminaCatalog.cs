@@ -53,6 +53,7 @@ public sealed class LuminaCatalog : IAbilityCatalog
         public readonly Dictionary<uint, Ability> ById = new();
         public readonly Dictionary<string, Ability> ByName = new();
         public readonly Dictionary<uint, uint> Canonical = new();
+        public readonly Dictionary<uint, uint[]> Hosts = new();
         public IReadOnlyList<Ability> Palette = Array.Empty<Ability>();
     }
 
@@ -91,7 +92,8 @@ public sealed class LuminaCatalog : IAbilityCatalog
                 .OrderByDescending(a => a.IsPlayerAction)
                 .ThenBy(a => a.RowId);
 
-            foreach (var row in inKit)
+            var rows = inKit.ToList();
+            foreach (var row in rows)
             {
                 if (!shared.TryGetValue(row.RowId, out var ability))
                     shared[row.RowId] = ability = ToAbility(row);
@@ -107,6 +109,8 @@ public sealed class LuminaCatalog : IAbilityCatalog
                 if (kit.ById.ContainsKey(variant) && kit.Canonical.TryGetValue(canonical, out var root))
                     kit.Canonical[variant] = root;
             }
+
+            FindHosts(kit, rows, excel);
 
             var primary = PrimaryStatName(excel, job);
             kit.Palette = kit.ByName.Values
@@ -144,6 +148,51 @@ public sealed class LuminaCatalog : IAbilityCatalog
 
     public uint CanonicalId(string job, uint id) =>
         _kits.TryGetValue(job, out var kit) && kit.Canonical.TryGetValue(id, out var canonical) ? canonical : id;
+
+    public IReadOnlyList<uint> ButtonHosts(string job, uint id) =>
+        _kits.TryGetValue(job, out var kit) && kit.Hosts.TryGetValue(id, out var hosts) ? hosts : Array.Empty<uint>();
+
+    /// <summary>
+    /// The buttons each replacement action appears on (see <see cref="IAbilityCatalog.ButtonHosts"/>): the curated
+    /// <see cref="ButtonHostTable"/> first, then for actions that can't be put on a hotbar the one player action sharing
+    /// its cooldown (the muses' charges), then the first player action back along its combo chain (Hammer Brush).
+    /// </summary>
+    private static void FindHosts(Kit kit, IReadOnlyList<LuminaAction> rows, ExcelModule excel)
+    {
+        var players = rows.Where(r => r.IsPlayerAction).ToList();
+        var sheet = excel.GetSheet<LuminaAction>();
+        foreach (var row in rows)
+        {
+            if (ButtonHostTable.Hosts.TryGetValue(row.RowId, out var listed))
+            {
+                var inKit = listed.Where(kit.ById.ContainsKey).ToArray();
+                if (inKit.Length > 0) kit.Hosts[row.RowId] = inKit;
+                continue;
+            }
+            if (row.IsPlayerAction) continue;
+
+            if (row.CooldownGroup is not (0 or GcdCooldownGroup))
+            {
+                var sharing = players.Where(p => p.CooldownGroup == row.CooldownGroup
+                    || (row.AdditionalCooldownGroup != 0 && p.AdditionalCooldownGroup == row.AdditionalCooldownGroup)).ToList();
+                if (sharing.Count == 1)
+                {
+                    kit.Hosts[row.RowId] = [sharing[0].RowId];
+                    continue;
+                }
+            }
+
+            var step = row;
+            for (var hops = 0; hops < 6 && step.ActionCombo.RowId != 0; hops++)
+            {
+                if (sheet.GetRowOrDefault(step.ActionCombo.RowId) is not { } previous) break;
+                step = previous;
+                if (!step.IsPlayerAction) continue;
+                if (kit.ById.ContainsKey(step.RowId)) kit.Hosts[row.RowId] = [step.RowId];
+                break;
+            }
+        }
+    }
 
     private static Ability ToAbility(LuminaAction row)
     {
