@@ -22,6 +22,11 @@ public interface IAbilityCatalog
     /// map to the id of the action they stand for. Unknown ids map to themselves.
     /// </summary>
     uint CanonicalId(string job, uint id) => id;
+    /// <summary>
+    /// The action ids of the hotbar button(s) this action appears on when it isn't a button of its own (Living Muse
+    /// for Pom Muse, Fire in Red for Aero in Green). Empty when it has its own button or none is known.
+    /// </summary>
+    IReadOnlyList<uint> ButtonHosts(string job, uint id) => Array.Empty<uint>();
 }
 
 public static class ItemIds

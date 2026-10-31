@@ -211,7 +211,7 @@ public sealed class BuilderWindow : Window
         var y = ImGui.GetCursorScreenPos().Y;
         var min = ImGui.GetWindowPos();
         ImGui.GetWindowDrawList().AddLine(new Vector2(min.X, y), new Vector2(min.X + ImGui.GetWindowSize().X, y),
-            U32(GlassTheme.White(0.10f)), Scale);
+            U32(GlassTheme.Fg(0.10f)), Scale);
         ImGui.Dummy(new Vector2(0, 4 * Scale));
     }
 
@@ -256,7 +256,7 @@ public sealed class BuilderWindow : Window
                 }
                 else if (hovered)
                 {
-                    ImGui.SetTooltip(a.Name);
+                    GlassWidgets.Tooltip(a.Name);
                 }
                 if (clicked) InsertAfterSelection(new Step(a.Type, a.Id, a.Name));
 
@@ -264,7 +264,7 @@ public sealed class BuilderWindow : Window
                 var min = pos + new Vector2((tile - size) / 2);
                 DrawIcon(dl, a, min, size, (a.IsGcd ? 9 : 12) * Scale, 1f);
                 if (hovered)
-                    dl.AddRect(min, min + new Vector2(size), U32(GlassTheme.White(0.6f)), (a.IsGcd ? 9 : 12) * Scale,
+                    dl.AddRect(min, min + new Vector2(size), U32(GlassTheme.Fg(0.6f)), (a.IsGcd ? 9 : 12) * Scale,
                         ImDrawFlags.None, Scale);
             }
             var rows = (abilities.Count + columns - 1) / columns;
@@ -425,7 +425,7 @@ public sealed class BuilderWindow : Window
         var outerDl = ImGui.GetWindowDrawList();
         outerDl.AddRectFilled(outerPos, outerPos + outerSize, U32(new Vector4(0, 0, 0, 0.22f)),
             GlassTheme.CardRounding * Scale);
-        outerDl.AddRect(outerPos, outerPos + outerSize, U32(GlassTheme.White(0.10f)), GlassTheme.CardRounding * Scale,
+        outerDl.AddRect(outerPos, outerPos + outerSize, U32(GlassTheme.Fg(0.10f)), GlassTheme.CardRounding * Scale,
             ImDrawFlags.None, Scale);
 
         using (ImRaii.PushStyle(ImGuiStyleVar.WindowPadding, Vector2.Zero))
@@ -438,7 +438,7 @@ public sealed class BuilderWindow : Window
             var lineHalf = 3 * Scale;
             dl.AddRectFilled(new Vector2(ImGui.GetWindowPos().X, origin.Y + LineCenter * Scale - lineHalf),
                 new Vector2(Math.Max(visibleRight, origin.X + contentWidth), origin.Y + LineCenter * Scale + lineHalf),
-                U32(GlassTheme.White(0.14f)), lineHalf);
+                U32(GlassTheme.Fg(0.14f)), lineHalf);
 
             if (steps.Count == 0)
             {
@@ -477,7 +477,7 @@ public sealed class BuilderWindow : Window
                 }
                 else if (hovered)
                 {
-                    ImGui.SetTooltip(step.Name);
+                    GlassWidgets.Tooltip(step.Name);
                 }
 
                 var rounding = (isGcd ? 10 : 12) * Scale;
@@ -535,16 +535,16 @@ public sealed class BuilderWindow : Window
         }
         else if (hovered)
         {
-            ImGui.SetTooltip("Drag to move the pull. Steps before it are pre-pull.");
+            GlassWidgets.Tooltip("Drag to move the pull. Steps before it are pre-pull.");
         }
 
-        var color = U32(GlassTheme.White(dragging ? 0.25f : hovered ? 1f : 0.85f));
+        var color = U32(GlassTheme.Fg(dragging ? 0.25f : hovered ? 1f : 0.85f));
         var textSize = ImGui.CalcTextSize("Pull");
         var top = 12 * Scale;
         dl.AddText(new Vector2(min.X + (slot.Width - textSize.X) / 2, min.Y + top), color, "Pull");
         var barX = min.X + slot.Width / 2;
         dl.AddLine(new Vector2(barX, min.Y + top + textSize.Y + 2 * Scale),
-            new Vector2(barX, min.Y + (TimelineHeight - 12) * Scale), U32(GlassTheme.White(dragging ? 0.2f : 0.55f)),
+            new Vector2(barX, min.Y + (TimelineHeight - 12) * Scale), U32(GlassTheme.Fg(dragging ? 0.2f : 0.55f)),
             2 * Scale);
     }
 
@@ -658,7 +658,7 @@ public sealed class BuilderWindow : Window
         var leftWidth = width * 1.1f / 2.1f;
         var height = ImGui.GetContentRegionAvail().Y;
 
-        using (ImRaii.PushColor(ImGuiCol.ChildBg, GlassTheme.White(0.055f)).Push(ImGuiCol.Border, GlassTheme.White(0.10f)))
+        using (ImRaii.PushColor(ImGuiCol.ChildBg, GlassTheme.Fg(0.055f)).Push(ImGuiCol.Border, GlassTheme.Fg(0.10f)))
         using (ImRaii.PushStyle(ImGuiStyleVar.ChildBorderSize, Scale)
                    .Push(ImGuiStyleVar.WindowPadding, new Vector2(14, 12) * Scale))
         {
@@ -814,7 +814,7 @@ public sealed class BuilderWindow : Window
         var dl = ImGui.GetWindowDrawList();
         var rounding = 10 * Scale;
         if (over) dl.AddRectFilled(pos, pos + size, U32(GlassTheme.WithAlpha(GlassTheme.Danger, 0.08f)), rounding);
-        dl.AddRect(pos, pos + size, U32(over ? GlassTheme.Danger : GlassTheme.White(0.25f)), rounding, ImDrawFlags.None,
+        dl.AddRect(pos, pos + size, U32(over ? GlassTheme.Danger : GlassTheme.Fg(0.25f)), rounding, ImDrawFlags.None,
             Scale);
         const string text = "Drop a step here to remove it";
         var textSize = ImGui.CalcTextSize(text);
@@ -836,13 +836,13 @@ public sealed class BuilderWindow : Window
         else
         {
             // Not in this job's kit: a plain tile with the name's initials.
-            dl.AddRectFilled(min, max, U32(GlassTheme.White(0.12f * alpha)), rounding);
+            dl.AddRectFilled(min, max, U32(GlassTheme.Fg(0.12f * alpha)), rounding);
             var name = fallbackName ?? "?";
             var initials = string.Concat(name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(w => w[0]));
             var textSize = ImGui.CalcTextSize(initials);
-            dl.AddText(min + (new Vector2(size) - textSize) / 2, U32(GlassTheme.White(alpha)), initials);
+            dl.AddText(min + (new Vector2(size) - textSize) / 2, U32(GlassTheme.Fg(alpha)), initials);
         }
-        dl.AddRect(min, max, U32(GlassTheme.White(0.35f * alpha)), rounding, ImDrawFlags.None, Scale);
+        dl.AddRect(min, max, U32(GlassTheme.Fg(0.35f * alpha)), rounding, ImDrawFlags.None, Scale);
     }
 
     private void DrawDragPreview(Ability? ability, string name)

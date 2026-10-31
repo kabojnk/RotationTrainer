@@ -29,11 +29,11 @@ public class PracticeEngineTests
 
     private static (PracticeEngine e, List<EngineEvent> ev) Make(AdvanceMode mode = AdvanceMode.Manual,
         PracticeSequence? seq = null, Func<StepType, uint, bool>? relevant = null,
-        Func<uint, uint, bool>? sameAction = null, double latency = 0)
+        Func<uint, uint, bool>? sameAction = null, double latency = 0, Func<uint, uint, bool>? sameItem = null)
     {
         var e = new PracticeEngine(seq ?? Opener(),
             new Scheduler(new StatTimingSource(new SpeedProfile(420, 420)), 0.65), mode,
-            relevant ?? ((t, id) => id != Sprint), sameAction, latency);
+            relevant ?? ((t, id) => id != Sprint), sameAction, latency, sameItem);
         var ev = new List<EngineEvent>();
         e.Event += ev.Add;
         return (e, ev);
@@ -362,5 +362,65 @@ public class PracticeEngineTests
         Assert.Empty(e.RunLog);
         Use(e, RD);
         Assert.Equal(0, e.RunLog[0].WrongPresses);
+    }
+
+    [Fact]
+    public void DifferentPotionIsWrongByDefault()
+    {
+        var (e, ev) = Make();
+        Use(e, RD);
+        e.OnActionUsed(StepType.Item, 44165);
+        Assert.Equal(new EngineEvent(EngineEventKind.WrongPress, 1), ev[^1]);
+        Assert.Equal(1, e.CurrentIndex);
+    }
+
+    [Fact]
+    public void SameItemDecidesWhichPotionCounts()
+    {
+        var (e, ev) = Make(sameItem: (used, step) => used is 44165 or 49235);
+        Use(e, RD);
+        Assert.True(e.IsStep(1, StepType.Item, 44165));
+        e.OnActionUsed(StepType.Item, 44165);
+        Assert.Equal(new EngineEvent(EngineEventKind.Popped, 1), ev[^1]);
+        Assert.Equal(2, e.CurrentIndex);
+    }
+
+    [Fact]
+    public void SkipPopsTheCurrentStepWithoutAPress()
+    {
+        var (e, ev) = Make();
+        e.Skip();
+        Assert.Equal(new EngineEvent(EngineEventKind.Popped, 0), ev[^1]);
+        Assert.Equal(1, e.CurrentIndex);
+        Assert.True(e.RunLog[0].Skipped);
+        Assert.NotNull(e.Clock);
+        Use(e, Swiftcast); // wrong press on the potion step
+        e.OnActionUsed(StepType.Item, 49235);
+        Assert.False(e.RunLog[1].Skipped);
+        Assert.Equal(1, e.RunLog[1].WrongPresses);
+    }
+
+    [Fact]
+    public void SkipResumesAPausedAutoRun()
+    {
+        var (e, ev) = Make(AdvanceMode.Auto);
+        e.OnCountdown(5);
+        e.Tick(5);
+        Assert.True(e.IsPaused);
+        e.Skip();
+        Assert.False(e.IsPaused);
+        Assert.Equal(new EngineEvent(EngineEventKind.Resumed, 0), ev[^1]);
+    }
+
+    [Fact]
+    public void SkippingTheLastStepFinishes()
+    {
+        var (e, ev) = Make(seq: InstantOpener());
+        e.Skip();
+        e.Skip();
+        Assert.True(e.IsFinished);
+        Assert.Equal(EngineEventKind.Finished, ev[^1].Kind);
+        e.Skip(); // nothing left: no-op
+        Assert.Equal(2, e.RunLog.Count);
     }
 }
