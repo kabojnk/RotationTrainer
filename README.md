@@ -1,3 +1,5 @@
+<p align="center"><img src="src/RotationTrainer/images/icon.png" alt="Rotation Trainer logo" width="160"></p>
+
 # Rotation Trainer
 
 A Dalamud plugin for Final Fantasy XIV that drills openers and rotations into muscle memory. A trail of upcoming
@@ -12,7 +14,8 @@ until the opener is automatic.
 3. Install **Rotation Trainer** from `/xlplugins`, then open it with `/rtrain`.
 
 Import a rotation (see `examples/`) from the Rotation library tab, pick it on the Practice tab, and start a
-`/countdown` at a dummy.
+`/countdown` at a dummy. The [user guide](docs/user-guide.md) covers installing, the trail, every setting, the
+rotation builder and troubleshooting.
 
 ## Build
 

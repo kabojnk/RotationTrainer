@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Globalization;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface;
 using Dalamud.Interface.Textures;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
@@ -26,6 +27,11 @@ public sealed class TrailWindow : Window, IDisposable
         | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoFocusOnAppearing | ImGuiWindowFlags.NoBringToFrontOnFocus
         | ImGuiWindowFlags.NoNav;
 
+    /// <summary>The settings gear's own window: just the button, always taking the mouse.</summary>
+    private const ImGuiWindowFlags GearFlags = ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoBackground
+        | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoSavedSettings | ImGuiWindowFlags.NoFocusOnAppearing
+        | ImGuiWindowFlags.NoNav | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.AlwaysAutoResize;
+
     private const float MarkerX = 110f;
     private const float TrackTop = 12f;
     private const float RowTop = 34f;
@@ -36,6 +42,7 @@ public sealed class TrailWindow : Window, IDisposable
     private const float ChipHeight = 16f;
     private const float ChipGap = 3f;
     private const float CompactChipLift = 10f;
+    private const float GearInset = 12f;
     private const int CompactMaxAhead = 5;
     /// <summary>How many popped steps back Auto looks for the step the clock is on.</summary>
     private const int FlowLookBack = 16;
@@ -65,6 +72,7 @@ public sealed class TrailWindow : Window, IDisposable
     private readonly PracticeSession _session;
     private readonly ITextureProvider _textures;
     private readonly IClientState _clientState;
+    private readonly Action _openSettings;
     // Engine events arrive on the framework update; they are applied on the next draw.
     private readonly ConcurrentQueue<EngineEvent> _events = new();
     private readonly ConcurrentQueue<int> _presses = new();
@@ -93,14 +101,17 @@ public sealed class TrailWindow : Window, IDisposable
     private double _reference;
     private float _offset;
     private IDisposable? _windowStyle;
+    private Vector2 _gearAnchor;
 
-    public TrailWindow(Configuration config, PracticeSession session, ITextureProvider textures, IClientState clientState)
+    public TrailWindow(Configuration config, PracticeSession session, ITextureProvider textures, IClientState clientState,
+        Action openSettings)
         : base("Rotation Trainer Trail###RotationTrainerTrail", BaseFlags)
     {
         _config = config;
         _session = session;
         _textures = textures;
         _clientState = clientState;
+        _openSettings = openSettings;
         IsOpen = true;
         RespectCloseHotkey = false;
         DisableWindowSounds = true;
@@ -169,6 +180,43 @@ public sealed class TrailWindow : Window, IDisposable
     {
         _windowStyle?.Dispose();
         _windowStyle = null;
+        DrawGear();
+    }
+
+    /// <summary>
+    /// The settings gear: a chip on the strip's top edge near the right corner, clear of the keybind chips below. It is
+    /// a separate little window drawn over the trail, so it stays clickable when the trail is locked and the trail
+    /// itself lets the mouse through to the game.
+    /// </summary>
+    private void DrawGear()
+    {
+        var s = Scale;
+        var icon = FontAwesomeIcon.Cog.ToIconString();
+        var pad = new Vector2(5, 4) * s;
+        Vector2 size;
+        using (ImRaii.PushFont(UiBuilder.IconFont))
+            size = ImGui.CalcTextSize(icon) + pad * 2;
+        ImGui.SetNextWindowPos(_gearAnchor + new Vector2(-size.X - GearInset * s, -size.Y / 2));
+
+        using var style = ImRaii.PushStyle(ImGuiStyleVar.WindowPadding, Vector2.Zero)
+            .Push(ImGuiStyleVar.WindowBorderSize, 0f)
+            .Push(ImGuiStyleVar.FramePadding, pad)
+            .Push(ImGuiStyleVar.FrameRounding, 6 * s)
+            .Push(ImGuiStyleVar.FrameBorderSize, s);
+        using var colors = ImRaii.PushColor(ImGuiCol.Button, new Vector4(10 / 255f, 12 / 255f, 20 / 255f, 0.75f))
+            .Push(ImGuiCol.ButtonHovered, new Vector4(40 / 255f, 46 / 255f, 64 / 255f, 0.9f))
+            .Push(ImGuiCol.ButtonActive, GlassTheme.WithAlpha(Accent, 0.6f))
+            .Push(ImGuiCol.Border, GlassTheme.White(0.22f))
+            .Push(ImGuiCol.Text, GlassTheme.White(0.8f));
+        if (ImGui.Begin("##RotationTrainerTrailGear", GearFlags))
+        {
+            bool clicked;
+            using (ImRaii.PushFont(UiBuilder.IconFont))
+                clicked = ImGui.Button(icon);
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Settings (/rtrain)");
+            if (clicked) _openSettings();
+        }
+        ImGui.End();
     }
 
     /// <summary>Builds this frame's items and advances the slide, pop and flash state.</summary>
@@ -323,6 +371,7 @@ public sealed class TrailWindow : Window, IDisposable
         var origin = ImGui.GetWindowPos();
         var s = Scale;
         var width = _width;
+        _gearAnchor = origin + new Vector2(width - StripInset, TrackTop) * s;
 
         if (!_config.LockTrail)
         {
