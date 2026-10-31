@@ -184,4 +184,38 @@ public class KeybindIndexTests
         Assert.False(index.Update(new[] { Obs(0, 0, Fire, Blizzard, "1") }));
         Assert.False(index.Update(new[] { Obs(0, 0, Fire, Fire, "1") }));
     }
+
+    [Fact]
+    public void OtherCrossSetsAreSearchedWhenTheActiveSetLacksIt()
+    {
+        var index = With(
+            Obs(0, 0, Fire, Fire, "LT D-Left", cross: true),                       // set 1, active
+            Obs(2, 5, Blizzard, Blizzard, "LT A-Up", cross: true, reachable: false), // set 3
+            Obs(4, 5, Blizzard, Blizzard, "RT A-Up", cross: true, reachable: false)); // set 5
+        Assert.Equal("LT D-Left", index.Label(StepType.Action, Fire, InputMode.Controller));
+        Assert.Equal("S3 LT A-Up", index.Label(StepType.Action, Blizzard, InputMode.Controller));
+    }
+
+    [Fact]
+    public void TheActiveSetBeatsAnotherSet()
+    {
+        var index = With(
+            Obs(1, 0, Fire, Fire, "RT D-Up", cross: true, reachable: false),
+            Obs(3, 9, Fire, Fire, "RT D-Up", cross: true));
+        Assert.Equal("RT D-Up", index.Label(StepType.Action, Fire, InputMode.Controller));
+    }
+
+    [Fact]
+    public void OtherSetsCountForAReplacementsHostButton()
+    {
+        var index = With(Obs(1, 0, Fire, Fire, "LT D-Left", cross: true, reachable: false));
+        Assert.Equal("S2 LT D-Left", index.Label(StepType.Action, Blizzard, InputMode.Controller, new[] { Fire }));
+    }
+
+    [Fact]
+    public void OtherSetsNeverLabelKeyboardMode()
+    {
+        var index = With(Obs(1, 0, Fire, Fire, "LT D-Left", cross: true, reachable: false));
+        Assert.Equal("?", index.Label(StepType.Action, Fire, InputMode.Keyboard));
+    }
 }

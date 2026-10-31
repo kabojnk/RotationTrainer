@@ -74,14 +74,34 @@ public sealed class KeybindIndex
     /// showing it; a slot seen showing it before; a slot of one of its <paramref name="hosts"/> (the buttons it
     /// replaces, e.g. Living Muse for Pom Muse), by command or by what the slot shows; a slot whose command is it.
     /// Within a rule a slot with a hint beats one without; an empty hint never falls through to a later rule.
+    /// On a controller, when the showing cross hotbar set has none, the other sets are searched the same way and the
+    /// label names the set to switch to (e.g. "S3 LT A-Up"); a hint that isn't a <see cref="PadButton"/> is never used
+    /// from another set, since it would name a button that fires something else.
     /// </summary>
     public string Label(StepType type, uint id, InputMode mode, IReadOnlyCollection<uint>? hosts = null)
     {
         id = Id(type, id);
         if (id == 0) return Unknown;
         var cross = mode == InputMode.Controller;
-        var slots = _snapshot.Where(o => o.Reachable && o.IsCross == cross && o.Type == type).ToList();
+        var label = Find(type, id, hosts, _snapshot.Where(o => o.Reachable && o.IsCross == cross && o.Type == type).ToList());
+        if (label != Unknown || !cross) return label;
 
+        var other = Pick(type, id, hosts, _snapshot.Where(o => !o.Reachable && o.IsCross && o.Type == type).ToList());
+        return other != null && PadButton.TryParse(other.Hint, out var button) && button.Set == null
+            ? (button with { Set = other.Bar + 1 }).ToString()
+            : Unknown;
+    }
+
+    private string Find(StepType type, uint id, IReadOnlyCollection<uint>? hosts, List<HotbarObservation> slots)
+    {
+        var hit = Pick(type, id, hosts, slots);
+        return hit == null || string.IsNullOrWhiteSpace(hit.Hint) ? Unknown : hit.Hint;
+    }
+
+    /// <summary>The slot the rules pick from <paramref name="slots"/>, or null.</summary>
+    private HotbarObservation? Pick(StepType type, uint id, IReadOnlyCollection<uint>? hosts,
+        List<HotbarObservation> slots)
+    {
         var hit = Best(slots.Where(o => Id(type, o.ApparentActionId) == id));
 
         if (hit == null && _learned.TryGetValue(new AbilityKey(type, id), out var list))
@@ -92,8 +112,7 @@ public sealed class KeybindIndex
             hit = Best(slots.Where(o => hosts.Contains(o.CommandId) || hosts.Contains(o.ApparentActionId)));
 
         hit ??= Best(slots.Where(o => o.CommandId != 0 && Id(type, o.CommandId) == id));
-
-        return hit == null || string.IsNullOrWhiteSpace(hit.Hint) ? Unknown : hit.Hint;
+        return hit;
     }
 
     public void Clear()

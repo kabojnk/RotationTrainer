@@ -40,4 +40,20 @@ public class PadButtonTests
     [InlineData("LT D-Sideways")]
     [InlineData("LT D-7")]
     public void RejectsOtherLabels(string? label) => Assert.False(PadButton.TryParse(label, out _));
+
+    [Fact]
+    public void ASetFromAnotherCrossHotbarIsWrittenFirst()
+    {
+        var button = PadButton.ForSlot(5)!.Value with { Set = 3 };
+        Assert.Equal("S3 LT A-Up", button.ToString());
+        Assert.True(PadButton.TryParse("S3 LT A-Up", out var parsed));
+        Assert.Equal(button, parsed);
+    }
+
+    [Theory]
+    [InlineData("S0 LT A-Up")]
+    [InlineData("S9 LT A-Up")]
+    [InlineData("SX LT A-Up")]
+    [InlineData("S3 LT")]
+    public void RejectsBadSets(string label) => Assert.False(PadButton.TryParse(label, out _));
 }
