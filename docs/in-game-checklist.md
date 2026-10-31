@@ -90,6 +90,12 @@ For each of Rail, Compact Rail and Timeline, in both Big and Small, compare agai
 5. **Auto, Timeline:** popped steps also fade off to the left instead of growing.
 6. **Press feedback (both advance modes):** pressing the current step's button while it is still on cooldown or the GCD is rolling makes its tile dip and flash with an accent ring, even though nothing pops. Pressing it from a macro does the same. A queued action firing on its own does not flash a second time. Pressing a different ability does not show the press flash.
 
+## Gear button and logo
+1. **Gear:** a small dark gear chip sits on the top edge of the trail's strip, near its right corner, in every style and size, and also on the empty "Pick an opener" trail. Hovering it shows "Settings (/rtrain)" and lightens it; clicking it opens the settings window, and clicking again closes it.
+2. **Gear with the trail locked:** with Lock position on, the gear still takes the click, while the rest of the trail lets clicks through to the game. With the trail unlocked, dragging the trail moves the gear with it.
+3. **Gear placement:** the gear stays above the keybind chips, including a weave's chip at the right end of the trail, in Big and Small and at your UI scale. If it overlaps anything, note the style and size.
+4. **Logo:** the settings window title shows the logo before "Rotation Trainer". The dev plugin's entry in `/xlplugins` shows the logo as its icon.
+
 ## Known limitations to watch for
 - After switching cross hotbar sets, controller labels can name the previous set's button for up to 0.5 s.
 - GCDs whose GCD lock comes only from a secondary cooldown group are scheduled at a flat 2.5 s (Viper's Vicewinder may really be 3.0 s).

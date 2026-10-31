@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- The plugin icon. Dalamud shows images/icon.png next to the DLL for dev plugins and repo.json links it as
+         IconUrl; the embedded copy is the settings window's logo, since the release zip has no images folder. -->
+    <Content Include="images\icon.png" CopyToOutputDirectory="PreserveNewest" />
+    <EmbeddedResource Include="images\icon.png" LogicalName="RotationTrainer.icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RotationTrainer.Core\RotationTrainer.Core.csproj" />
     <ProjectReference Include="..\RotationTrainer.GameData\RotationTrainer.GameData.csproj" />
   </ItemGroup>
