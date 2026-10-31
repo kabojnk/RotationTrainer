@@ -11,7 +11,7 @@ public enum Theme { Midnight, Graphite, Sakura }
 /// <summary>Which potion counts for a potion step.</summary>
 public enum PotionMatch
 {
-    /// <summary>Any main-stat tincture or gemdraught, so practice needn't burn the newest grade.</summary>
+    /// <summary>Any Medicine item (potions, ethers, elixirs, tinctures…), so practice needn't burn the newest grade.</summary>
     AnyPotion,
     /// <summary>Only the potion the rotation names (HQ or NQ).</summary>
     Exact,
@@ -26,6 +26,10 @@ public sealed class Configuration : IPluginConfiguration
     public PotionMatch PotionMatch { get; set; } = PotionMatch.AnyPotion;
     public bool StartWithCountdown { get; set; } = true;
     public bool ResetOnLeavingCombat { get; set; } = true;
+    /// <summary>Count a neighbouring step used before the current one (see <see cref="PracticeEngine"/>).</summary>
+    public bool AllowNeighbourOrder { get; set; } = true;
+    /// <summary>Reset striking dummies' enmity when the run restarts or a countdown starts or is cancelled.</summary>
+    public bool ResetDummyEnmity { get; set; } = true;
     public bool ShowTrail { get; set; } = true;
     public TrailStyle Style { get; set; } = TrailStyle.Rail;
     public TrailSize Size { get; set; } = TrailSize.Big;

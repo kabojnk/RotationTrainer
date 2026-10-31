@@ -65,9 +65,10 @@ public sealed class TrailWindow : Window, IDisposable
     private const double StartSeconds = 0.8;
     private const double PulseHalfPeriod = 0.6;
 
-    /// <summary>How far the glass strip's gradient leans toward the accent, at the top and bottom.</summary>
+    /// <summary>How far the glass strip's gradient leans towards the accent, at the top and bottom.</summary>
     private const float TintTop = 0.22f, TintBottom = 0.1f;
     private const float CaptionPx = 13f;
+    private const double ToastSeconds = 1.0;
     /// <summary>The controller glyph in a keybind chip, and its gap after the trigger.</summary>
     private const float GlyphSize = 11f, GlyphGap = 3f;
 
@@ -75,7 +76,7 @@ public sealed class TrailWindow : Window, IDisposable
 
     private sealed record Pop(PlannedStep Step, TrailItem Item, double Start)
     {
-        /// <summary>Center in layout coordinates; follows the track as later steps pop.</summary>
+        /// <summary>Centre in layout coordinates; follows the track as later steps pop.</summary>
         public float X { get; set; } = Item.CenterX;
     }
 
@@ -104,6 +105,7 @@ public sealed class TrailWindow : Window, IDisposable
     private double _pressStart = double.NegativeInfinity;
     private double? _lastClock;
     private double _startShown = double.NegativeInfinity;
+    private double _toastStart = double.NegativeInfinity;
     private float _width;
     private float? _pullX;
     private bool _hidden = true;
@@ -165,7 +167,7 @@ public sealed class TrailWindow : Window, IDisposable
 
     private void OnEngineEvent(EngineEvent e)
     {
-        if (e.Kind is EngineEventKind.Popped or EngineEventKind.WrongPress) _events.Enqueue(e);
+        if (e.Kind is EngineEventKind.Popped or EngineEventKind.WrongPress or EngineEventKind.OutOfOrder) _events.Enqueue(e);
     }
 
     private void OnStepPressed(int index) => _presses.Enqueue(index);
@@ -319,8 +321,9 @@ public sealed class TrailWindow : Window, IDisposable
                 ? Math.Min(_config.AbilitiesAhead, CompactMaxAhead)
                 : _config.AbilitiesAhead;
             var inputs = new List<TrailInput>(ahead + 1);
-            for (var i = current; i <= current + ahead && _session.Sequence[i] is { } step; i++)
-                inputs.Add(Input(engine, i));
+            // Steps used early (out of order) have already popped: leave them off the track.
+            for (var i = current; inputs.Count <= ahead && _session.Sequence[i] is not null; i++)
+                if (!engine.IsDone(i)) inputs.Add(Input(engine, i));
             var auto = _config.Advance == AdvanceMode.Auto && clock != null;
             _reference = auto ? clock!.Value : engine.ExpectedTime(current);
             if (auto && _config.Style != TrailStyle.Timeline)
@@ -369,7 +372,11 @@ public sealed class TrailWindow : Window, IDisposable
 
         while (_events.TryDequeue(out var e))
         {
-            if (e.Kind == EngineEventKind.Popped)
+            if (e.Kind == EngineEventKind.OutOfOrder)
+            {
+                _toastStart = _time;
+            }
+            else if (e.Kind == EngineEventKind.Popped)
             {
                 if (_last.TryGetValue(e.Index, out var item) && _session.Sequence[e.Index] is { } step)
                     _pops.Add(new Pop(step, item, _time) { X = item.CenterX - shift });
@@ -413,6 +420,7 @@ public sealed class TrailWindow : Window, IDisposable
         _pressIndex = -1;
         _lastClock = null;
         _startShown = double.NegativeInfinity;
+        _toastStart = double.NegativeInfinity;
         _pullX = null;
         _events.Clear();
         _presses.Clear();
@@ -498,6 +506,7 @@ public sealed class TrailWindow : Window, IDisposable
         var lineHeight = TextSize("Ag", CaptionPx).Y;
         _skipAnchor = origin + new Vector2((width - CaptionInset) * s, WindowHeight * s - 10 * s - lineHeight / 2);
         DrawCaption(dl, origin, engine);
+        DrawToast(origin, width);
         DrawCountdown(dl, origin, engine.Clock, _showSkip ? SkipSize().X + 10 * s : 0);
     }
 
@@ -743,6 +752,29 @@ public sealed class TrailWindow : Window, IDisposable
         }
         if (!button.Face)
             dl.AddRectFilled(center - new Vector2(size / 6), center + new Vector2(size / 6), U32(GlassTheme.Fg(0.3f * alpha)));
+    }
+
+    /// <summary>"Wrong order" in a themed pill just above the trail, for a second after a step is used early.</summary>
+    private void DrawToast(Vector2 origin, float width)
+    {
+        var t = _time - _toastStart;
+        if (t is < 0 or >= ToastSeconds) return;
+        var s = Scale;
+        // Fades in quickly, holds, and fades out over the last quarter.
+        var alpha = (float)Math.Min(Math.Min(t / 0.1, 1), Math.Min((ToastSeconds - t) / (ToastSeconds * 0.25), 1));
+        const string text = "Wrong order";
+        var size = TextSize(text, 13f);
+        var pad = new Vector2(12, 5) * s;
+        var box = size + pad * 2;
+        var min = origin + new Vector2(width * s / 2 - box.X / 2, -box.Y - 8 * s - (1 - alpha) * 4 * s);
+        // Outside the trail window, so drawn on the background list (behind other ImGui windows, above the game).
+        var dl = ImGui.GetBackgroundDrawList();
+        var palette = GlassTheme.Palette;
+        var rounding = box.Y / 2;
+        dl.AddRectFilled(min, min + box, U32(Vector4.Lerp(palette.GlassTop, palette.GlassBottom, 0.5f) with { W = 0.95f * alpha }),
+            rounding);
+        dl.AddRect(min, min + box, U32(GlassTheme.WithAlpha(Accent, 0.8f * alpha)), rounding, ImDrawFlags.None, 1.5f * s);
+        DrawText(dl, min + pad, 13f, GlassTheme.Fg(alpha), text);
     }
 
     private void DrawCaption(ImDrawListPtr dl, Vector2 origin, PracticeEngine engine)

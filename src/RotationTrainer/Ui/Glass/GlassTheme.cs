@@ -7,13 +7,13 @@ namespace RotationTrainer.Ui.Glass;
 
 /// <summary>
 /// One look for the glass: the glass gradient, the foreground that text and thin lines are drawn in, the text
-/// shades, and the fills that sit on the glass. <paramref name="Tint"/> scales how far the trail's glass leans toward
+/// shades, and the fills that sit on the glass. <paramref name="Tint"/> scales how far the trail's glass leans towards
 /// the accent.
 /// </summary>
 public sealed record GlassPalette(Vector4 GlassTop, Vector4 GlassBottom, Vector4 Foreground, Vector4 Ink, Vector4 Dim,
     Vector4 Mute, Vector4 OnAccent, Vector4 Warning, Vector4 Danger, Vector4 Chip, Vector4 Popup, float Tint);
 
-/// <summary>Colors and style for the glass windows. Pixel sizes here are unscaled; multiply by GlobalScale.</summary>
+/// <summary>Colours and style for the glass windows. Pixel sizes here are unscaled; multiply by GlobalScale.</summary>
 public static class GlassTheme
 {
     public const float WindowRounding = 16f, CardRounding = 12f, FrameRounding = 8f;
@@ -66,7 +66,7 @@ public static class GlassTheme
     public static Vector4 WithAlpha(Vector4 color, float alpha) => color with { W = alpha };
 
     /// <summary>
-    /// Pushes the style vars and colors for a glass window (call before Begin, dispose after End). The window
+    /// Pushes the style vars and colours for a glass window (call before Begin, dispose after End). The window
     /// background itself is transparent: draw it with <see cref="GlassWidgets.DrawGlassBackground"/>.
     /// <paramref name="opacity"/> multiplies the alpha of the frame, button and header fills.
     /// </summary>

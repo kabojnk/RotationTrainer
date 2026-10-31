@@ -13,7 +13,7 @@ public interface IAbilityCatalog
     /// <summary>Null if not in that job's level-100 kit (including role actions).</summary>
     Ability? FindAction(string job, uint id);
     Ability? FindActionByName(string job, string name);
-    /// <summary>Medicine only; id already normalized.</summary>
+    /// <summary>Medicine only; id already normalised.</summary>
     Ability? FindItem(uint id);
     Ability? FindItemByName(string name);
     IReadOnlyList<Ability> Palette(string job);
@@ -22,6 +22,8 @@ public interface IAbilityCatalog
     /// map to the id of the action they stand for. Unknown ids map to themselves.
     /// </summary>
     uint CanonicalId(string job, uint id) => id;
+    /// <summary>Whether this (normalised) item id is any Medicine item: potions, ethers, elixirs, tinctures…</summary>
+    bool IsMedicine(uint itemId) => FindItem(itemId) != null;
     /// <summary>
     /// The action ids of the hotbar button(s) this action appears on when it isn't a button of its own (Living Muse
     /// for Pom Muse, Fire in Red for Aero in Green). Empty when it has its own button or none is known.

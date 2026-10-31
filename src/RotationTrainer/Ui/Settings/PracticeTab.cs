@@ -48,8 +48,8 @@ internal sealed class PracticeTab(Plugin plugin, Action importFile)
                     plugin.SaveConfig();
                 }
                 if (ImGui.IsItemHovered())
-                    GlassWidgets.Tooltip("Any potion: any main-stat tincture or gemdraught counts, so you can practise with "
-                        + "cheap ones.\nExact potion: only the one the rotation names counts.");
+                    GlassWidgets.Tooltip("Any potion: any medicine item counts (potions, ethers, tinctures…), so you can "
+                        + "practise with cheap ones.\nExact potion: only the one the rotation names counts.");
             }
 
             var countdown = config.StartWithCountdown;
@@ -57,6 +57,24 @@ internal sealed class PracticeTab(Plugin plugin, Action importFile)
                     "Typing /countdown lines up pre-pull steps like Rainbow Drip at 4.5.", ref countdown))
             {
                 config.StartWithCountdown = countdown;
+                plugin.SaveConfig();
+            }
+
+            var neighbours = config.AllowNeighbourOrder;
+            if (GlassWidgets.Toggle("neighbours", "Allow abilities to be used out of order when neighbouring",
+                    "A weave used before another weave between the same GCDs counts, and so does the next GCD used "
+                    + "before the current one. The trail shows \"Wrong order\" briefly.", ref neighbours))
+            {
+                config.AllowNeighbourOrder = neighbours;
+                plugin.SaveConfig();
+            }
+
+            var dummies = config.ResetDummyEnmity;
+            if (GlassWidgets.Toggle("dummies", "Reset striking dummy enmity on restart",
+                    "When the run restarts or a countdown starts or is cancelled, striking dummies fighting you reset "
+                    + "their enmity, like their Reset Enmity menu option.", ref dummies))
+            {
+                config.ResetDummyEnmity = dummies;
                 plugin.SaveConfig();
             }
 
@@ -179,7 +197,7 @@ internal sealed class PracticeTab(Plugin plugin, Action importFile)
             ImGui.SetCursorPosY(rowTop + (gcdSize.Y - ImGui.GetTextLineHeight()) / 2);
             GlassWidgets.Chip($"+{abilities.Count - PreviewSteps} more", GlassTheme.Dim);
         }
-        // Ends the row with an item, so the strip's full height counts toward the card.
+        // Ends the row with an item, so the strip's full height counts towards the card.
         ImGui.SetCursorPosY(rowTop);
         ImGui.Dummy(new Vector2(0, gcdSize.Y));
     }
