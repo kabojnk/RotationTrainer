@@ -15,7 +15,8 @@ namespace RotationTrainer.Game;
 /// </summary>
 public sealed class PracticeSession : IDisposable
 {
-    private static readonly TimeSpan ScanInterval = TimeSpan.FromMilliseconds(500);
+    /// <summary>Short, so a keybind shows soon after a button turns into the step's ability.</summary>
+    private static readonly TimeSpan ScanInterval = TimeSpan.FromMilliseconds(200);
     private const float StickDeadzone = 0.3f;
     /// <summary>A countdown that rises by more than this (or appears) is a new countdown.</summary>
     private const double CountdownRise = 0.05;
@@ -37,6 +38,7 @@ public sealed class PracticeSession : IDisposable
     private readonly IKeyState _keys;
     private readonly VirtualKey[] _keyboardKeys;
     private readonly IPluginLog _log;
+    private readonly System.Action _saveConfig;
     private readonly ActionListener _listener;
     private readonly CountdownSource _countdown;
     private readonly HotbarScanner _scanner = new();
@@ -53,8 +55,10 @@ public sealed class PracticeSession : IDisposable
 
     public PracticeSession(Configuration config, RotationLibrary library, IAbilityCatalog catalog, IDataManager data,
         IClientState clientState, IPlayerState player, ICondition condition, IFramework framework,
-        IGamepadState gamepad, IKeyState keys, IPluginLog log, ActionListener listener, CountdownSource countdown)
+        IGamepadState gamepad, IKeyState keys, IPluginLog log, ActionListener listener, CountdownSource countdown,
+        System.Action saveConfig)
     {
+        _saveConfig = saveConfig;
         _config = config;
         _library = library;
         _catalog = catalog;
@@ -134,7 +138,10 @@ public sealed class PracticeSession : IDisposable
                 ? _catalog.FindItem(ItemIds.Normalize(id)) != null
                 : _catalog.FindAction(job, id) != null,
             (used, step) => _catalog.CanonicalId(job, used) == _catalog.CanonicalId(job, step),
-            latency);
+            latency,
+            _config.PotionMatch == PotionMatch.AnyPotion
+                ? (used, _) => _catalog.FindItem(used) != null
+                : null);
         Engine.Event += OnEngineEvent;
     }
 
@@ -145,6 +152,17 @@ public sealed class PracticeSession : IDisposable
         _attempts.Clear();
         Engine?.Reset();
     }
+
+    /// <summary>The keybind hint for an action or item on the current job's hotbars, or "?" (see <see cref="KeybindIndex.Label"/>).</summary>
+    public string KeybindLabel(StepType type, uint id) =>
+        Keybinds.Label(type, id, InputMode,
+            type == StepType.Action && Job != null ? (IReadOnlyCollection<uint>)_catalog.ButtonHosts(Job, id) : null);
+
+    /// <summary>What the last hotbar scan saw of the cross hotbar, for the debug window.</summary>
+    public string CrossHotbarDiagnostics => _scanner.CrossDiagnostics;
+
+    /// <summary>Moves past the current step without using it.</summary>
+    public void Skip() => Engine?.Skip();
 
     // Raised on the game's thread by the hook; handled in OnUpdate.
     private void OnActionUsed(StepType type, uint id) => _pending.Enqueue((type, id));
@@ -169,7 +187,11 @@ public sealed class PracticeSession : IDisposable
             if (now >= _nextScan)
             {
                 _nextScan = now + ScanInterval;
-                Keybinds.Update(_scanner.Scan());
+                if (Keybinds.Update(_scanner.Scan()) && Job != null)
+                {
+                    _config.LearnedKeybinds[Job] = Keybinds.Export().ToList();
+                    _saveConfig();
+                }
             }
 
             Engine?.Tick(dt);
@@ -199,6 +221,7 @@ public sealed class PracticeSession : IDisposable
         Keybinds.Clear();
         _nextScan = DateTime.MinValue;
         Rebuild();
+        if (Job != null && _config.LearnedKeybinds.TryGetValue(Job, out var learned)) Keybinds.Import(learned);
     }
 
     private void PollCountdown(double dt)
