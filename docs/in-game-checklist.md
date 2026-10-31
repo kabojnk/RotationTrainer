@@ -96,6 +96,13 @@ For each of Rail, Compact Rail and Timeline, in both Big and Small, compare agai
 3. **Gear placement:** the gear stays above the keybind chips, including a weave's chip at the right end of the trail, in Big and Small and at your UI scale. If it overlaps anything, note the style and size.
 4. **Logo:** the settings window title shows the logo before "Rotation Trainer". The dev plugin's entry in `/xlplugins` shows the logo as its icon.
 
+## Built-in rotations and credits
+1. **First load:** with a fresh library (rename library.json), loading the plugin adds the 34 built-in rotations. /xllog shows no "Built-in rotation" warnings.
+2. **Deleted stays deleted:** delete one built-in rotation and reload the plugin. It does not come back. **Restore built-ins** adds it back and reports "1 rotation restored."; a second click says they are all already there.
+3. **Edits kept:** edit a built-in rotation, save, reload and click Restore built-ins. Your edit is kept.
+4. **Credits tab:** the sidebar has Credits last. It names Big Bear and The Balance, shows the rotation count, and the button opens thebalanceffxiv.com in your browser.
+5. **Author:** `/xlplugins` shows the author as Big Bear.
+
 ## Known limitations to watch for
 - After switching cross hotbar sets, controller labels can name the previous set's button for up to 0.5 s.
 - GCDs whose GCD lock comes only from a secondary cooldown group are scheduled at a flat 2.5 s (Viper's Vicewinder may really be 3.0 s).

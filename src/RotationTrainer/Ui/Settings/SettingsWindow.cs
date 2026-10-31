@@ -11,7 +11,7 @@ namespace RotationTrainer.Ui.Settings;
 /// <summary>The glass settings window (<c>/rtrain</c>): a sidebar of tabs and the selected tab's contents.</summary>
 public sealed class SettingsWindow : Window
 {
-    private enum Tab { Practice, Trail, Timing, Library, Appearance }
+    private enum Tab { Practice, Trail, Timing, Library, Appearance, Credits }
 
     private const float SidebarWidth = 180f;
     private const float LabelWidth = 150f;
@@ -23,6 +23,7 @@ public sealed class SettingsWindow : Window
         (Tab.Timing, "Speed & timing", FontAwesomeIcon.Stopwatch),
         (Tab.Library, "Rotation library", FontAwesomeIcon.Book),
         (Tab.Appearance, "Appearance", FontAwesomeIcon.Palette),
+        (Tab.Credits, "Credits", FontAwesomeIcon.Heart),
     };
 
     private readonly Plugin _plugin;
@@ -31,6 +32,7 @@ public sealed class SettingsWindow : Window
     private readonly TimingTab _timing;
     private readonly LibraryTab _library;
     private readonly AppearanceTab _appearance;
+    private readonly CreditsTab _credits;
     private readonly string _version;
     private Tab _tab = Tab.Practice;
     private IDisposable? _theme;
@@ -48,6 +50,7 @@ public sealed class SettingsWindow : Window
         _trail = new TrailTab(plugin);
         _timing = new TimingTab(plugin);
         _appearance = new AppearanceTab(plugin);
+        _credits = new CreditsTab(plugin);
 
         var v = typeof(Plugin).Assembly.GetName().Version;
         _version = v == null ? "" : $"v{v.Major}.{v.Minor}.{v.Build}";
@@ -98,6 +101,7 @@ public sealed class SettingsWindow : Window
             case Tab.Timing: _timing.Draw(); break;
             case Tab.Library: _library.Draw(); break;
             case Tab.Appearance: _appearance.Draw(); break;
+            case Tab.Credits: _credits.Draw(); break;
         }
     }
 
