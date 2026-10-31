@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Release version (major.minor.patch); bumped by publish.sh / publish.ps1. -->
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <IsPackable>false</IsPackable>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
