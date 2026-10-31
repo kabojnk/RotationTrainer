@@ -55,6 +55,19 @@ public class ExampleFileTests(GameDataFixture data)
         Assert.Equal(json, RotationJson.Export(new[] { built }) + "\n");
     }
 
+    [SqpackFact]
+    public void BuiltInRotationsImportCleanly()
+    {
+        var json = File.ReadAllText(Path.Combine(RepoRoot(), "presets", "balance-openers.json"));
+
+        var result = RotationJson.Import(json, data.Catalog, () => Guid.NewGuid().ToString());
+
+        Assert.Empty(result.Errors);
+        Assert.Equal(34, result.Rotations.Count);
+        Assert.Equal(result.Rotations.Count, result.Rotations.Select(r => r.Id).Distinct().Count());
+        Assert.All(result.Rotations, r => Assert.StartsWith("The Balance", r.Source));
+    }
+
     private static string RepoRoot()
     {
         for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir != null; dir = dir.Parent)

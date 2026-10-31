@@ -1,0 +1,3945 @@
+{
+  "format": "rotation-trainer/1",
+  "rotations": [
+    {
+      "id": "05014d13-f3ba-45a5-800d-e7b6945f9f64",
+      "job": "AST",
+      "level": 100,
+      "kind": "opener",
+      "name": "Dawntrail Opener",
+      "source": "The Balance (thebalanceffxiv.com): Astrologian_Dawntrail_Opener_9.png",
+      "patch": "7.01",
+      "steps": [
+        {
+          "action": 7439,
+          "name": "Earthly Star",
+          "at": -4
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic",
+          "at": -2.1
+        },
+        {
+          "pull": true
+        },
+        {
+          "item": 49238,
+          "name": "Grade 4 Gemdraught of Mind"
+        },
+        {
+          "action": 16554,
+          "name": "Combust III"
+        },
+        {
+          "action": 3606,
+          "name": "Lightspeed"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 16552,
+          "name": "Divination"
+        },
+        {
+          "action": 37023,
+          "name": "the Balance"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 7444,
+          "name": "Lord of Crowns"
+        },
+        {
+          "action": 37018,
+          "name": "Umbral Draw"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 37026,
+          "name": "the Spear"
+        },
+        {
+          "action": 37029,
+          "name": "Oracle"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        },
+        {
+          "action": 16554,
+          "name": "Combust III"
+        },
+        {
+          "action": 25871,
+          "name": "Fall Malefic"
+        }
+      ]
+    },
+    {
+      "id": "4f76f91e-45d3-42eb-a14a-ea52e6ad1de9",
+      "job": "BLM",
+      "level": 100,
+      "kind": "opener",
+      "name": "Alternative Single Target Flare Opener",
+      "source": "The Balance (thebalanceffxiv.com): alternative-st-flare-opener.png",
+      "patch": "7.2",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 152,
+          "name": "Fire III"
+        },
+        {
+          "action": 36986,
+          "name": "High Thunder"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 25796,
+          "name": "Amplifier"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 3573,
+          "name": "Ley Lines"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 16507,
+          "name": "Xenoglossy"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 16505,
+          "name": "Despair"
+        },
+        {
+          "action": 158,
+          "name": "Manafont"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 36989,
+          "name": "Flare Star"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 36986,
+          "name": "High Thunder"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 25797,
+          "name": "Paradox"
+        },
+        {
+          "action": 7421,
+          "name": "Triplecast"
+        },
+        {
+          "action": 162,
+          "name": "Flare"
+        },
+        {
+          "action": 36989,
+          "name": "Flare Star"
+        },
+        {
+          "action": 149,
+          "name": "Transpose"
+        },
+        {
+          "action": 154,
+          "name": "Blizzard III"
+        },
+        {
+          "action": 3576,
+          "name": "Blizzard IV"
+        },
+        {
+          "action": 25797,
+          "name": "Paradox"
+        },
+        {
+          "action": 149,
+          "name": "Transpose"
+        },
+        {
+          "action": 152,
+          "name": "Fire III"
+        }
+      ]
+    },
+    {
+      "id": "792ea5d2-256b-43fc-9f2f-7958c7862780",
+      "job": "BLM",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard \"5+7\" Opener",
+      "source": "The Balance (thebalanceffxiv.com): standard-5-7-opener.png",
+      "patch": "7.2",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 152,
+          "name": "Fire III"
+        },
+        {
+          "action": 36986,
+          "name": "High Thunder"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 25796,
+          "name": "Amplifier"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 3573,
+          "name": "Ley Lines"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 16507,
+          "name": "Xenoglossy"
+        },
+        {
+          "action": 158,
+          "name": "Manafont"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 36989,
+          "name": "Flare Star"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 36986,
+          "name": "High Thunder"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 3577,
+          "name": "Fire IV"
+        },
+        {
+          "action": 36989,
+          "name": "Flare Star"
+        },
+        {
+          "action": 16505,
+          "name": "Despair"
+        },
+        {
+          "action": 149,
+          "name": "Transpose"
+        },
+        {
+          "action": 7421,
+          "name": "Triplecast"
+        },
+        {
+          "action": 154,
+          "name": "Blizzard III"
+        },
+        {
+          "action": 3576,
+          "name": "Blizzard IV"
+        },
+        {
+          "action": 25797,
+          "name": "Paradox"
+        },
+        {
+          "action": 149,
+          "name": "Transpose"
+        },
+        {
+          "action": 25797,
+          "name": "Paradox"
+        },
+        {
+          "action": 152,
+          "name": "Fire III"
+        }
+      ]
+    },
+    {
+      "id": "39daefaa-70da-406d-82ef-ce104a44d2c4",
+      "job": "BRD",
+      "level": 100,
+      "kind": "opener",
+      "name": "2.49 Standard Opener (comfy)",
+      "source": "The Balance (thebalanceffxiv.com): standard249-opener-2.png",
+      "patch": "7.05",
+      "steps": [
+        {
+          "item": 49235,
+          "name": "Grade 4 Gemdraught of Dexterity",
+          "at": -0.7
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 7407,
+          "name": "Stormbite"
+        },
+        {
+          "action": 36975,
+          "name": "Heartbreak Shot"
+        },
+        {
+          "action": 3559,
+          "name": "the Wanderer's Minuet"
+        },
+        {
+          "action": 7406,
+          "name": "Caustic Bite"
+        },
+        {
+          "action": 3558,
+          "name": "Empyreal Arrow"
+        },
+        {
+          "action": 25785,
+          "name": "Radiant Finale"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 118,
+          "name": "Battle Voice"
+        },
+        {
+          "action": 101,
+          "name": "Raging Strikes"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 107,
+          "name": "Barrage"
+        },
+        {
+          "action": 7409,
+          "name": "Refulgent Arrow"
+        },
+        {
+          "action": 3562,
+          "name": "Sidewinder"
+        },
+        {
+          "action": 36977,
+          "name": "Radiant Encore"
+        },
+        {
+          "action": 36976,
+          "name": "Resonant Arrow"
+        },
+        {
+          "action": 7409,
+          "name": "Refulgent Arrow"
+        },
+        {
+          "action": 3558,
+          "name": "Empyreal Arrow"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 3560,
+          "name": "Iron Jaws"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 7404,
+          "name": "Pitch Perfect"
+        }
+      ]
+    },
+    {
+      "id": "659d8103-2e1a-4b8b-bb3c-2927df8520c5",
+      "job": "BRD",
+      "level": 100,
+      "kind": "opener",
+      "name": "3-6-9 Opener (2.49 or 2.50 GCD)",
+      "source": "The Balance (thebalanceffxiv.com): 369-opener-b.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 7407,
+          "name": "Stormbite"
+        },
+        {
+          "action": 36975,
+          "name": "Heartbreak Shot"
+        },
+        {
+          "action": 3559,
+          "name": "the Wanderer's Minuet"
+        },
+        {
+          "action": 7406,
+          "name": "Caustic Bite"
+        },
+        {
+          "item": 49235,
+          "name": "Grade 4 Gemdraught of Dexterity"
+        },
+        {
+          "action": 25785,
+          "name": "Radiant Finale"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 118,
+          "name": "Battle Voice"
+        },
+        {
+          "action": 101,
+          "name": "Raging Strikes"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 3558,
+          "name": "Empyreal Arrow"
+        },
+        {
+          "action": 36977,
+          "name": "Radiant Encore"
+        },
+        {
+          "action": 107,
+          "name": "Barrage"
+        },
+        {
+          "action": 7409,
+          "name": "Refulgent Arrow"
+        },
+        {
+          "action": 3562,
+          "name": "Sidewinder"
+        },
+        {
+          "action": 36976,
+          "name": "Resonant Arrow"
+        },
+        {
+          "action": 7409,
+          "name": "Refulgent Arrow"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 3560,
+          "name": "Iron Jaws"
+        },
+        {
+          "action": 3558,
+          "name": "Empyreal Arrow"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 7404,
+          "name": "Pitch Perfect"
+        }
+      ]
+    },
+    {
+      "id": "dd2e3377-1e69-4414-9360-8441f50ba92a",
+      "job": "BRD",
+      "level": 100,
+      "kind": "opener",
+      "name": "Adjusted Standard Opener (2.48 GCD ideal)",
+      "source": "The Balance (thebalanceffxiv.com): adjusted-standard-opener.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 36975,
+          "name": "Heartbreak Shot"
+        },
+        {
+          "action": 7407,
+          "name": "Stormbite"
+        },
+        {
+          "action": 3559,
+          "name": "the Wanderer's Minuet"
+        },
+        {
+          "action": 3558,
+          "name": "Empyreal Arrow"
+        },
+        {
+          "action": 7406,
+          "name": "Caustic Bite"
+        },
+        {
+          "item": 49235,
+          "name": "Grade 4 Gemdraught of Dexterity"
+        },
+        {
+          "action": 118,
+          "name": "Battle Voice"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 25785,
+          "name": "Radiant Finale"
+        },
+        {
+          "action": 101,
+          "name": "Raging Strikes"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 107,
+          "name": "Barrage"
+        },
+        {
+          "action": 7409,
+          "name": "Refulgent Arrow"
+        },
+        {
+          "action": 3562,
+          "name": "Sidewinder"
+        },
+        {
+          "action": 36977,
+          "name": "Radiant Encore"
+        },
+        {
+          "action": 36976,
+          "name": "Resonant Arrow"
+        },
+        {
+          "action": 3558,
+          "name": "Empyreal Arrow"
+        },
+        {
+          "action": 7409,
+          "name": "Refulgent Arrow"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 3560,
+          "name": "Iron Jaws"
+        },
+        {
+          "action": 16495,
+          "name": "Burst Shot"
+        },
+        {
+          "action": 7404,
+          "name": "Pitch Perfect"
+        }
+      ]
+    },
+    {
+      "id": "a1c7186e-3064-4001-bcd9-9d8d5fcd02e1",
+      "job": "DRG",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard Opener - No PT",
+      "source": "The Balance (thebalanceffxiv.com): Dragoon_Standard_Opener_-_No_PT.png",
+      "patch": "7.1",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 75,
+          "name": "True Thrust"
+        },
+        {
+          "action": 36955,
+          "name": "Spiral Blow"
+        },
+        {
+          "action": 85,
+          "name": "Lance Charge"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 25772,
+          "name": "Chaotic Spring"
+        },
+        {
+          "action": 3557,
+          "name": "Battle Litany"
+        },
+        {
+          "action": 3555,
+          "name": "Geirskogul"
+        },
+        {
+          "action": 3556,
+          "name": "Wheeling Thrust"
+        },
+        {
+          "action": 16478,
+          "name": "High Jump"
+        },
+        {
+          "action": 83,
+          "name": "Life Surge"
+        },
+        {
+          "action": 36952,
+          "name": "Drakesbane"
+        },
+        {
+          "action": 96,
+          "name": "Dragonfire Dive"
+        },
+        {
+          "action": 7400,
+          "name": "Nastrond"
+        },
+        {
+          "action": 16479,
+          "name": "Raiden Thrust"
+        },
+        {
+          "action": 16480,
+          "name": "Stardiver"
+        },
+        {
+          "action": 36954,
+          "name": "Lance Barrage"
+        },
+        {
+          "action": 36956,
+          "name": "Starcross"
+        },
+        {
+          "action": 83,
+          "name": "Life Surge"
+        },
+        {
+          "action": 25771,
+          "name": "Heavens' Thrust"
+        },
+        {
+          "action": 36953,
+          "name": "Rise of the Dragon"
+        },
+        {
+          "action": 7399,
+          "name": "Mirage Dive"
+        },
+        {
+          "action": 3554,
+          "name": "Fang and Claw"
+        },
+        {
+          "action": 36952,
+          "name": "Drakesbane"
+        },
+        {
+          "action": 16479,
+          "name": "Raiden Thrust"
+        },
+        {
+          "action": 25773,
+          "name": "Wyrmwind Thrust"
+        }
+      ]
+    },
+    {
+      "id": "c218ed3b-c70d-4c2b-864a-2a2b2e18778a",
+      "job": "DRG",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard Opener",
+      "source": "The Balance (thebalanceffxiv.com): Dragoon_Standard_Opener.png",
+      "patch": "7.1",
+      "steps": [
+        {
+          "action": 94,
+          "name": "Elusive Jump",
+          "at": -15
+        },
+        {
+          "action": 90,
+          "name": "Piercing Talon",
+          "at": -0.85
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 75,
+          "name": "True Thrust"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 36955,
+          "name": "Spiral Blow"
+        },
+        {
+          "action": 85,
+          "name": "Lance Charge"
+        },
+        {
+          "action": 3557,
+          "name": "Battle Litany"
+        },
+        {
+          "action": 25772,
+          "name": "Chaotic Spring"
+        },
+        {
+          "action": 3555,
+          "name": "Geirskogul"
+        },
+        {
+          "action": 3556,
+          "name": "Wheeling Thrust"
+        },
+        {
+          "action": 16478,
+          "name": "High Jump"
+        },
+        {
+          "action": 83,
+          "name": "Life Surge"
+        },
+        {
+          "action": 36952,
+          "name": "Drakesbane"
+        },
+        {
+          "action": 96,
+          "name": "Dragonfire Dive"
+        },
+        {
+          "action": 7400,
+          "name": "Nastrond"
+        },
+        {
+          "action": 16479,
+          "name": "Raiden Thrust"
+        },
+        {
+          "action": 16480,
+          "name": "Stardiver"
+        },
+        {
+          "action": 36954,
+          "name": "Lance Barrage"
+        },
+        {
+          "action": 36956,
+          "name": "Starcross"
+        },
+        {
+          "action": 83,
+          "name": "Life Surge"
+        },
+        {
+          "action": 25771,
+          "name": "Heavens' Thrust"
+        },
+        {
+          "action": 36953,
+          "name": "Rise of the Dragon"
+        },
+        {
+          "action": 7399,
+          "name": "Mirage Dive"
+        },
+        {
+          "action": 3554,
+          "name": "Fang and Claw"
+        },
+        {
+          "action": 36952,
+          "name": "Drakesbane"
+        },
+        {
+          "action": 16479,
+          "name": "Raiden Thrust"
+        },
+        {
+          "action": 25773,
+          "name": "Wyrmwind Thrust"
+        }
+      ]
+    },
+    {
+      "id": "44b5f325-4936-443c-a282-ea39247bbe27",
+      "job": "DRK",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard Opener",
+      "source": "The Balance (thebalanceffxiv.com): drk_opener_7_2.png",
+      "patch": "7.2",
+      "steps": [
+        {
+          "action": 7393,
+          "name": "The Blackest Night",
+          "at": -3
+        },
+        {
+          "action": 3624,
+          "name": "Unmend",
+          "at": -1
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 16470,
+          "name": "Edge of Shadow"
+        },
+        {
+          "action": 3617,
+          "name": "Hard Slash"
+        },
+        {
+          "action": 16472,
+          "name": "Living Shadow"
+        },
+        {
+          "action": 3623,
+          "name": "Syphon Strike"
+        },
+        {
+          "action": 3632,
+          "name": "Souleater"
+        },
+        {
+          "action": 7390,
+          "name": "Delirium"
+        },
+        {
+          "action": 36932,
+          "name": "Disesteem"
+        },
+        {
+          "action": 3639,
+          "name": "Salted Earth"
+        },
+        {
+          "action": 16470,
+          "name": "Edge of Shadow"
+        },
+        {
+          "action": 36928,
+          "name": "Scarlet Delirium"
+        },
+        {
+          "action": 25757,
+          "name": "Shadowbringer"
+        },
+        {
+          "action": 16470,
+          "name": "Edge of Shadow"
+        },
+        {
+          "action": 36929,
+          "name": "Comeuppance"
+        },
+        {
+          "action": 3643,
+          "name": "Carve and Spit"
+        },
+        {
+          "action": 16470,
+          "name": "Edge of Shadow"
+        },
+        {
+          "action": 36930,
+          "name": "Torcleaver"
+        },
+        {
+          "action": 25757,
+          "name": "Shadowbringer"
+        },
+        {
+          "action": 16470,
+          "name": "Edge of Shadow"
+        },
+        {
+          "action": 7392,
+          "name": "Bloodspiller"
+        },
+        {
+          "action": 25755,
+          "name": "Salt and Darkness"
+        }
+      ]
+    },
+    {
+      "id": "cec39445-40dd-4e3d-8c1b-33743d4c83a2",
+      "job": "GNB",
+      "level": 100,
+      "kind": "opener",
+      "name": "Opener",
+      "source": "The Balance (thebalanceffxiv.com): oEgh3i.png",
+      "patch": "7.4",
+      "steps": [
+        {
+          "action": 16143,
+          "name": "Lightning Shot",
+          "at": -0.7
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 16164,
+          "name": "Bloodfest"
+        },
+        {
+          "action": 16137,
+          "name": "Keen Edge"
+        },
+        {
+          "action": 16139,
+          "name": "Brutal Shell"
+        },
+        {
+          "action": 16138,
+          "name": "No Mercy"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 16146,
+          "name": "Gnashing Fang"
+        },
+        {
+          "action": 16156,
+          "name": "Jugular Rip"
+        },
+        {
+          "action": 16159,
+          "name": "Bow Shock"
+        },
+        {
+          "action": 25760,
+          "name": "Double Down"
+        },
+        {
+          "action": 16165,
+          "name": "Blasting Zone"
+        },
+        {
+          "action": 16153,
+          "name": "Sonic Break"
+        },
+        {
+          "action": 16147,
+          "name": "Savage Claw"
+        },
+        {
+          "action": 16157,
+          "name": "Abdomen Tear"
+        },
+        {
+          "action": 16150,
+          "name": "Wicked Talon"
+        },
+        {
+          "action": 16158,
+          "name": "Eye Gouge"
+        },
+        {
+          "action": 36937,
+          "name": "Reign of Beasts"
+        },
+        {
+          "action": 36938,
+          "name": "Noble Blood"
+        },
+        {
+          "action": 36939,
+          "name": "Lion Heart"
+        },
+        {
+          "action": 16145,
+          "name": "Solid Barrel"
+        },
+        {
+          "action": 16146,
+          "name": "Gnashing Fang"
+        },
+        {
+          "action": 16156,
+          "name": "Jugular Rip"
+        }
+      ]
+    },
+    {
+      "id": "35c12623-582e-41d2-b3be-9dac7373371f",
+      "job": "MCH",
+      "level": 100,
+      "kind": "opener",
+      "name": "Alternative Opener (Static to Even Minute Bursts)",
+      "source": "The Balance (thebalanceffxiv.com): machinist-alternative-opener-static-to-even-minute-bursts-.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 2876,
+          "name": "Reassemble",
+          "at": -5
+        },
+        {
+          "item": 49235,
+          "name": "Grade 4 Gemdraught of Dexterity",
+          "at": -1
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 16500,
+          "name": "Air Anchor"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 16498,
+          "name": "Drill"
+        },
+        {
+          "action": 7414,
+          "name": "Barrel Stabilizer"
+        },
+        {
+          "action": 25788,
+          "name": "Chain Saw"
+        },
+        {
+          "action": 2876,
+          "name": "Reassemble"
+        },
+        {
+          "action": 36981,
+          "name": "Excavator"
+        },
+        {
+          "action": 16501,
+          "name": "Automaton Queen"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36982,
+          "name": "Full Metal Field"
+        },
+        {
+          "action": 17209,
+          "name": "Hypercharge"
+        },
+        {
+          "action": 2878,
+          "name": "Wildfire"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 16498,
+          "name": "Drill"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 16498,
+          "name": "Drill"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 7411,
+          "name": "Heated Split Shot"
+        },
+        {
+          "action": 7412,
+          "name": "Heated Slug Shot"
+        },
+        {
+          "action": 7413,
+          "name": "Heated Clean Shot"
+        }
+      ]
+    },
+    {
+      "id": "df4c19f7-c75e-4818-9657-d8fea6582b3a",
+      "job": "MCH",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard Opener (AA)",
+      "source": "The Balance (thebalanceffxiv.com): machinist-standard-opener-aa-6-.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 2876,
+          "name": "Reassemble",
+          "at": -5
+        },
+        {
+          "item": 49235,
+          "name": "Grade 4 Gemdraught of Dexterity",
+          "at": -2
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 16500,
+          "name": "Air Anchor"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 16498,
+          "name": "Drill"
+        },
+        {
+          "action": 7414,
+          "name": "Barrel Stabilizer"
+        },
+        {
+          "action": 25788,
+          "name": "Chain Saw"
+        },
+        {
+          "action": 36981,
+          "name": "Excavator"
+        },
+        {
+          "action": 16501,
+          "name": "Automaton Queen"
+        },
+        {
+          "action": 2876,
+          "name": "Reassemble"
+        },
+        {
+          "action": 16498,
+          "name": "Drill"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 2878,
+          "name": "Wildfire"
+        },
+        {
+          "action": 36982,
+          "name": "Full Metal Field"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 17209,
+          "name": "Hypercharge"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 36978,
+          "name": "Blazing Shot"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 16498,
+          "name": "Drill"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 36980,
+          "name": "Checkmate"
+        },
+        {
+          "action": 7411,
+          "name": "Heated Split Shot"
+        },
+        {
+          "action": 36979,
+          "name": "Double Check"
+        },
+        {
+          "action": 7412,
+          "name": "Heated Slug Shot"
+        },
+        {
+          "action": 7413,
+          "name": "Heated Clean Shot"
+        }
+      ]
+    },
+    {
+      "id": "46c1d661-6600-488e-951c-7f0b308c0418",
+      "job": "MNK",
+      "level": 100,
+      "kind": "opener",
+      "name": "Double Lunar - DK Opener (7s Buffs)",
+      "source": "The Balance (thebalanceffxiv.com): ll7s-dk.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength",
+          "at": -1.4
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "action": 3547,
+          "name": "the Forbidden Chakra"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 7396,
+          "name": "Brotherhood"
+        },
+        {
+          "action": 7395,
+          "name": "Riddle of Fire"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 25766,
+          "name": "Riddle of Wind"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36949,
+          "name": "Wind's Reply"
+        },
+        {
+          "action": 36950,
+          "name": "Fire's Reply"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 61,
+          "name": "Twin Snakes"
+        }
+      ]
+    },
+    {
+      "id": "1d64ce65-1ce1-422a-83db-067f1772b769",
+      "job": "MNK",
+      "level": 100,
+      "kind": "opener",
+      "name": "Double Lunar - DK Opener (5s Buffs)",
+      "source": "The Balance (thebalanceffxiv.com): ll5s-dk.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 7396,
+          "name": "Brotherhood"
+        },
+        {
+          "action": 7395,
+          "name": "Riddle of Fire"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 3547,
+          "name": "the Forbidden Chakra"
+        },
+        {
+          "action": 25766,
+          "name": "Riddle of Wind"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36949,
+          "name": "Wind's Reply"
+        },
+        {
+          "action": 36950,
+          "name": "Fire's Reply"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        }
+      ]
+    },
+    {
+      "id": "0c20f288-7667-4a2a-b531-cff967ac2212",
+      "job": "MNK",
+      "level": 100,
+      "kind": "opener",
+      "name": "Double Lunar - Demo Opener (7s Buffs)",
+      "source": "The Balance (thebalanceffxiv.com): ll7s-de.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 66,
+          "name": "Demolish"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 7396,
+          "name": "Brotherhood"
+        },
+        {
+          "action": 7395,
+          "name": "Riddle of Fire"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 3547,
+          "name": "the Forbidden Chakra"
+        },
+        {
+          "action": 25766,
+          "name": "Riddle of Wind"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36949,
+          "name": "Wind's Reply"
+        },
+        {
+          "action": 36950,
+          "name": "Fire's Reply"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        }
+      ]
+    },
+    {
+      "id": "0b4c84d0-9b21-4567-b9e4-2b19dbd16cb9",
+      "job": "MNK",
+      "level": 100,
+      "kind": "opener",
+      "name": "Solar Lunar - Demo Opener (7s Buffs)",
+      "source": "The Balance (thebalanceffxiv.com): sl7s-de.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 66,
+          "name": "Demolish"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 61,
+          "name": "Twin Snakes"
+        },
+        {
+          "action": 36947,
+          "name": "Pouncing Coeurl"
+        },
+        {
+          "action": 7396,
+          "name": "Brotherhood"
+        },
+        {
+          "action": 7395,
+          "name": "Riddle of Fire"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 3547,
+          "name": "the Forbidden Chakra"
+        },
+        {
+          "action": 25766,
+          "name": "Riddle of Wind"
+        },
+        {
+          "action": 25768,
+          "name": "Rising Phoenix"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36949,
+          "name": "Wind's Reply"
+        },
+        {
+          "action": 36950,
+          "name": "Fire's Reply"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        }
+      ]
+    },
+    {
+      "id": "7d4ad8e9-7b6d-4790-83e4-1296c05c1f6f",
+      "job": "MNK",
+      "level": 100,
+      "kind": "opener",
+      "name": "Solar Lunar - DK Opener (5s Buffs)",
+      "source": "The Balance (thebalanceffxiv.com): sl5s-dk.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "action": 61,
+          "name": "Twin Snakes"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 66,
+          "name": "Demolish"
+        },
+        {
+          "action": 7396,
+          "name": "Brotherhood"
+        },
+        {
+          "action": 7395,
+          "name": "Riddle of Fire"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 3547,
+          "name": "the Forbidden Chakra"
+        },
+        {
+          "action": 25766,
+          "name": "Riddle of Wind"
+        },
+        {
+          "action": 25768,
+          "name": "Rising Phoenix"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36949,
+          "name": "Wind's Reply"
+        },
+        {
+          "action": 36950,
+          "name": "Fire's Reply"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        }
+      ]
+    },
+    {
+      "id": "9f933b18-6339-4884-b340-70198b211723",
+      "job": "MNK",
+      "level": 100,
+      "kind": "opener",
+      "name": "Solar Lunar - DK Opener (7s Buffs)",
+      "source": "The Balance (thebalanceffxiv.com): sl7s-dk.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "pull": true
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 61,
+          "name": "Twin Snakes"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 66,
+          "name": "Demolish"
+        },
+        {
+          "action": 7396,
+          "name": "Brotherhood"
+        },
+        {
+          "action": 7395,
+          "name": "Riddle of Fire"
+        },
+        {
+          "action": 25768,
+          "name": "Rising Phoenix"
+        },
+        {
+          "action": 3547,
+          "name": "the Forbidden Chakra"
+        },
+        {
+          "action": 25766,
+          "name": "Riddle of Wind"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36949,
+          "name": "Wind's Reply"
+        },
+        {
+          "action": 36950,
+          "name": "Fire's Reply"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 69,
+          "name": "Perfect Balance"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 74,
+          "name": "Dragon Kick"
+        },
+        {
+          "action": 36948,
+          "name": "Elixir Burst"
+        },
+        {
+          "action": 36945,
+          "name": "Leaping Opo"
+        },
+        {
+          "action": 36946,
+          "name": "Rising Raptor"
+        }
+      ]
+    },
+    {
+      "id": "99cb07c2-77ef-486d-b99f-cb794dec9771",
+      "job": "NIN",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard - 3rd GCD",
+      "source": "The Balance (thebalanceffxiv.com): standard3rd.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 2259,
+          "name": "Ten",
+          "at": -6.5
+        },
+        {
+          "action": 2261,
+          "name": "Chi",
+          "at": -6
+        },
+        {
+          "action": 2263,
+          "name": "Jin",
+          "at": -5.5
+        },
+        {
+          "action": 2271,
+          "name": "Suiton",
+          "at": -0.9
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 2264,
+          "name": "Kassatsu"
+        },
+        {
+          "action": 2240,
+          "name": "Spinning Edge"
+        },
+        {
+          "item": 49235,
+          "name": "Grade 4 Gemdraught of Dexterity"
+        },
+        {
+          "action": 2242,
+          "name": "Gust Slash"
+        },
+        {
+          "action": 36957,
+          "name": "Dokumori"
+        },
+        {
+          "action": 16493,
+          "name": "Bunshin"
+        },
+        {
+          "action": 25774,
+          "name": "Phantom Kamaitachi"
+        },
+        {
+          "action": 36958,
+          "name": "Kunai's Bane"
+        },
+        {
+          "action": 16492,
+          "name": "Hyosho Ranryu"
+        },
+        {
+          "action": 3566,
+          "name": "Dream Within a Dream"
+        },
+        {
+          "action": 2267,
+          "name": "Raiton"
+        },
+        {
+          "action": 7403,
+          "name": "Ten Chi Jin"
+        },
+        {
+          "action": 2265,
+          "name": "Fuma Shuriken"
+        },
+        {
+          "action": 2267,
+          "name": "Raiton"
+        },
+        {
+          "action": 2271,
+          "name": "Suiton"
+        },
+        {
+          "action": 16489,
+          "name": "Meisui"
+        },
+        {
+          "action": 25778,
+          "name": "Fleeting Raiju"
+        },
+        {
+          "action": 36960,
+          "name": "Zesho Meppo"
+        },
+        {
+          "action": 36961,
+          "name": "Tenri Jindo"
+        },
+        {
+          "action": 25778,
+          "name": "Fleeting Raiju"
+        },
+        {
+          "action": 3563,
+          "name": "Armor Crush"
+        },
+        {
+          "action": 7402,
+          "name": "Bhavacakra"
+        },
+        {
+          "action": 2267,
+          "name": "Raiton"
+        },
+        {
+          "action": 25778,
+          "name": "Fleeting Raiju"
+        }
+      ]
+    },
+    {
+      "id": "b2e36ac7-8389-4576-8c86-fed138e5c114",
+      "job": "NIN",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard - 4th GCD",
+      "source": "The Balance (thebalanceffxiv.com): standard4th-1-.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 2259,
+          "name": "Ten",
+          "at": -6.5
+        },
+        {
+          "action": 2261,
+          "name": "Chi",
+          "at": -6
+        },
+        {
+          "action": 2263,
+          "name": "Jin",
+          "at": -5.5
+        },
+        {
+          "action": 2271,
+          "name": "Suiton",
+          "at": -0.9
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 2264,
+          "name": "Kassatsu"
+        },
+        {
+          "action": 2240,
+          "name": "Spinning Edge"
+        },
+        {
+          "item": 49235,
+          "name": "Grade 4 Gemdraught of Dexterity"
+        },
+        {
+          "action": 2242,
+          "name": "Gust Slash"
+        },
+        {
+          "action": 36957,
+          "name": "Dokumori"
+        },
+        {
+          "action": 16493,
+          "name": "Bunshin"
+        },
+        {
+          "action": 25774,
+          "name": "Phantom Kamaitachi"
+        },
+        {
+          "action": 3563,
+          "name": "Armor Crush"
+        },
+        {
+          "action": 36958,
+          "name": "Kunai's Bane"
+        },
+        {
+          "action": 16492,
+          "name": "Hyosho Ranryu"
+        },
+        {
+          "action": 3566,
+          "name": "Dream Within a Dream"
+        },
+        {
+          "action": 2267,
+          "name": "Raiton"
+        },
+        {
+          "action": 7403,
+          "name": "Ten Chi Jin"
+        },
+        {
+          "action": 2265,
+          "name": "Fuma Shuriken"
+        },
+        {
+          "action": 2267,
+          "name": "Raiton"
+        },
+        {
+          "action": 2271,
+          "name": "Suiton"
+        },
+        {
+          "action": 16489,
+          "name": "Meisui"
+        },
+        {
+          "action": 25778,
+          "name": "Fleeting Raiju"
+        },
+        {
+          "action": 36960,
+          "name": "Zesho Meppo"
+        },
+        {
+          "action": 36961,
+          "name": "Tenri Jindo"
+        },
+        {
+          "action": 25778,
+          "name": "Fleeting Raiju"
+        },
+        {
+          "action": 7402,
+          "name": "Bhavacakra"
+        },
+        {
+          "action": 2267,
+          "name": "Raiton"
+        },
+        {
+          "action": 25778,
+          "name": "Fleeting Raiju"
+        }
+      ]
+    },
+    {
+      "id": "3a3177d3-a083-4e80-adf3-a71df918a620",
+      "job": "PCT",
+      "level": 100,
+      "kind": "opener",
+      "name": "2nd GCD Starry Opener",
+      "source": "The Balance (thebalanceffxiv.com): pictomancer_2nd_gcd_starry_opener.png",
+      "patch": "7.2",
+      "steps": [
+        {
+          "action": 34688,
+          "name": "Rainbow Drip",
+          "at": -4.5
+        },
+        {
+          "pull": true
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 34670,
+          "name": "Pom Muse"
+        },
+        {
+          "action": 34674,
+          "name": "Striking Muse"
+        },
+        {
+          "action": 34665,
+          "name": "Wing Motif"
+        },
+        {
+          "action": 34675,
+          "name": "Starry Muse"
+        },
+        {
+          "action": 34678,
+          "name": "Hammer Stamp"
+        },
+        {
+          "action": 34683,
+          "name": "Subtractive Palette"
+        },
+        {
+          "action": 34653,
+          "name": "Blizzard in Cyan"
+        },
+        {
+          "action": 34654,
+          "name": "Stone in Yellow"
+        },
+        {
+          "action": 34655,
+          "name": "Thunder in Magenta"
+        },
+        {
+          "action": 34663,
+          "name": "Comet in Black"
+        },
+        {
+          "action": 34671,
+          "name": "Winged Muse"
+        },
+        {
+          "action": 34676,
+          "name": "Mog of the Ages"
+        },
+        {
+          "action": 34681,
+          "name": "Star Prism"
+        },
+        {
+          "action": 34679,
+          "name": "Hammer Brush"
+        },
+        {
+          "action": 34680,
+          "name": "Polishing Hammer"
+        },
+        {
+          "action": 34688,
+          "name": "Rainbow Drip"
+        },
+        {
+          "action": 34650,
+          "name": "Fire in Red"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 34651,
+          "name": "Aero in Green"
+        }
+      ]
+    },
+    {
+      "id": "7635bb41-29ee-4a42-9619-685fc8d92054",
+      "job": "PCT",
+      "level": 100,
+      "kind": "opener",
+      "name": "3rd GCD Starry Opener",
+      "source": "The Balance (thebalanceffxiv.com): pictomancer_3rd_gcd_starry_opener.png",
+      "patch": "7.2",
+      "steps": [
+        {
+          "action": 34688,
+          "name": "Rainbow Drip",
+          "at": -4.5
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 34674,
+          "name": "Striking Muse"
+        },
+        {
+          "action": 34662,
+          "name": "Holy in White"
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 34670,
+          "name": "Pom Muse"
+        },
+        {
+          "action": 34665,
+          "name": "Wing Motif"
+        },
+        {
+          "action": 34675,
+          "name": "Starry Muse"
+        },
+        {
+          "action": 34678,
+          "name": "Hammer Stamp"
+        },
+        {
+          "action": 34683,
+          "name": "Subtractive Palette"
+        },
+        {
+          "action": 34653,
+          "name": "Blizzard in Cyan"
+        },
+        {
+          "action": 34654,
+          "name": "Stone in Yellow"
+        },
+        {
+          "action": 34655,
+          "name": "Thunder in Magenta"
+        },
+        {
+          "action": 34663,
+          "name": "Comet in Black"
+        },
+        {
+          "action": 34671,
+          "name": "Winged Muse"
+        },
+        {
+          "action": 34676,
+          "name": "Mog of the Ages"
+        },
+        {
+          "action": 34681,
+          "name": "Star Prism"
+        },
+        {
+          "action": 34679,
+          "name": "Hammer Brush"
+        },
+        {
+          "action": 34680,
+          "name": "Polishing Hammer"
+        },
+        {
+          "action": 34688,
+          "name": "Rainbow Drip"
+        },
+        {
+          "action": 34650,
+          "name": "Fire in Red"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 34666,
+          "name": "Claw Motif"
+        },
+        {
+          "action": 34672,
+          "name": "Clawed Muse"
+        }
+      ]
+    },
+    {
+      "id": "8bbd91f4-ff84-4993-b221-9fb3cb9f6470",
+      "job": "PLD",
+      "level": 100,
+      "kind": "loop",
+      "name": "Filler Loop",
+      "source": "The Balance (thebalanceffxiv.com): 100rotation.png",
+      "patch": "7.16",
+      "steps": [
+        {
+          "action": 3539,
+          "name": "Royal Authority"
+        },
+        {
+          "action": 16460,
+          "name": "Atonement"
+        },
+        {
+          "action": 9,
+          "name": "Fast Blade"
+        },
+        {
+          "action": 15,
+          "name": "Riot Blade"
+        },
+        {
+          "action": 36918,
+          "name": "Supplication"
+        },
+        {
+          "action": 7384,
+          "name": "Holy Spirit"
+        },
+        {
+          "action": 36919,
+          "name": "Sepulchre"
+        }
+      ]
+    },
+    {
+      "id": "0301b4b2-deae-4342-8854-1951e9281e12",
+      "job": "PLD",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard Opener",
+      "source": "The Balance (thebalanceffxiv.com): 100open.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 7384,
+          "name": "Holy Spirit",
+          "at": -1.75
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 9,
+          "name": "Fast Blade"
+        },
+        {
+          "action": 15,
+          "name": "Riot Blade"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 3539,
+          "name": "Royal Authority"
+        },
+        {
+          "action": 20,
+          "name": "Fight or Flight"
+        },
+        {
+          "action": 36921,
+          "name": "Imperator"
+        },
+        {
+          "action": 16459,
+          "name": "Confiteor"
+        },
+        {
+          "action": 23,
+          "name": "Circle of Scorn"
+        },
+        {
+          "action": 25747,
+          "name": "Expiacion"
+        },
+        {
+          "action": 25748,
+          "name": "Blade of Faith"
+        },
+        {
+          "action": 16461,
+          "name": "Intervene"
+        },
+        {
+          "action": 25749,
+          "name": "Blade of Truth"
+        },
+        {
+          "action": 16461,
+          "name": "Intervene"
+        },
+        {
+          "action": 25750,
+          "name": "Blade of Valor"
+        },
+        {
+          "action": 36922,
+          "name": "Blade of Honor"
+        },
+        {
+          "action": 3538,
+          "name": "Goring Blade"
+        },
+        {
+          "action": 16460,
+          "name": "Atonement"
+        },
+        {
+          "action": 36918,
+          "name": "Supplication"
+        },
+        {
+          "action": 36919,
+          "name": "Sepulchre"
+        },
+        {
+          "action": 7384,
+          "name": "Holy Spirit"
+        }
+      ]
+    },
+    {
+      "id": "9daab414-d95c-4113-85a7-46d11d6cb9b2",
+      "job": "RDM",
+      "level": 100,
+      "kind": "opener",
+      "name": "Early C6 Opener",
+      "source": "The Balance (thebalanceffxiv.com): rdm_dt_opener2.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 25856,
+          "name": "Veraero III",
+          "at": -5
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7518,
+          "name": "Acceleration"
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7517,
+          "name": "Fleche"
+        },
+        {
+          "action": 7519,
+          "name": "Contre Sixte"
+        },
+        {
+          "action": 37006,
+          "name": "Grand Impact"
+        },
+        {
+          "action": 7520,
+          "name": "Embolden"
+        },
+        {
+          "action": 7521,
+          "name": "Manafication"
+        },
+        {
+          "action": 7527,
+          "name": "Enchanted Riposte"
+        },
+        {
+          "action": 16527,
+          "name": "Engagement"
+        },
+        {
+          "action": 7528,
+          "name": "Enchanted Zwerchhau"
+        },
+        {
+          "action": 7506,
+          "name": "Corps-a-corps"
+        },
+        {
+          "action": 7529,
+          "name": "Enchanted Redoublement"
+        },
+        {
+          "action": 37005,
+          "name": "Vice of Thorns"
+        },
+        {
+          "action": 7526,
+          "name": "Verholy"
+        },
+        {
+          "action": 16527,
+          "name": "Engagement"
+        },
+        {
+          "action": 7506,
+          "name": "Corps-a-corps"
+        },
+        {
+          "action": 16530,
+          "name": "Scorch"
+        },
+        {
+          "action": 25858,
+          "name": "Resolution"
+        },
+        {
+          "action": 7518,
+          "name": "Acceleration"
+        },
+        {
+          "action": 37007,
+          "name": "Prefulgence"
+        },
+        {
+          "action": 37006,
+          "name": "Grand Impact"
+        },
+        {
+          "action": 7510,
+          "name": "Verfire"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 7517,
+          "name": "Fleche"
+        },
+        {
+          "action": 7511,
+          "name": "Verstone"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 7510,
+          "name": "Verfire"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 7519,
+          "name": "Contre Sixte"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        }
+      ]
+    },
+    {
+      "id": "b2784da2-1622-43d1-82a7-bb8d2dc71fb9",
+      "job": "RDM",
+      "level": 100,
+      "kind": "opener",
+      "name": "Single Weave Potion",
+      "source": "The Balance (thebalanceffxiv.com): rdm_dt_opener3.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 25856,
+          "name": "Veraero III",
+          "at": -5
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7517,
+          "name": "Fleche"
+        },
+        {
+          "action": 7518,
+          "name": "Acceleration"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 37006,
+          "name": "Grand Impact"
+        },
+        {
+          "action": 7520,
+          "name": "Embolden"
+        },
+        {
+          "action": 7521,
+          "name": "Manafication"
+        },
+        {
+          "action": 7527,
+          "name": "Enchanted Riposte"
+        },
+        {
+          "action": 7519,
+          "name": "Contre Sixte"
+        },
+        {
+          "action": 7528,
+          "name": "Enchanted Zwerchhau"
+        },
+        {
+          "action": 16527,
+          "name": "Engagement"
+        },
+        {
+          "action": 7529,
+          "name": "Enchanted Redoublement"
+        },
+        {
+          "action": 7506,
+          "name": "Corps-a-corps"
+        },
+        {
+          "action": 7526,
+          "name": "Verholy"
+        },
+        {
+          "action": 37005,
+          "name": "Vice of Thorns"
+        },
+        {
+          "action": 16527,
+          "name": "Engagement"
+        },
+        {
+          "action": 16530,
+          "name": "Scorch"
+        },
+        {
+          "action": 7506,
+          "name": "Corps-a-corps"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 25858,
+          "name": "Resolution"
+        },
+        {
+          "action": 7518,
+          "name": "Acceleration"
+        },
+        {
+          "action": 37007,
+          "name": "Prefulgence"
+        },
+        {
+          "action": 37006,
+          "name": "Grand Impact"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7517,
+          "name": "Fleche"
+        },
+        {
+          "action": 7511,
+          "name": "Verstone"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 7510,
+          "name": "Verfire"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 37004,
+          "name": "Jolt III"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 37004,
+          "name": "Jolt III"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7519,
+          "name": "Contre Sixte"
+        }
+      ]
+    },
+    {
+      "id": "73c314c2-89df-4245-af15-b533bdbf030f",
+      "job": "RDM",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard Opener",
+      "source": "The Balance (thebalanceffxiv.com): rdm_dt_opener1.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 25856,
+          "name": "Veraero III",
+          "at": -5
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7517,
+          "name": "Fleche"
+        },
+        {
+          "action": 7518,
+          "name": "Acceleration"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7520,
+          "name": "Embolden"
+        },
+        {
+          "action": 7521,
+          "name": "Manafication"
+        },
+        {
+          "action": 7527,
+          "name": "Enchanted Riposte"
+        },
+        {
+          "action": 7519,
+          "name": "Contre Sixte"
+        },
+        {
+          "action": 7528,
+          "name": "Enchanted Zwerchhau"
+        },
+        {
+          "action": 16527,
+          "name": "Engagement"
+        },
+        {
+          "action": 7529,
+          "name": "Enchanted Redoublement"
+        },
+        {
+          "action": 7506,
+          "name": "Corps-a-corps"
+        },
+        {
+          "action": 7526,
+          "name": "Verholy"
+        },
+        {
+          "action": 37005,
+          "name": "Vice of Thorns"
+        },
+        {
+          "action": 16530,
+          "name": "Scorch"
+        },
+        {
+          "action": 16527,
+          "name": "Engagement"
+        },
+        {
+          "action": 7506,
+          "name": "Corps-a-corps"
+        },
+        {
+          "action": 25858,
+          "name": "Resolution"
+        },
+        {
+          "action": 37007,
+          "name": "Prefulgence"
+        },
+        {
+          "action": 37006,
+          "name": "Grand Impact"
+        },
+        {
+          "action": 7518,
+          "name": "Acceleration"
+        },
+        {
+          "action": 7510,
+          "name": "Verfire"
+        },
+        {
+          "action": 37006,
+          "name": "Grand Impact"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7517,
+          "name": "Fleche"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 7510,
+          "name": "Verfire"
+        },
+        {
+          "action": 25855,
+          "name": "Verthunder III"
+        },
+        {
+          "action": 7511,
+          "name": "Verstone"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 25856,
+          "name": "Veraero III"
+        },
+        {
+          "action": 7519,
+          "name": "Contre Sixte"
+        }
+      ]
+    },
+    {
+      "id": "34c77783-4789-47c5-bb17-6596b129352a",
+      "job": "RPR",
+      "level": 100,
+      "kind": "opener",
+      "name": "Opener · 2nd GCD AC",
+      "source": "The Balance (thebalanceffxiv.com): second-gcd-ac.png",
+      "patch": "7.0",
+      "steps": [
+        {
+          "action": 24386,
+          "name": "Harpe",
+          "at": -1.7
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 24378,
+          "name": "Shadow of Death"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 24380,
+          "name": "Soul Slice"
+        },
+        {
+          "action": 24405,
+          "name": "Arcane Circle"
+        },
+        {
+          "action": 24393,
+          "name": "Gluttony"
+        },
+        {
+          "action": 36970,
+          "name": "Executioner's Gibbet"
+        },
+        {
+          "action": 36971,
+          "name": "Executioner's Gallows"
+        },
+        {
+          "action": 24380,
+          "name": "Soul Slice"
+        },
+        {
+          "action": 24385,
+          "name": "Plentiful Harvest"
+        },
+        {
+          "action": 24394,
+          "name": "Enshroud"
+        },
+        {
+          "action": 24395,
+          "name": "Void Reaping"
+        },
+        {
+          "action": 36969,
+          "name": "Sacrificium"
+        },
+        {
+          "action": 24396,
+          "name": "Cross Reaping"
+        },
+        {
+          "action": 24399,
+          "name": "Lemure's Slice"
+        },
+        {
+          "action": 24395,
+          "name": "Void Reaping"
+        },
+        {
+          "action": 24396,
+          "name": "Cross Reaping"
+        },
+        {
+          "action": 24399,
+          "name": "Lemure's Slice"
+        },
+        {
+          "action": 24398,
+          "name": "Communio"
+        },
+        {
+          "action": 36973,
+          "name": "Perfectio"
+        },
+        {
+          "action": 24390,
+          "name": "Unveiled Gibbet"
+        },
+        {
+          "action": 24382,
+          "name": "Gibbet"
+        },
+        {
+          "action": 24378,
+          "name": "Shadow of Death"
+        },
+        {
+          "action": 24373,
+          "name": "Slice"
+        }
+      ]
+    },
+    {
+      "id": "5724b3ff-05dc-4e16-89a1-50b0da552106",
+      "job": "SAM",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard Opener",
+      "source": "The Balance (thebalanceffxiv.com): samurai-opener.jpeg",
+      "patch": "7.05",
+      "steps": [
+        {
+          "action": 7499,
+          "name": "Meikyo Shisui",
+          "at": -14
+        },
+        {
+          "action": 7546,
+          "name": "True North",
+          "at": -5
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 7481,
+          "name": "Gekko"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 7482,
+          "name": "Kasha"
+        },
+        {
+          "action": 16482,
+          "name": "Ikishoten"
+        },
+        {
+          "action": 7480,
+          "name": "Yukikaze"
+        },
+        {
+          "action": 36966,
+          "name": "Tendo Setsugekka"
+        },
+        {
+          "action": 16481,
+          "name": "Hissatsu: Senei"
+        },
+        {
+          "action": 36968,
+          "name": "Tendo Kaeshi Setsugekka"
+        },
+        {
+          "action": 7499,
+          "name": "Meikyo Shisui"
+        },
+        {
+          "action": 7481,
+          "name": "Gekko"
+        },
+        {
+          "action": 36964,
+          "name": "Zanshin"
+        },
+        {
+          "action": 7489,
+          "name": "Higanbana"
+        },
+        {
+          "action": 25781,
+          "name": "Ogi Namikiri"
+        },
+        {
+          "action": 16487,
+          "name": "Shoha"
+        },
+        {
+          "action": 25782,
+          "name": "Kaeshi: Namikiri"
+        },
+        {
+          "action": 7482,
+          "name": "Kasha"
+        },
+        {
+          "action": 7490,
+          "name": "Hissatsu: Shinten"
+        },
+        {
+          "action": 7481,
+          "name": "Gekko"
+        },
+        {
+          "action": 7492,
+          "name": "Hissatsu: Gyoten"
+        },
+        {
+          "action": 36963,
+          "name": "Gyofu"
+        },
+        {
+          "action": 7480,
+          "name": "Yukikaze"
+        },
+        {
+          "action": 7490,
+          "name": "Hissatsu: Shinten"
+        },
+        {
+          "action": 36966,
+          "name": "Tendo Setsugekka"
+        },
+        {
+          "action": 36968,
+          "name": "Tendo Kaeshi Setsugekka"
+        }
+      ]
+    },
+    {
+      "id": "1adcd2b8-64af-47f0-959a-0447ff8d1e3d",
+      "job": "SMN",
+      "level": 100,
+      "kind": "opener",
+      "name": "Dawntrail General Opener",
+      "source": "The Balance (thebalanceffxiv.com): summoner-dawntrail-general-opener.png",
+      "patch": "7.5",
+      "steps": [
+        {
+          "action": 3579,
+          "name": "Ruin III",
+          "at": -1.5
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 36992,
+          "name": "Summon Solar Bahamut"
+        },
+        {
+          "item": 49237,
+          "name": "Grade 4 Gemdraught of Intelligence"
+        },
+        {
+          "action": 36994,
+          "name": "Umbral Impulse"
+        },
+        {
+          "action": 25801,
+          "name": "Searing Light"
+        },
+        {
+          "action": 36994,
+          "name": "Umbral Impulse"
+        },
+        {
+          "action": 36994,
+          "name": "Umbral Impulse"
+        },
+        {
+          "action": 16508,
+          "name": "Energy Drain"
+        },
+        {
+          "action": 36994,
+          "name": "Umbral Impulse"
+        },
+        {
+          "action": 36998,
+          "name": "Enkindle Solar Bahamut"
+        },
+        {
+          "action": 36990,
+          "name": "Necrotize"
+        },
+        {
+          "action": 36994,
+          "name": "Umbral Impulse"
+        },
+        {
+          "action": 36996,
+          "name": "Sunflare"
+        },
+        {
+          "action": 36990,
+          "name": "Necrotize"
+        },
+        {
+          "action": 36994,
+          "name": "Umbral Impulse"
+        },
+        {
+          "action": 36991,
+          "name": "Searing Flash"
+        },
+        {
+          "action": 25839,
+          "name": "Summon Titan II"
+        },
+        {
+          "action": 25824,
+          "name": "Topaz Rite"
+        },
+        {
+          "action": 25836,
+          "name": "Mountain Buster"
+        },
+        {
+          "action": 25824,
+          "name": "Topaz Rite"
+        },
+        {
+          "action": 25836,
+          "name": "Mountain Buster"
+        },
+        {
+          "action": 25824,
+          "name": "Topaz Rite"
+        },
+        {
+          "action": 25836,
+          "name": "Mountain Buster"
+        },
+        {
+          "action": 25824,
+          "name": "Topaz Rite"
+        },
+        {
+          "action": 25836,
+          "name": "Mountain Buster"
+        },
+        {
+          "action": 25840,
+          "name": "Summon Garuda II"
+        },
+        {
+          "action": 7561,
+          "name": "Swiftcast"
+        },
+        {
+          "action": 25837,
+          "name": "Slipstream"
+        }
+      ]
+    },
+    {
+      "id": "a142963d-3132-4f25-901a-aa6b422f3393",
+      "job": "VPR",
+      "level": 100,
+      "kind": "opener",
+      "name": "Standard Opener (7.5)",
+      "source": "The Balance (thebalanceffxiv.com): vpr_standard_opener.png",
+      "patch": "7.5",
+      "steps": [
+        {
+          "action": 34646,
+          "name": "Slither",
+          "at": -0.5
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 34606,
+          "name": "Steel Fangs"
+        },
+        {
+          "action": 34647,
+          "name": "Serpent's Ire"
+        },
+        {
+          "action": 34609,
+          "name": "Swiftskin's Sting"
+        },
+        {
+          "action": 34620,
+          "name": "Vicewinder"
+        },
+        {
+          "item": 49235,
+          "name": "Grade 4 Gemdraught of Dexterity"
+        },
+        {
+          "action": 34621,
+          "name": "Hunter's Coil"
+        },
+        {
+          "action": 34636,
+          "name": "Twinfang Bite"
+        },
+        {
+          "action": 34637,
+          "name": "Twinblood Bite"
+        },
+        {
+          "action": 34622,
+          "name": "Swiftskin's Coil"
+        },
+        {
+          "action": 34637,
+          "name": "Twinblood Bite"
+        },
+        {
+          "action": 34636,
+          "name": "Twinfang Bite"
+        },
+        {
+          "action": 34626,
+          "name": "Reawaken"
+        },
+        {
+          "action": 34627,
+          "name": "First Generation"
+        },
+        {
+          "action": 34640,
+          "name": "First Legacy"
+        },
+        {
+          "action": 34628,
+          "name": "Second Generation"
+        },
+        {
+          "action": 34641,
+          "name": "Second Legacy"
+        },
+        {
+          "action": 34629,
+          "name": "Third Generation"
+        },
+        {
+          "action": 34642,
+          "name": "Third Legacy"
+        },
+        {
+          "action": 34630,
+          "name": "Fourth Generation"
+        },
+        {
+          "action": 34643,
+          "name": "Fourth Legacy"
+        },
+        {
+          "action": 34631,
+          "name": "Ouroboros"
+        },
+        {
+          "action": 34633,
+          "name": "Uncoiled Fury"
+        },
+        {
+          "action": 34644,
+          "name": "Uncoiled Twinfang"
+        },
+        {
+          "action": 34645,
+          "name": "Uncoiled Twinblood"
+        },
+        {
+          "action": 34633,
+          "name": "Uncoiled Fury"
+        },
+        {
+          "action": 34644,
+          "name": "Uncoiled Twinfang"
+        },
+        {
+          "action": 34645,
+          "name": "Uncoiled Twinblood"
+        },
+        {
+          "action": 34612,
+          "name": "Hindsting Strike"
+        },
+        {
+          "action": 34634,
+          "name": "Death Rattle"
+        },
+        {
+          "action": 34620,
+          "name": "Vicewinder"
+        },
+        {
+          "action": 34621,
+          "name": "Hunter's Coil"
+        },
+        {
+          "action": 34636,
+          "name": "Twinfang Bite"
+        },
+        {
+          "action": 34637,
+          "name": "Twinblood Bite"
+        },
+        {
+          "action": 34622,
+          "name": "Swiftskin's Coil"
+        },
+        {
+          "action": 34637,
+          "name": "Twinblood Bite"
+        },
+        {
+          "action": 34636,
+          "name": "Twinfang Bite"
+        }
+      ]
+    },
+    {
+      "id": "9a5a54c9-2616-41af-9153-7015c4217ce3",
+      "job": "WAR",
+      "level": 100,
+      "kind": "opener",
+      "name": "Dawntrail Warrior Opener",
+      "source": "The Balance (thebalanceffxiv.com): warrior-dawntrail-opener-updated-2.png",
+      "patch": "7.2",
+      "steps": [
+        {
+          "action": 46,
+          "name": "Tomahawk",
+          "at": -0.7
+        },
+        {
+          "pull": true
+        },
+        {
+          "action": 52,
+          "name": "Infuriate"
+        },
+        {
+          "action": 31,
+          "name": "Heavy Swing"
+        },
+        {
+          "action": 37,
+          "name": "Maim"
+        },
+        {
+          "action": 45,
+          "name": "Storm's Eye"
+        },
+        {
+          "action": 7389,
+          "name": "Inner Release"
+        },
+        {
+          "item": 49234,
+          "name": "Grade 4 Gemdraught of Strength"
+        },
+        {
+          "action": 16465,
+          "name": "Inner Chaos"
+        },
+        {
+          "action": 7387,
+          "name": "Upheaval"
+        },
+        {
+          "action": 7386,
+          "name": "Onslaught"
+        },
+        {
+          "action": 3549,
+          "name": "Fell Cleave"
+        },
+        {
+          "action": 7386,
+          "name": "Onslaught"
+        },
+        {
+          "action": 3549,
+          "name": "Fell Cleave"
+        },
+        {
+          "action": 7386,
+          "name": "Onslaught"
+        },
+        {
+          "action": 3549,
+          "name": "Fell Cleave"
+        },
+        {
+          "action": 36924,
+          "name": "Primal Wrath"
+        },
+        {
+          "action": 52,
+          "name": "Infuriate"
+        },
+        {
+          "action": 25753,
+          "name": "Primal Rend"
+        },
+        {
+          "action": 36925,
+          "name": "Primal Ruination"
+        },
+        {
+          "action": 16465,
+          "name": "Inner Chaos"
+        },
+        {
+          "action": 31,
+          "name": "Heavy Swing"
+        },
+        {
+          "action": 37,
+          "name": "Maim"
+        },
+        {
+          "action": 42,
+          "name": "Storm's Path"
+        },
+        {
+          "action": 3549,
+          "name": "Fell Cleave"
+        },
+        {
+          "action": 52,
+          "name": "Infuriate"
+        },
+        {
+          "action": 16465,
+          "name": "Inner Chaos"
+        }
+      ]
+    },
+    {
+      "id": "1fdbc663-f102-4235-956e-300ba8ab5ea7",
+      "job": "WHM",
+      "level": 100,
+      "kind": "opener",
+      "name": "Double Misery Opener",
+      "source": "The Balance (thebalanceffxiv.com): white-mage-double-misery-opener.png",
+      "patch": "7.4",
+      "steps": [
+        {
+          "action": 25859,
+          "name": "Glare III",
+          "at": -2.3
+        },
+        {
+          "pull": true
+        },
+        {
+          "item": 49238,
+          "name": "Grade 4 Gemdraught of Mind"
+        },
+        {
+          "action": 16532,
+          "name": "Dia"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 136,
+          "name": "Presence of Mind"
+        },
+        {
+          "action": 37009,
+          "name": "Glare IV"
+        },
+        {
+          "action": 3571,
+          "name": "Assize"
+        },
+        {
+          "action": 16535,
+          "name": "Afflatus Misery"
+        },
+        {
+          "action": 37009,
+          "name": "Glare IV"
+        },
+        {
+          "action": 37009,
+          "name": "Glare IV"
+        },
+        {
+          "action": 16534,
+          "name": "Afflatus Rapture"
+        },
+        {
+          "action": 16534,
+          "name": "Afflatus Rapture"
+        },
+        {
+          "action": 16534,
+          "name": "Afflatus Rapture"
+        },
+        {
+          "action": 16535,
+          "name": "Afflatus Misery"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 16532,
+          "name": "Dia"
+        }
+      ]
+    },
+    {
+      "id": "3dcf001d-7652-4851-b204-4897604cc948",
+      "job": "WHM",
+      "level": 100,
+      "kind": "opener",
+      "name": "Early DoT Refresh Opener",
+      "source": "The Balance (thebalanceffxiv.com): white-mage-early-dot-refresh-opener.png",
+      "patch": "7.4",
+      "steps": [
+        {
+          "action": 25859,
+          "name": "Glare III",
+          "at": -2.3
+        },
+        {
+          "pull": true
+        },
+        {
+          "item": 49238,
+          "name": "Grade 4 Gemdraught of Mind"
+        },
+        {
+          "action": 16532,
+          "name": "Dia"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 136,
+          "name": "Presence of Mind"
+        },
+        {
+          "action": 37009,
+          "name": "Glare IV"
+        },
+        {
+          "action": 3571,
+          "name": "Assize"
+        },
+        {
+          "action": 16535,
+          "name": "Afflatus Misery"
+        },
+        {
+          "action": 37009,
+          "name": "Glare IV"
+        },
+        {
+          "action": 37009,
+          "name": "Glare IV"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 25859,
+          "name": "Glare III"
+        },
+        {
+          "action": 16532,
+          "name": "Dia"
+        }
+      ]
+    }
+  ]
+}

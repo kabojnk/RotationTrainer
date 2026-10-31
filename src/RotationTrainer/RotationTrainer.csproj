@@ -17,6 +17,8 @@
          IconUrl; the embedded copy is the settings window's logo, since the release zip has no images folder. -->
     <Content Include="images\icon.png" CopyToOutputDirectory="PreserveNewest" />
     <EmbeddedResource Include="images\icon.png" LogicalName="RotationTrainer.icon.png" />
+    <!-- Rotations every library starts with (see Plugin.BuiltInRotations). -->
+    <EmbeddedResource Include="..\..\presets\balance-openers.json" LogicalName="RotationTrainer.presets.json" />
   </ItemGroup>
 
   <ItemGroup>

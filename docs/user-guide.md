@@ -28,7 +28,7 @@ Updates arrive through Dalamud like any other plugin. You will see them in `/xlp
 
 1. Log in on a combat job.
 2. Type `/rtrain` to open the settings window.
-3. Get a rotation for your job. Either:
+3. Get a rotation for your job. The library already has openers for 18 jobs (all but Dancer, Scholar and Sage), transcribed from The Balance's guides (see [Credits](#credits)). Otherwise:
    - open the **Rotation library** tab and click **Import JSON...** (or **Paste from clipboard**), or
    - click **New in builder** and build an opener yourself (see [The rotation builder](#the-rotation-builder)).
 4. Open the **Practice** tab and pick your **Opener** (and, if you have one, a loop under **Then loop**).
@@ -173,7 +173,7 @@ Number fields apply when you finish typing.
 
 ### Rotation library tab
 
-Every opener and loop you have imported or built.
+Every opener and loop you have imported or built, plus the built-in ones. The plugin adds its built-in rotations to your library the first time it loads, and adds any new ones after an update. Built-in rotations are ordinary library entries: you can edit or delete them, and a deleted one is not added back.
 
 | Button | What it does |
 |---|---|
@@ -181,6 +181,7 @@ Every opener and loop you have imported or built.
 | **Import JSON...** | Pick a `.json` file to import. |
 | **Paste from clipboard** | Imports JSON you copied (for example, from a friend). |
 | **Export selected** | Saves the selected rotations to a `.json` file. Click rows to select them. |
+| **Restore built-ins** | Adds back any built-in rotation you have deleted. Ones you have edited are left as they are. |
 
 The table lists **Job**, **Name**, **Kind** (Opener or Loop) and **Notes**. Notes show a gold `potion` chip if the rotation has a potion, and a chip like `-4.5s` for the earliest pre-pull time. Each row has **Edit**, **Export** and **Delete**. Delete asks "Delete?" with **Yes** and **No** first.
 
@@ -301,3 +302,9 @@ Your saved library could not be loaded or saved. The banner says what was skippe
 
 **Where can I report a problem?**
 Open `/rtrain debug` and include what it shows, plus any errors from `/xllog`.
+
+## Credits
+
+Rotation Trainer is made by Big Bear. The **Credits** tab in the settings window shows the same information.
+
+The built-in openers and loops are transcribed from the opener charts in [The Balance](https://www.thebalanceffxiv.com)'s job guides. Each rotation's source names the chart it came from. Thank you to The Balance's guide writers; read their guides for the reasoning behind each opener and how to adapt it to a fight.
