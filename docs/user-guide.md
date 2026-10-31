@@ -130,8 +130,10 @@ Choose what to drill on your current job.
 | **Then loop** | A loop to continue into after the opener, or "None". |
 | (preview) | A row of icons showing the start of the chosen opener, with "+N more" if it is longer. Hover for names. |
 | **Use potions** | Adds potion weaves to openers that have them. Off by default because potions are consumed. |
-| **Potion counts** | Shown when Use potions is on. **Any potion** (the default) counts any main-stat tincture or gemdraught for a potion step, so you can practise with cheap ones instead of burning your best. **Exact potion** counts only the potion the rotation names. |
+| **Potion counts** | Shown when Use potions is on. **Any potion** (the default) counts any medicine item (HP potions, ethers, elixirs, tinctures, gemdraughts…) for a potion step, so you can practise with cheap ones instead of burning your best. **Exact potion** counts only the potion the rotation names. |
 | **Start with in-game countdown** | Typing `/countdown` lines up pre-pull steps (for example, a cast at 4.5). On by default. |
+| **Allow abilities to be used out of order when neighbouring** | On by default. A weave used before another weave between the same two GCDs counts (say, the potion before No Mercy in a double weave), and so does the next GCD used before the current one. The early step pops where it is, the trail carries on from the step you skipped, and "Wrong order" shows above the trail for a second. Never across the Pull. Off: any step out of order is a wrong press. |
+| **Reset striking dummy enmity on restart** | On by default. When the run restarts (Restart or Restart opener), or a `/countdown` starts or is cancelled, striking dummies fighting you reset their enmity, as their own Reset Enmity menu option does, so you start out of combat. Only striking dummies are touched. |
 | **Reset when leaving combat** | Starts your run over when combat ends. On by default. |
 | **Hide trail** / **Show trail** | Toggles the trail, same as `/rtrain trail`. |
 | **Restart opener** | Starts the current run over from the first step. Greyed out when there is nothing to practise. |
