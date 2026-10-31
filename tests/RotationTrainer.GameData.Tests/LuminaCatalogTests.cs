@@ -100,4 +100,16 @@ public class LuminaCatalogTests(GameDataFixture data)
         Assert.False(Catalog.IsKnownJob("CRP"));
         Assert.False(Catalog.IsKnownJob("THM"));
     }
+
+    [SqpackFact]
+    public void AnyMedicineItemIsMedicine()
+    {
+        var items = data.Excel.GetSheet<Lumina.Excel.Sheets.Item>(Lumina.Data.Language.English);
+        uint Id(string name) => items.First(i => i.Name.ExtractText() == name).RowId;
+
+        Assert.True(data.Catalog.IsMedicine(Id("Hi-Potion")));
+        Assert.True(data.Catalog.IsMedicine(Id("Elixir")));
+        Assert.True(data.Catalog.IsMedicine(Id("Grade 4 Gemdraught of Mind")));
+        Assert.False(data.Catalog.IsMedicine(Id("Fire Shard")));
+    }
 }

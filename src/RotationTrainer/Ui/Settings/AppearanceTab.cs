@@ -3,7 +3,7 @@ using RotationTrainer.Ui.Glass;
 
 namespace RotationTrainer.Ui.Settings;
 
-/// <summary>Accent color, window and trail opacity, and the trail's backing.</summary>
+/// <summary>Accent colour, window and trail opacity, and the trail's backing.</summary>
 internal sealed class AppearanceTab(Plugin plugin)
 {
     private const int MinOpacityPercent = 20;

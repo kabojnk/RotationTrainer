@@ -95,14 +95,23 @@ For each of Rail, Compact Rail and Timeline, in both Big and Small, compare agai
 2. **Buttons:** each shows its tooltip and lightens on hover; Hide turns red. Restart restarts the run (disabled with nothing picked). Lock toggles Lock position and its icon. Settings toggles the settings window. Hide hides the trail; `/rtrain trail` brings it back with the run kept.
 3. **Locked:** with Lock position on, every title bar button and Skip still take clicks, while the rest of the trail lets clicks through.
 4. **Skip:** a small Skip button sits flush right on the caption line. Clicking it pops the current step, like using it; on a paused Auto run it resumes. It is gone on "Opener complete" and the empty trail. During `/countdown` the number sits left of Skip without overlapping it.
-5. **Tint:** the glass strip leans toward the accent colour, more at the top, for every accent.
-6. **Potion counts:** with Use potions on, the Practice tab shows Potion counts, set to Any potion on a fresh config. With Any potion, the caption reads "Next: any potion", and any main-stat tincture or gemdraught (any grade, any stat) pops the step. With Exact potion, only the named potion pops it, and others flash wrong.
+5. **Tint:** the glass strip leans towards the accent colour, more at the top, for every accent.
+6. **Potion counts:** with Use potions on, the Practice tab shows Potion counts, set to Any potion on a fresh config. With Any potion, the caption reads "Next: any potion", and any medicine item (a Hi-Potion, an ether, any grade or stat of tincture or gemdraught) pops the step. With Exact potion, only the named potion pops it, and others flash wrong.
 7. **Replacement keybinds:** on PCT out of combat, with Living Muse, Fire in Red, Creature Motif and Hammer Stamp on your bars, the trail's chips for Pom Muse, Aero in Green, Water in Blue, Pom Motif and Hammer Brush show those buttons' keys, not `?`. Also check VPR (Hunter's Sting on Steel Fangs), SAM (Midare Setsugekka on Iaijutsu) and NIN (Raiton on Ninjutsu) if you play them.
 8. **Remembered buttons:** RDM's Verholy, Scorch and Resolution, NIN's Zesho Meppo and VPR's Generations and Ouroboros show `?` until you've seen them on your bar once. After that they show the right key, also after reloading the plugin.
 9. **Themes:** Appearance has Theme: Midnight, Graphite, Sakura. Graphite makes the trail and the settings and builder windows neutral dark grey. Sakura makes them light pink with dark plum text, white keybind chips with plum text and a pastel pink accent, and sets the accent to Sakura and both opacities to at least 90%. Check every tab, the builder, popups (the import conflict window, delete confirm), tooltips (trail buttons, Skip, library buttons) and the trail's caption, Pull line, timeline ticks and countdown for readable text on Sakura.
 10. **Keybind as the bar changes:** for an ability with no predicted key (e.g. RDM Verholy), the chip shows `?` until your bar shows it, then the key within a moment.
 11. **Controller chips:** on a controller, with abilities on the active cross hotbar set, each chip shows LT or RT and a glyph. Living Muse on LT + D-pad Left shows LT with the D-pad's left arm lit; Sprint on LT + Y/triangle shows LT with the top face button lit; something on RT + A/cross shows RT with the bottom face button lit. `/rtrain debug` shows the active set and slot count on its Cross hotbar line. An ability only on another set shows that set first (e.g. `S3 LT` and the glyph); once you switch to that set the `S3` goes away. The active set always wins when both have it.
 12. **Logo:** the settings window title shows the logo before "Rotation Trainer". The plugin's entry in `/xlplugins` shows the logo.
+
+## Out of order and dummy enmity
+1. **Weaves out of order:** in an opener with a double weave (e.g. GNB No Mercy then the potion), use the second weave first. It pops, "Wrong order" shows above the trail in the theme's colours for about a second, and the trail stays on the first weave. Using it then moves on past both.
+2. **GCDs out of order:** use the GCD after the current one (with weaves between them, if any). It pops with "Wrong order"; the current GCD is still next.
+3. **Limits:** a GCD pressed during a weave run, a GCD two GCDs ahead, or anything across the Pull still flashes as a wrong press.
+4. **Off:** with the setting off, each of the above flashes as a wrong press and nothing pops.
+5. **Toast:** readable on Midnight, Graphite and Sakura, and not drawn over the settings window.
+6. **Dummy enmity:** hit a striking dummy, then click Restart (title bar or Practice tab). You drop out of combat within a moment. Start a `/countdown` while fighting a dummy: same. Cancel it: same. Nearby players' dummies and real enemies are untouched.
+7. **Enmity setting off:** with "Reset striking dummy enmity on restart" off, restarting leaves you in combat.
 
 ## Built-in rotations and credits
 1. **First load:** with a fresh library (rename library.json), loading the plugin adds the 34 built-in rotations. /xllog shows no "Built-in rotation" warnings.

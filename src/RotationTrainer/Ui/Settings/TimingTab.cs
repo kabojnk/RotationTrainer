@@ -48,7 +48,7 @@ internal sealed class TimingTab(Plugin plugin)
                 plugin.SaveConfig();
             }
             using (ImRaii.PushColor(ImGuiCol.Text, GlassTheme.Mute))
-                ImGui.TextWrapped("Custom lets you practice another gear set's speed.");
+                ImGui.TextWrapped("Custom lets you practise another gear set's speed.");
         }
 
         using (GlassWidgets.Card("stats"))
