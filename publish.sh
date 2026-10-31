@@ -11,7 +11,7 @@
 # runs the tests, writes repo.json (the Dalamud repo manifest), commits both, tags vX.Y.Z, pushes main and the
 # tag, and creates a GitHub release with the plugin zip.
 #
-# Needs: a clean main branch, an "origin" remote on GitHub, the GitHub CLI (gh) logged in, python3, and what
+# Needs: a clean main branch that's up to date with origin/main, an "origin" remote on GitHub, the GitHub CLI (gh) logged in, python3, and what
 # build.sh needs.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -44,7 +44,11 @@ if ! $dry; then
   gh auth status >/dev/null 2>&1 || die "gh is not logged in: run 'gh auth login'"
   [[ $(git branch --show-current) == main ]] || die "switch to main first"
   [[ -z $(git status --porcelain) ]] || die "commit or stash your changes first"
-  git fetch --tags origin 2>/dev/null || true
+  git fetch --tags origin 2>/dev/null || die "could not fetch from origin"
+  # Releasing from a main that's missing merged work would publish the old code (and the push would fail after the
+  # tag went up).
+  behind=$(git rev-list --count HEAD..origin/main)
+  [[ $behind == 0 ]] || die "main is $behind commit(s) behind origin/main: run 'git pull' first"
 fi
 
 if git rev-parse -q --verify "refs/tags/v$current" >/dev/null; then

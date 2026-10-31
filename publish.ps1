@@ -10,7 +10,7 @@
 # runs the tests, writes repo.json (the Dalamud repo manifest), commits both, tags vX.Y.Z, pushes main and the
 # tag, and creates a GitHub release with the plugin zip.
 #
-# Needs: a clean main branch, an "origin" remote on GitHub, the GitHub CLI (gh) logged in, and what build.ps1 needs.
+# Needs: a clean main branch that's up to date with origin/main, an "origin" remote on GitHub, the GitHub CLI (gh) logged in, and what build.ps1 needs.
 param(
     [ValidateSet('patch', 'minor', 'major')]
     [string]$Bump = 'patch',
@@ -46,6 +46,11 @@ if (-not $DryRun) {
     if ((git branch --show-current) -ne 'main') { Fail 'switch to main first' }
     if (git status --porcelain) { Fail 'commit or stash your changes first' }
     Quiet git fetch --tags origin | Out-Null
+    if ($LASTEXITCODE -ne 0) { Fail 'could not fetch from origin' }
+    # Releasing from a main that's missing merged work would publish the old code (and the push would fail after the
+    # tag went up).
+    $behind = [int](git rev-list --count HEAD..origin/main)
+    if ($behind -ne 0) { Fail "main is $behind commit(s) behind origin/main: run 'git pull' first" }
 }
 
 function TagExists([string]$name) { Quiet git rev-parse -q --verify "refs/tags/$name" | Out-Null; return $LASTEXITCODE -eq 0 }
