@@ -59,6 +59,7 @@ public sealed class LuminaCatalog : IAbilityCatalog
 
     private readonly Dictionary<string, Kit> _kits = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<uint, Ability> _itemsById = new();
+    private readonly HashSet<uint> _medicine;
     private readonly Dictionary<string, Ability> _itemsByName = new();
 
     public LuminaCatalog(ExcelModule excel)
@@ -68,6 +69,10 @@ public sealed class LuminaCatalog : IAbilityCatalog
             .ToList();
         Jobs = jobs.Select(j => j.Abbreviation.ExtractText()).ToList();
         var medicine = LoadMedicine(excel, jobs);
+        _medicine = excel.GetSheet<Item>(Language.English)
+            .Where(i => i.ItemUICategory.ValueNullable?.Name.ExtractText() == "Medicine")
+            .Select(i => i.RowId)
+            .ToHashSet();
         var actions = excel.GetSheet<LuminaAction>()
             .Where(a => !a.IsPvP && a.ClassJobLevel is >= 1 and <= MaxLevel && a.CooldownGroup != 0
                         && a.ClassJobCategory.RowId != 0
@@ -142,6 +147,8 @@ public sealed class LuminaCatalog : IAbilityCatalog
     public Ability? FindItem(uint id) => _itemsById.GetValueOrDefault(id);
 
     public Ability? FindItemByName(string name) => _itemsByName.GetValueOrDefault(Norm(name));
+
+    public bool IsMedicine(uint itemId) => _medicine.Contains(itemId);
 
     public IReadOnlyList<Ability> Palette(string job) =>
         _kits.TryGetValue(job, out var kit) ? kit.Palette : Array.Empty<Ability>();

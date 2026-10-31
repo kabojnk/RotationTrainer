@@ -39,6 +39,7 @@ public sealed class PracticeSession : IDisposable
     private readonly VirtualKey[] _keyboardKeys;
     private readonly IPluginLog _log;
     private readonly System.Action _saveConfig;
+    private readonly DummyEnmity _dummies;
     private readonly ActionListener _listener;
     private readonly CountdownSource _countdown;
     private readonly HotbarScanner _scanner = new();
@@ -56,9 +57,10 @@ public sealed class PracticeSession : IDisposable
     public PracticeSession(Configuration config, RotationLibrary library, IAbilityCatalog catalog, IDataManager data,
         IClientState clientState, IPlayerState player, ICondition condition, IFramework framework,
         IGamepadState gamepad, IKeyState keys, IPluginLog log, ActionListener listener, CountdownSource countdown,
-        System.Action saveConfig)
+        System.Action saveConfig, DummyEnmity dummies)
     {
         _saveConfig = saveConfig;
+        _dummies = dummies;
         _config = config;
         _library = library;
         _catalog = catalog;
@@ -135,19 +137,21 @@ public sealed class PracticeSession : IDisposable
         var latency = _config.LatencyMs / 1000.0;
         Engine = new PracticeEngine(Sequence, new Scheduler(Timing, 0.6 + latency), _config.Advance,
             (type, id) => type == StepType.Item
-                ? _catalog.FindItem(ItemIds.Normalize(id)) != null
+                ? _catalog.IsMedicine(ItemIds.Normalize(id))
                 : _catalog.FindAction(job, id) != null,
             (used, step) => _catalog.CanonicalId(job, used) == _catalog.CanonicalId(job, step),
             latency,
             _config.PotionMatch == PotionMatch.AnyPotion
-                ? (used, _) => _catalog.FindItem(used) != null
-                : null);
+                ? (used, _) => _catalog.IsMedicine(used)
+                : null,
+            _config.AllowNeighbourOrder);
         Engine.Event += OnEngineEvent;
     }
 
     /// <summary>Starts the current run over from the first step.</summary>
     public void Restart()
     {
+        ResetDummies();
         _pending.Clear();
         _attempts.Clear();
         Engine?.Reset();
@@ -163,6 +167,11 @@ public sealed class PracticeSession : IDisposable
 
     /// <summary>Moves past the current step without using it.</summary>
     public void Skip() => Engine?.Skip();
+
+    private void ResetDummies()
+    {
+        if (_config.ResetDummyEnmity) _dummies.ResetAll();
+    }
 
     // Raised on the game's thread by the hook; handled in OnUpdate.
     private void OnActionUsed(StepType type, uint id) => _pending.Enqueue((type, id));
@@ -233,12 +242,14 @@ public sealed class PracticeSession : IDisposable
             if (remaining != null && (_lastCountdown == null || remaining > _lastCountdown + CountdownRise))
             {
                 Engine.OnCountdown(remaining.Value);
+                ResetDummies();
             }
             else if (remaining == null && _lastCountdown > dt + CountdownEndSlack && Engine.Clock < 0)
             {
                 // Vanished well before reaching zero: cancelled. Running out at zero is the pull, not a cancel.
                 // (Judged by the countdown itself, because in Auto the engine clock may be paused before zero.)
                 Engine.OnCountdownCancelled();
+                ResetDummies();
             }
         }
         _lastCountdown = remaining;

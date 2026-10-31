@@ -10,7 +10,7 @@ namespace RotationTrainer.Game;
 /// <summary>
 /// Reads the 10 standard hotbars (12 slots) and 8 cross hotbars (16 slots) of the current job.
 /// Only slots that show or run an action or item (directly, or a macro with an action's icon) are reported.
-/// Item ids are normalized (HQ +1,000,000 removed); a command that is not the slot's type is reported as 0.
+/// Item ids are normalised (HQ +1,000,000 removed); a command that is not the slot's type is reported as 0.
 /// Only the cross hotbar set the cross hotbar is showing is reachable; other sets (and the expanded hold bars, whose
 /// hints aren't known to match their buttons) are reported as unreachable. Call on the framework thread only.
 /// </summary>

@@ -2,16 +2,26 @@ namespace RotationTrainer.Core;
 
 public enum AdvanceMode { Manual, Auto }
 
-public enum EngineEventKind { Popped, WrongPress, Paused, Resumed, Finished }
+/// <summary><see cref="EngineEventKind.OutOfOrder"/> follows the Popped of a neighbouring step used early.</summary>
+public enum EngineEventKind { Popped, WrongPress, Paused, Resumed, Finished, OutOfOrder }
 
 public sealed record EngineEvent(EngineEventKind Kind, int Index);
 
 /// <param name="Skipped">The player skipped the step instead of using it.</param>
+/// <param name="OutOfOrder">Used before the step it follows (see <see cref="PracticeEngine"/>).</param>
 public sealed record StepResult(int Index, uint AbilityId, double Expected, double Actual, int WrongPresses,
-    bool Skipped = false);
+    bool Skipped = false, bool OutOfOrder = false);
 
+/// <summary>
+/// Follows the player through a <see cref="PracticeSequence"/>. With neighbours allowed, a step may be used early
+/// when it is a neighbour of the current one: another weave between the same two GCDs, or, on a GCD, the next GCD
+/// (weaves between them aside), never across the pull. It pops where it is and is passed over once reached.
+/// </summary>
 public sealed class PracticeEngine
 {
+    /// <summary>How far ahead neighbours are looked for (a loop of weaves alone never ends).</summary>
+    private const int NeighbourReach = 16;
+
     private readonly PracticeSequence _sequence;
     private readonly Scheduler _scheduler;
     private readonly AdvanceMode _mode;
@@ -19,6 +29,8 @@ public sealed class PracticeEngine
     private readonly Func<uint, uint, bool> _sameAction;
     private readonly Func<uint, uint, bool> _sameItem;
     private readonly double _latency;
+    private readonly bool _allowNeighbours;
+    private readonly HashSet<int> _doneAhead = new();
     /// <summary>Per step: when it should start, and how long its cast takes.</summary>
     private readonly List<(double Expected, double Cast)> _timing = new();
     private readonly List<StepResult> _runLog = new();
@@ -27,12 +39,14 @@ public sealed class PracticeEngine
     /// <param name="sameAction">Whether a used action id counts as a step's action id (button variants);
     /// plain equality when null.</param>
     /// <param name="latencySeconds">How late a hard cast's effect may arrive after its cast ends before Auto pauses.</param>
-    /// <param name="sameItem">Whether a used item id counts as a step's item id (both HQ-normalized); plain
+    /// <param name="sameItem">Whether a used item id counts as a step's item id (both HQ-normalised); plain
     /// equality when null. Lets any potion count for a potion step.</param>
+    /// <param name="allowNeighbours">Whether a neighbouring step may be used before the current one.</param>
     public PracticeEngine(PracticeSequence sequence, Scheduler scheduler, AdvanceMode mode,
         Func<StepType, uint, bool> isRelevant, Func<uint, uint, bool>? sameAction = null, double latencySeconds = 0,
-        Func<uint, uint, bool>? sameItem = null)
+        Func<uint, uint, bool>? sameItem = null, bool allowNeighbours = false)
     {
+        _allowNeighbours = allowNeighbours;
         _sequence = sequence;
         _scheduler = scheduler;
         _mode = mode;
@@ -48,6 +62,9 @@ public sealed class PracticeEngine
     public bool IsPaused { get; private set; }
     public bool IsFinished { get; private set; }
     public IReadOnlyList<StepResult> RunLog => _runLog;
+
+    /// <summary>Whether a step after the current one was already used out of order.</summary>
+    public bool IsDone(int index) => _doneAhead.Contains(index);
     public event Action<EngineEvent>? Event;
 
     /// <summary>When the step should be started (pressed).</summary>
@@ -82,6 +99,11 @@ public sealed class PracticeEngine
 
         if (!IsStep(CurrentIndex, type, id))
         {
+            if (_allowNeighbours && Neighbours().FirstOrDefault(i => IsStep(i, type, id), -1) is var early and >= 0)
+            {
+                UseEarly(early);
+                return;
+            }
             if (_isRelevant(type, id))
             {
                 _wrongPresses++;
@@ -99,6 +121,36 @@ public sealed class PracticeEngine
         Advance(step, skipped: true);
     }
 
+    /// <summary>Steps that may be used before the current one (see the class summary), not yet done.</summary>
+    private IEnumerable<int> Neighbours()
+    {
+        var current = _sequence[CurrentIndex]!;
+        for (var i = CurrentIndex + 1; i <= CurrentIndex + NeighbourReach && _sequence[i] is { } step; i++)
+        {
+            if (step.IsPrepull != current.IsPrepull) yield break;
+            if (current.Ability.IsGcd)
+            {
+                if (!step.Ability.IsGcd) continue;
+                if (!_doneAhead.Contains(i)) yield return i;
+                yield break;
+            }
+            if (step.Ability.IsGcd) yield break;
+            if (!_doneAhead.Contains(i)) yield return i;
+        }
+    }
+
+    private void UseEarly(int index)
+    {
+        var (expected, cast) = Timing(index);
+        Clock ??= expected + cast;
+        _runLog.Add(new StepResult(index, _sequence[index]!.Ability.Id, expected, Clock.Value, _wrongPresses,
+            OutOfOrder: true));
+        _wrongPresses = 0;
+        _doneAhead.Add(index);
+        Raise(EngineEventKind.Popped, index);
+        Raise(EngineEventKind.OutOfOrder, index);
+    }
+
     private void Advance(PlannedStep step, bool skipped)
     {
         var (expected, cast) = Timing(CurrentIndex);
@@ -109,6 +161,7 @@ public sealed class PracticeEngine
         _runLog.Add(new StepResult(index, step.Ability.Id, expected, Clock.Value, _wrongPresses, skipped));
         _wrongPresses = 0;
         CurrentIndex++;
+        while (_doneAhead.Remove(CurrentIndex)) CurrentIndex++;
         Raise(EngineEventKind.Popped, index);
         if (IsPaused)
         {
@@ -169,6 +222,7 @@ public sealed class PracticeEngine
         IsPaused = false;
         IsFinished = _sequence[0] == null;
         _wrongPresses = 0;
+        _doneAhead.Clear();
         _runLog.Clear();
         _timing.Clear();
         _scheduler.Reset();

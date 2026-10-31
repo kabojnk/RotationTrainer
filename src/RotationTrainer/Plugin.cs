@@ -49,7 +49,8 @@ public sealed class Plugin : IDalamudPlugin
 
     public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commands, IDataManager data,
         ITextureProvider textures, IClientState clientState, ICondition condition, IFramework framework,
-        IGameInteropProvider interop, IPlayerState playerState, IGamepadState gamepad, IKeyState keys, IPluginLog log)
+        IGameInteropProvider interop, IPlayerState playerState, IGamepadState gamepad, IKeyState keys, IObjectTable objects,
+        IPluginLog log)
     {
         PluginInterface = pluginInterface;
         Commands = commands;
@@ -78,7 +79,7 @@ public sealed class Plugin : IDalamudPlugin
         {
             Session = new PracticeSession(Config, Library, Catalog, data, clientState, playerState, condition,
                 framework, gamepad, keys, log, Actions, Countdown,
-                () => pluginInterface.SavePluginConfig(Config));
+                () => pluginInterface.SavePluginConfig(Config), new DummyEnmity(objects, log));
             _debug = new DebugWindow(Session, Actions, Countdown);
             _settings = new SettingsWindow(this);
             _trail = new TrailWindow(Config, Session, textures, clientState, _settings.Toggle,

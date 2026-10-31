@@ -29,11 +29,12 @@ public class PracticeEngineTests
 
     private static (PracticeEngine e, List<EngineEvent> ev) Make(AdvanceMode mode = AdvanceMode.Manual,
         PracticeSequence? seq = null, Func<StepType, uint, bool>? relevant = null,
-        Func<uint, uint, bool>? sameAction = null, double latency = 0, Func<uint, uint, bool>? sameItem = null)
+        Func<uint, uint, bool>? sameAction = null, double latency = 0, Func<uint, uint, bool>? sameItem = null,
+        bool neighbors = false)
     {
         var e = new PracticeEngine(seq ?? Opener(),
             new Scheduler(new StatTimingSource(new SpeedProfile(420, 420)), 0.65), mode,
-            relevant ?? ((t, id) => id != Sprint), sameAction, latency, sameItem);
+            relevant ?? ((t, id) => id != Sprint), sameAction, latency, sameItem, neighbors);
         var ev = new List<EngineEvent>();
         e.Event += ev.Add;
         return (e, ev);
@@ -422,5 +423,101 @@ public class PracticeEngineTests
         Assert.Equal(EngineEventKind.Finished, ev[^1].Kind);
         e.Skip(); // nothing left: no-op
         Assert.Equal(2, e.RunLog.Count);
+    }
+
+    // Opener(): 0 Rainbow Drip (pre-pull), 1 potion, 2 Pom Muse, 3 Striking Muse, 4 Wing Motif, 5 Starry Muse, 6 Hammer Stamp.
+
+    [Fact]
+    public void WeavesBetweenTheSameGcdsCountInAnyOrder()
+    {
+        var (e, ev) = Make(neighbors: true);
+        Use(e, RD);
+        Use(e, Striking); // before the potion and Pom Muse
+        Assert.Equal(new EngineEvent(EngineEventKind.OutOfOrder, 3), ev[^1]);
+        Assert.Contains(new EngineEvent(EngineEventKind.Popped, 3), ev);
+        Assert.Equal(1, e.CurrentIndex);
+        Assert.True(e.IsDone(3));
+
+        e.OnActionUsed(StepType.Item, 49235);
+        Assert.Equal(2, e.CurrentIndex);
+        Use(e, Pom);
+        Assert.Equal(4, e.CurrentIndex); // Striking Muse is already done
+        Assert.Equal(new[] { 0, 3, 1, 2 }, e.RunLog.Select(r => r.Index));
+        Assert.True(e.RunLog[1].OutOfOrder);
+        Assert.False(e.RunLog[2].OutOfOrder);
+    }
+
+    [Fact]
+    public void AWeaveCannotJumpToTheNextGcd()
+    {
+        var (e, ev) = Make(neighbors: true);
+        Use(e, RD);
+        Use(e, Wing);
+        Assert.Equal(new EngineEvent(EngineEventKind.WrongPress, 1), ev[^1]);
+        Assert.Equal(1, e.CurrentIndex);
+    }
+
+    [Fact]
+    public void TheNextGcdCountsBeforeTheCurrentOne()
+    {
+        var (e, ev) = Make(neighbors: true);
+        Use(e, RD);
+        e.OnActionUsed(StepType.Item, 49235);
+        Use(e, Pom);
+        Use(e, Striking);
+        Assert.Equal(4, e.CurrentIndex);
+        Use(e, Hammer); // the GCD after Wing Motif, past the Starry Muse weave
+        Assert.Equal(new EngineEvent(EngineEventKind.OutOfOrder, 6), ev[^1]);
+        Use(e, Wing);
+        Use(e, Starry);
+        Assert.True(e.IsFinished);
+    }
+
+    [Fact]
+    public void OutOfOrderNeverCrossesThePull()
+    {
+        var (e, ev) = Make(neighbors: true);
+        Use(e, Wing); // Rainbow Drip is pre-pull; Wing Motif is after the pull
+        Assert.Equal(new EngineEvent(EngineEventKind.WrongPress, 0), ev[^1]);
+    }
+
+    [Fact]
+    public void OutOfOrderIsWrongWhenTurnedOff()
+    {
+        var (e, ev) = Make();
+        Use(e, RD);
+        Use(e, Striking);
+        Assert.Equal(new EngineEvent(EngineEventKind.WrongPress, 1), ev[^1]);
+        Assert.False(e.IsDone(3));
+    }
+
+    [Fact]
+    public void ResetForgetsStepsDoneOutOfOrder()
+    {
+        var (e, _) = Make(neighbors: true);
+        Use(e, RD);
+        Use(e, Striking);
+        e.Reset();
+        Assert.False(e.IsDone(3));
+    }
+
+    [Fact]
+    public void SkipPassesStepsDoneOutOfOrder()
+    {
+        var (e, _) = Make(neighbors: true);
+        Use(e, RD);
+        Use(e, Pom);
+        e.Skip(); // the potion
+        Assert.Equal(3, e.CurrentIndex);
+    }
+
+    [Fact]
+    public void AWeaveOnlyLoopDoesNotHang()
+    {
+        var seq = PracticeSequence.Build(null,
+            new Rotation("l", "PCT", 100, RotationKind.Loop, "l", new[] { A(Pom), A(Striking) }), true, Cat);
+        var (e, ev) = Make(seq: seq, neighbors: true);
+        Use(e, Striking);
+        Assert.Equal(EngineEventKind.OutOfOrder, ev[^1].Kind);
     }
 }

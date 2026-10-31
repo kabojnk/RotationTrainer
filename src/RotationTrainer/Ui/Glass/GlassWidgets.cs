@@ -145,7 +145,7 @@ public static class GlassWidgets
     }
 
     /// <summary>
-    /// A row of options with the selected one filled in the accent color. Returns true when the value changed.
+    /// A row of options with the selected one filled in the accent colour. Returns true when the value changed.
     /// </summary>
     public static bool Segmented<T>(string id, ref T value, params (T Value, string Label)[] options)
     {
@@ -228,7 +228,7 @@ public static class GlassWidgets
         return changed;
     }
 
-    /// <summary>A small pill: tinted fill, colored text. Stays on the current line for SameLine use.</summary>
+    /// <summary>A small pill: tinted fill, coloured text. Stays on the current line for SameLine use.</summary>
     public static void Chip(string text, Vector4 color)
     {
         var pad = new Vector2(8, 2) * Scale;
@@ -241,7 +241,7 @@ public static class GlassWidgets
         ImGui.Dummy(size);
     }
 
-    /// <summary>A button filled in the accent color, for the main action of a group.</summary>
+    /// <summary>A button filled in the accent colour, for the main action of a group.</summary>
     public static bool PrimaryButton(string label)
     {
         var accent = GlassTheme.CurrentAccent;
