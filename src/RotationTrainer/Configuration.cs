@@ -32,4 +32,6 @@ public sealed class Configuration : IPluginConfiguration
     /// <summary>Opacity of the trail's glass strip (1 = opaque).</summary>
     public float TrailOpacity { get; set; } = 0.7f;
     public bool TrailGlassStrip { get; set; } = true;
+    /// <summary>IDs of built-in rotations already added to the library, so deleted ones are not added back.</summary>
+    public HashSet<string> BuiltInsAdded { get; set; } = new();
 }

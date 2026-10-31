@@ -131,6 +131,18 @@ internal sealed class LibraryTab(Plugin plugin)
         }
         if (_selected.Count == 0 && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled))
             ImGui.SetTooltip("Click rows to select them.");
+
+        ImGui.SameLine();
+        if (ImGui.Button("Restore built-ins"))
+        {
+            var added = library.RestoreBuiltIns(plugin.BuiltInRotations);
+            SetStatus("Built-in rotations", (added > 0
+                ? added == 1 ? "1 rotation restored." : $"{added} rotations restored."
+                : "All built-in rotations are already in your library.", GlassTheme.Ink));
+        }
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Adds back any of the openers that come with the plugin that you've deleted.\n"
+                + "Ones you've edited are left as they are.");
     }
 
     private void DrawTable(RotationLibrary library)
