@@ -680,7 +680,8 @@ public sealed class TrailWindow : Window, IDisposable
         {
             var label = _session.KeybindLabel(step.Ability.Type, step.Ability.Id);
             var pad = PadButton.TryParse(label, out var button) ? button : (PadButton?)null;
-            if (pad is { } p) label = p.Trigger;
+            // On another cross hotbar set: "S3 LT", then the glyph.
+            if (pad is { } p) label = p.Set is { } set ? $"S{set} {p.Trigger}" : p.Trigger;
             var textSize = TextSize(label, 11f);
             var glyph = pad != null ? GlyphSize * s : 0f;
             var contentWidth = textSize.X + (pad != null ? GlyphGap * s + glyph : 0f);
