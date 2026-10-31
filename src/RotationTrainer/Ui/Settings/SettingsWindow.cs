@@ -88,7 +88,7 @@ public sealed class SettingsWindow : Window
         var lineX = ImGui.GetCursorScreenPos().X;
         var top = ImGui.GetCursorScreenPos().Y;
         ImGui.GetWindowDrawList().AddLine(new Vector2(lineX, top), new Vector2(lineX, top + avail.Y),
-            ImGui.GetColorU32(GlassTheme.White(0.10f)), scale);
+            ImGui.GetColorU32(GlassTheme.Fg(0.10f)), scale);
         ImGui.SetCursorScreenPos(new Vector2(lineX + scale, top));
 
         using var main = ImRaii.Child("##content", ImGui.GetContentRegionAvail(), false,
@@ -153,7 +153,7 @@ public sealed class SettingsWindow : Window
         var y = ImGui.GetCursorScreenPos().Y;
         var min = ImGui.GetWindowPos();
         ImGui.GetWindowDrawList().AddLine(new Vector2(min.X, y), new Vector2(min.X + ImGui.GetWindowSize().X, y),
-            ImGui.GetColorU32(GlassTheme.White(0.10f)), scale);
+            ImGui.GetColorU32(GlassTheme.Fg(0.10f)), scale);
         ImGui.Dummy(new Vector2(0, 4 * scale));
     }
 

@@ -7,6 +7,7 @@ namespace RotationTrainer.Ui.Settings;
 internal sealed class AppearanceTab(Plugin plugin)
 {
     private const int MinOpacityPercent = 20;
+    private const float SakuraMinOpacity = 0.9f;
 
     public void Draw()
     {
@@ -15,10 +16,28 @@ internal sealed class AppearanceTab(Plugin plugin)
 
         using (GlassWidgets.Card("appearance"))
         {
+            SettingsWindow.RowLabel("Theme");
+            var theme = config.Theme;
+            if (GlassWidgets.Segmented("theme", ref theme,
+                    (Theme.Midnight, "Midnight"), (Theme.Graphite, "Graphite"), (Theme.Sakura, "Sakura")))
+            {
+                config.Theme = theme;
+                if (theme == Theme.Sakura)
+                {
+                    // Made for its pink accent, and light glass turns muddy when the dark world shows through it.
+                    // Both can be changed again afterwards.
+                    config.Accent = Accent.Sakura;
+                    config.GlassOpacity = Math.Max(config.GlassOpacity, SakuraMinOpacity);
+                    config.TrailOpacity = Math.Max(config.TrailOpacity, SakuraMinOpacity);
+                }
+                plugin.SaveConfig();
+            }
+
             SettingsWindow.RowLabel("Accent");
             var accent = config.Accent;
             if (GlassWidgets.Segmented("accent", ref accent,
-                    (Accent.Sky, "Sky"), (Accent.Violet, "Violet"), (Accent.Mint, "Mint"), (Accent.Gold, "Gold")))
+                    (Accent.Sky, "Sky"), (Accent.Violet, "Violet"), (Accent.Mint, "Mint"), (Accent.Gold, "Gold"),
+                    (Accent.Sakura, "Sakura")))
             {
                 config.Accent = accent;
                 plugin.SaveConfig();

@@ -27,22 +27,27 @@ public sealed class TrailWindow : Window, IDisposable
         | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoFocusOnAppearing | ImGuiWindowFlags.NoBringToFrontOnFocus
         | ImGuiWindowFlags.NoNav;
 
-    /// <summary>The settings gear's own window: just the button, always taking the mouse.</summary>
-    private const ImGuiWindowFlags GearFlags = ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoBackground
+    /// <summary>The title bar buttons' and Skip button's own windows: just the buttons, always taking the mouse.</summary>
+    private const ImGuiWindowFlags OverlayFlags = ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoBackground
         | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoSavedSettings | ImGuiWindowFlags.NoFocusOnAppearing
         | ImGuiWindowFlags.NoNav | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.AlwaysAutoResize;
 
-    private const float MarkerX = 110f;
-    private const float TrackTop = 12f;
+    private const float MarkerX = 96f;
+    /// <summary>The window is the glass panel itself: no margin above or beside it.</summary>
+    private const float TrackTop = 0f;
+    /// <summary>The strip's top band holding the title and the title bar buttons, above the keybind chips.</summary>
+    private const float TitleBar = 26f;
     private const float RowTop = 34f;
-    private const float StripInset = 14f;
+    private const float StripInset = 0f;
     private const float StripRounding = 20f;
     private const float FooterHeight = 40f;
+    /// <summary>The glass panel ends this far above the window's bottom; the caption and Skip sit this far in.</summary>
+    private const float PanelBottomInset = 0f, CaptionInset = 18f;
     private const float MinWidth = MarkerX + 360f;
     private const float ChipHeight = 16f;
     private const float ChipGap = 3f;
     private const float CompactChipLift = 10f;
-    private const float GearInset = 12f;
+    private const float TitleInset = 10f;
     private const int CompactMaxAhead = 5;
     /// <summary>How many popped steps back Auto looks for the step the clock is on.</summary>
     private const int FlowLookBack = 16;
@@ -60,6 +65,12 @@ public sealed class TrailWindow : Window, IDisposable
     private const double StartSeconds = 0.8;
     private const double PulseHalfPeriod = 0.6;
 
+    /// <summary>How far the glass strip's gradient leans toward the accent, at the top and bottom.</summary>
+    private const float TintTop = 0.22f, TintBottom = 0.1f;
+    private const float CaptionPx = 13f;
+    /// <summary>The controller glyph in a keybind chip, and its gap after the trigger.</summary>
+    private const float GlyphSize = 11f, GlyphGap = 3f;
+
     private static readonly Vector4 Gold = new(1f, 210 / 255f, 122 / 255f, 1f);
 
     private sealed record Pop(PlannedStep Step, TrailItem Item, double Start)
@@ -73,6 +84,7 @@ public sealed class TrailWindow : Window, IDisposable
     private readonly ITextureProvider _textures;
     private readonly IClientState _clientState;
     private readonly Action _openSettings;
+    private readonly Action _saveConfig;
     // Engine events arrive on the framework update; they are applied on the next draw.
     private readonly ConcurrentQueue<EngineEvent> _events = new();
     private readonly ConcurrentQueue<int> _presses = new();
@@ -101,10 +113,13 @@ public sealed class TrailWindow : Window, IDisposable
     private double _reference;
     private float _offset;
     private IDisposable? _windowStyle;
-    private Vector2 _gearAnchor;
+    /// <summary>Screen positions of the title bar's right end and the caption line's right end, both at mid-height.</summary>
+    private Vector2 _titleAnchor, _skipAnchor;
+    private bool _showSkip;
 
+    /// <param name="saveConfig">Saves the configuration without rebuilding the session, so the run is kept.</param>
     public TrailWindow(Configuration config, PracticeSession session, ITextureProvider textures, IClientState clientState,
-        Action openSettings)
+        Action openSettings, Action saveConfig)
         : base("Rotation Trainer Trail###RotationTrainerTrail", BaseFlags)
     {
         _config = config;
@@ -112,6 +127,7 @@ public sealed class TrailWindow : Window, IDisposable
         _textures = textures;
         _clientState = clientState;
         _openSettings = openSettings;
+        _saveConfig = saveConfig;
         IsOpen = true;
         RespectCloseHotkey = false;
         DisableWindowSounds = true;
@@ -128,9 +144,9 @@ public sealed class TrailWindow : Window, IDisposable
 
     private float Raise => (_config.Style == TrailStyle.Timeline ? 0.95f : 0.6f) * Metrics.Gcd;
 
-    private float GcdTop => TrackTop + RowTop + Raise;
+    private float GcdTop => TrackTop + TitleBar + RowTop + Raise;
 
-    private float StripHeight => RowTop + Raise + Metrics.Gcd + (_config.Style == TrailStyle.Timeline ? 26f : 22f);
+    private float StripHeight => TitleBar + RowTop + Raise + Metrics.Gcd + (_config.Style == TrailStyle.Timeline ? 26f : 22f);
 
     private float WindowHeight => TrackTop + StripHeight + FooterHeight;
 
@@ -180,44 +196,93 @@ public sealed class TrailWindow : Window, IDisposable
     {
         _windowStyle?.Dispose();
         _windowStyle = null;
-        DrawGear();
+        DrawOverlays();
     }
 
     /// <summary>
-    /// The settings gear: a chip on the strip's top edge near the right corner, clear of the keybind chips below. It is
-    /// a separate little window drawn over the trail, so it stays clickable when the trail is locked and the trail
-    /// itself lets the mouse through to the game.
+    /// The title bar buttons, right-aligned in the strip's top band like a window's minimize and close buttons, and
+    /// the Skip button at the caption's right end. Each is a separate little window drawn over the trail, so it stays
+    /// clickable when the trail is locked and the trail itself lets the mouse through to the game.
     /// </summary>
-    private void DrawGear()
+    private void DrawOverlays()
     {
         var s = Scale;
-        var icon = FontAwesomeIcon.Cog.ToIconString();
-        var pad = new Vector2(5, 4) * s;
-        Vector2 size;
-        using (ImRaii.PushFont(UiBuilder.IconFont))
-            size = ImGui.CalcTextSize(icon) + pad * 2;
-        ImGui.SetNextWindowPos(_gearAnchor + new Vector2(-size.X - GearInset * s, -size.Y / 2));
-
         using var style = ImRaii.PushStyle(ImGuiStyleVar.WindowPadding, Vector2.Zero)
             .Push(ImGuiStyleVar.WindowBorderSize, 0f)
-            .Push(ImGuiStyleVar.FramePadding, pad)
             .Push(ImGuiStyleVar.FrameRounding, 6 * s)
-            .Push(ImGuiStyleVar.FrameBorderSize, s);
-        using var colors = ImRaii.PushColor(ImGuiCol.Button, new Vector4(10 / 255f, 12 / 255f, 20 / 255f, 0.75f))
-            .Push(ImGuiCol.ButtonHovered, new Vector4(40 / 255f, 46 / 255f, 64 / 255f, 0.9f))
-            .Push(ImGuiCol.ButtonActive, GlassTheme.WithAlpha(Accent, 0.6f))
-            .Push(ImGuiCol.Border, GlassTheme.White(0.22f))
-            .Push(ImGuiCol.Text, GlassTheme.White(0.8f));
-        if (ImGui.Begin("##RotationTrainerTrailGear", GearFlags))
+            .Push(ImGuiStyleVar.FrameBorderSize, 0f)
+            .Push(ImGuiStyleVar.ItemSpacing, new Vector2(2, 0) * s);
+        using var colors = ImRaii.PushColor(ImGuiCol.Button, Vector4.Zero)
+            .Push(ImGuiCol.ButtonHovered, GlassTheme.WithAlpha(Accent, 0.35f))
+            .Push(ImGuiCol.ButtonActive, GlassTheme.WithAlpha(Accent, 0.7f))
+            .Push(ImGuiCol.Text, GlassTheme.Fg(0.75f));
+
+        var buttons = new (FontAwesomeIcon Icon, string Tip, bool Enabled, Action Click, bool Close)[]
         {
-            bool clicked;
-            using (ImRaii.PushFont(UiBuilder.IconFont))
-                clicked = ImGui.Button(icon);
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Settings (/rtrain)");
-            if (clicked) _openSettings();
+            (FontAwesomeIcon.Redo, "Restart the run", _session.Engine != null, _session.Restart, false),
+            (_config.LockTrail ? FontAwesomeIcon.Lock : FontAwesomeIcon.LockOpen,
+                _config.LockTrail ? "Unlock: drag the trail to move it" : "Lock: clicks pass through to the game",
+                true, () => { _config.LockTrail = !_config.LockTrail; _saveConfig(); }, false),
+            (FontAwesomeIcon.Cog, "Settings (/rtrain)", true, _openSettings, false),
+            (FontAwesomeIcon.Ban, "Hide the trail (/rtrain trail shows it again)", true,
+                () => { _config.ShowTrail = false; _saveConfig(); }, true),
+        };
+        var pad = new Vector2(5, 3) * s;
+        var row = new Vector2(-2 * s, 0);
+        using (ImRaii.PushFont(UiBuilder.IconFont))
+        {
+            foreach (var b in buttons)
+            {
+                var size = ImGui.CalcTextSize(b.Icon.ToIconString()) + pad * 2;
+                row = new Vector2(row.X + size.X + 2 * s, Math.Max(row.Y, size.Y));
+            }
+        }
+        ImGui.SetNextWindowPos(_titleAnchor - new Vector2(row.X + TitleInset * s, row.Y / 2));
+        if (ImGui.Begin("##RotationTrainerTrailTitle", OverlayFlags))
+        {
+            using var framePad = ImRaii.PushStyle(ImGuiStyleVar.FramePadding, pad);
+            for (var i = 0; i < buttons.Length; i++)
+            {
+                var b = buttons[i];
+                if (i > 0) ImGui.SameLine();
+                bool clicked;
+                using (ImRaii.Disabled(!b.Enabled))
+                using (ImRaii.PushColor(ImGuiCol.ButtonHovered, GlassTheme.WithAlpha(GlassTheme.Danger, 0.7f), b.Close))
+                using (ImRaii.PushFont(UiBuilder.IconFont))
+                    clicked = ImGui.Button($"{b.Icon.ToIconString()}##title{i}");
+                if (ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled)) GlassWidgets.Tooltip(b.Tip);
+                if (clicked) b.Click();
+            }
+        }
+        ImGui.End();
+
+        if (!_showSkip) return;
+        var skipSize = SkipSize();
+        ImGui.SetNextWindowPos(_skipAnchor - new Vector2(skipSize.X, skipSize.Y / 2));
+        using var skipStyle = ImRaii.PushStyle(ImGuiStyleVar.FramePadding, SkipPad)
+            .Push(ImGuiStyleVar.FrameBorderSize, s);
+        // A chip like the keybind chips, warming to the accent on hover and filling with it when pressed.
+        var chip = GlassTheme.Palette.Chip;
+        using var skipColors = ImRaii.PushColor(ImGuiCol.Button, chip)
+            .Push(ImGuiCol.ButtonHovered, Vector4.Lerp(chip, Accent with { W = 1 }, 0.4f))
+            .Push(ImGuiCol.ButtonActive, Accent with { W = 1 })
+            .Push(ImGuiCol.Border, GlassTheme.WithAlpha(Accent, 0.55f))
+            .Push(ImGuiCol.Text, GlassTheme.Fg(0.95f));
+        if (ImGui.Begin("##RotationTrainerTrailSkip", OverlayFlags))
+        {
+            if (ImGui.Button(SkipLabel)) _session.Skip();
+            if (ImGui.IsItemHovered())
+                GlassWidgets.Tooltip("Skip this step, e.g. for an ability that isn't on your hotbar or keybound.");
         }
         ImGui.End();
     }
+
+    private const string SkipLabel = "Skip";
+
+    private static Vector2 SkipPad => new Vector2(8, 2) * Scale;
+
+    /// <summary>The Skip button's size on screen, including its border.</summary>
+    private static Vector2 SkipSize() => ImGui.CalcTextSize(SkipLabel) + SkipPad * 2 + new Vector2(2 * Scale);
 
     /// <summary>Builds this frame's items and advances the slide, pop and flash state.</summary>
     private void UpdateModel(float dt)
@@ -371,25 +436,32 @@ public sealed class TrailWindow : Window, IDisposable
         var origin = ImGui.GetWindowPos();
         var s = Scale;
         var width = _width;
-        _gearAnchor = origin + new Vector2(width - StripInset, TrackTop) * s;
-
-        if (!_config.LockTrail)
-        {
-            var max = origin + new Vector2(width, WindowHeight) * s;
-            dl.AddRectFilled(origin, max, U32(GlassTheme.White(0.04f)), 10 * s);
-            dl.AddRect(origin, max, U32(GlassTheme.WithAlpha(Accent, 0.55f)), 10 * s, ImDrawFlags.None, 1.5f * s);
-        }
+        _titleAnchor = origin + new Vector2(width - StripInset, TrackTop + TitleBar / 2 + 2) * s;
+        _showSkip = false;
 
         var stripMin = origin + new Vector2(StripInset, TrackTop) * s;
         var stripMax = origin + new Vector2(width - StripInset, TrackTop + StripHeight) * s;
-        if (_config.TrailGlassStrip) DrawStrip(dl, stripMin, stripMax);
+        if (_config.TrailGlassStrip)
+        {
+            // One glass panel behind the track and the caption line, so the caption never sits on the bare world.
+            DrawStrip(dl, stripMin, origin + new Vector2(width - StripInset, WindowHeight - PanelBottomInset) * s);
+            dl.AddLine(new Vector2(stripMin.X + 14 * s, stripMax.Y), new Vector2(stripMax.X - 14 * s, stripMax.Y),
+                U32(GlassTheme.Fg(0.08f)), s);
+        }
+        if (!_config.LockTrail)
+        {
+            // Unlocked (draggable): an accent outline around the panel.
+            dl.AddRect(origin, origin + new Vector2(width, WindowHeight) * s, U32(GlassTheme.WithAlpha(Accent, 0.7f)),
+                StripRounding * s, ImDrawFlags.None, 1.5f * s);
+        }
+        DrawTitle(dl, stripMin, stripMax);
 
         var engine = _session.Engine;
         if (engine == null || _session.Sequence.IsEmpty)
         {
             const string empty = "Pick an opener and loop with /rtrain";
             var size = TextSize(empty, 15f);
-            DrawText(dl, (stripMin + stripMax) / 2 - size / 2, 15f, GlassTheme.White(0.85f), empty);
+            DrawText(dl, (stripMin + stripMax) / 2 - size / 2, 15f, GlassTheme.Fg(0.85f), empty);
             return;
         }
 
@@ -422,8 +494,23 @@ public sealed class TrailWindow : Window, IDisposable
         if (_config.Style == TrailStyle.Timeline) DrawMarker(dl, origin);
         dl.PopClipRect();
 
+        _showSkip = !engine.IsFinished;
+        var lineHeight = TextSize("Ag", CaptionPx).Y;
+        _skipAnchor = origin + new Vector2((width - CaptionInset) * s, WindowHeight * s - 10 * s - lineHeight / 2);
         DrawCaption(dl, origin, engine);
-        DrawCountdown(dl, origin, engine.Clock);
+        DrawCountdown(dl, origin, engine.Clock, _showSkip ? SkipSize().X + 10 * s : 0);
+    }
+
+    /// <summary>The title at the left of the strip's top band, and a faint line under the band.</summary>
+    private void DrawTitle(ImDrawListPtr dl, Vector2 stripMin, Vector2 stripMax)
+    {
+        var s = Scale;
+        var title = _session.Job is { } job ? "Rotation Trainer · " + job : "Rotation Trainer";
+        var size = TextSize(title, 11f);
+        DrawText(dl, new Vector2(stripMin.X + 16 * s, stripMin.Y + (TitleBar * s - size.Y) / 2 + 2 * s), 11f,
+            GlassTheme.Fg(0.5f), title);
+        var y = stripMin.Y + (TitleBar + 2) * s;
+        dl.AddLine(new Vector2(stripMin.X + 14 * s, y), new Vector2(stripMax.X - 14 * s, y), U32(GlassTheme.Fg(0.08f)), s);
     }
 
     private void DrawStrip(ImDrawListPtr dl, Vector2 min, Vector2 max)
@@ -432,9 +519,10 @@ public sealed class TrailWindow : Window, IDisposable
         var s = Scale;
         var rounding = StripRounding * s;
 
-        // Shadow 0 10px 30px rgba(0,0,0,.35), outside the strip only.
+        // Shadow 0 10px 30px rgba(0,0,0,.35), outside the strip only (and outside the window, so unclipped).
         const int rings = 10;
         var reach = 30 * s;
+        dl.PushClipRect(min - new Vector2(reach), max + new Vector2(reach, reach + 10 * s), false);
         for (var i = 1; i <= rings; i++)
         {
             var t = i / (float)rings;
@@ -444,12 +532,16 @@ public sealed class TrailWindow : Window, IDisposable
             dl.AddRect(min - new Vector2(grow) + offset, max + new Vector2(grow) + offset, U32(new Vector4(0, 0, 0, alpha)),
                 rounding + grow, ImDrawFlags.None, reach / rings + Scale);
         }
+        dl.PopClipRect();
 
         // A dark glass base whose alpha is the opacity (1 = opaque), then the highlight on top.
         var baseStart = dl.VtxBuffer.Size;
         dl.AddRectFilled(min, max, U32(new Vector4(1, 1, 1, o)), rounding);
+        // The theme's gradient tinted with the accent, more at the top.
+        var palette = GlassTheme.Palette;
         ImGuiP.ShadeVertsLinearColorGradientKeepAlpha(dl, baseStart, dl.VtxBuffer.Size, min, new Vector2(min.X, max.Y),
-            U32(new Vector4(40 / 255f, 46 / 255f, 64 / 255f, 1)), U32(new Vector4(18 / 255f, 20 / 255f, 30 / 255f, 1)));
+            U32(Vector4.Lerp(palette.GlassTop, Accent with { W = 1 }, TintTop * palette.Tint)),
+            U32(Vector4.Lerp(palette.GlassBottom, Accent with { W = 1 }, TintBottom * palette.Tint)));
 
         // Vertical gradient rgba(255,255,255,.14) → .05, drawn as whole-pixel bands of the same rounded shape.
         const int bands = 8;
@@ -459,19 +551,20 @@ public sealed class TrailWindow : Window, IDisposable
             var y1 = MathF.Round(min.Y + (max.Y - min.Y) * (k + 1) / bands);
             var alpha = (0.14f + (0.05f - 0.14f) * (k + 0.5f) / bands) * o;
             dl.PushClipRect(new Vector2(min.X, y0), new Vector2(max.X, y1), true);
-            dl.AddRectFilled(min, max, U32(GlassTheme.White(alpha)), rounding);
+            dl.AddRectFilled(min, max, U32(GlassTheme.Gloss(alpha)), rounding);
             dl.PopClipRect();
         }
-        dl.AddRect(min, max, U32(GlassTheme.White(0.2f * o)), rounding, ImDrawFlags.None, s);
+        dl.AddRect(min, max, U32(Vector4.Lerp(GlassTheme.Gloss(0.2f), GlassTheme.WithAlpha(Accent, 0.45f), 0.5f) * new Vector4(1, 1, 1, o)),
+            rounding, ImDrawFlags.None, s);
         dl.AddLine(new Vector2(min.X + rounding, min.Y + s), new Vector2(max.X - rounding, min.Y + s),
-            U32(GlassTheme.White(0.35f * o)), s);
+            U32(Vector4.Lerp(GlassTheme.Gloss(0.35f), GlassTheme.WithAlpha(Accent, 0.5f), 0.4f) * new Vector4(1, 1, 1, o)), s);
     }
 
     private void DrawRail(ImDrawListPtr dl, Vector2 origin, Vector2 stripMin, Vector2 stripMax)
     {
         var s = Scale;
         var y = origin.Y + (GcdTop + Metrics.Gcd / 2 - 3) * s;
-        dl.AddRectFilled(new Vector2(stripMin.X, y), new Vector2(stripMax.X, y + 6 * s), U32(GlassTheme.White(0.18f)), 3 * s);
+        dl.AddRectFilled(new Vector2(stripMin.X, y), new Vector2(stripMax.X, y + 6 * s), U32(GlassTheme.Fg(0.18f)), 3 * s);
     }
 
     private void DrawTicks(ImDrawListPtr dl, Vector2 origin, Vector2 stripMin, Vector2 stripMax)
@@ -487,9 +580,9 @@ public sealed class TrailWindow : Window, IDisposable
             if (x < stripMin.X || x > stripMax.X) continue;
             var big = t % 5 == 0;
             var top = origin.Y + (baseY + (big ? 2 : 6)) * s;
-            dl.AddRectFilled(new Vector2(x, top), new Vector2(x + s, top + (big ? 12 : 6) * s), U32(GlassTheme.White(0.18f)));
+            dl.AddRectFilled(new Vector2(x, top), new Vector2(x + s, top + (big ? 12 : 6) * s), U32(GlassTheme.Fg(0.18f)));
             if (big && t != 0)
-                DrawText(dl, new Vector2(x + 4 * s, top - 16 * s), 11f, GlassTheme.White(0.55f),
+                DrawText(dl, new Vector2(x + 4 * s, top - 16 * s), 11f, GlassTheme.Fg(0.55f),
                     t.ToString(CultureInfo.InvariantCulture) + "s");
         }
     }
@@ -510,19 +603,19 @@ public sealed class TrailWindow : Window, IDisposable
 
         var s = Scale;
         var left = origin.X + (x.Value + _offset - 1) * s;
-        var top = origin.Y + (TrackTop + 14) * s;
-        dl.AddRectFilled(new Vector2(left, top), new Vector2(left + 2 * s, top + (StripHeight - 20) * s),
-            U32(GlassTheme.White(0.4f)));
-        DrawText(dl, new Vector2(left + 6 * s, top - 2 * s), 12f, GlassTheme.White(0.85f), "Pull");
+        var top = origin.Y + (TrackTop + TitleBar + 8) * s;
+        dl.AddRectFilled(new Vector2(left, top), new Vector2(left + 2 * s, top + (StripHeight - TitleBar - 14) * s),
+            U32(GlassTheme.Fg(0.4f)));
+        DrawText(dl, new Vector2(left + 6 * s, top - 2 * s), 12f, GlassTheme.Fg(0.85f), "Pull");
     }
 
     private void DrawMarker(ImDrawListPtr dl, Vector2 origin)
     {
         var s = Scale;
-        var min = origin + new Vector2(MarkerX - 1, 18) * s;
-        var max = min + new Vector2(2, StripHeight - 12) * s;
+        var min = origin + new Vector2(MarkerX - 1, TrackTop + TitleBar + 6) * s;
+        var max = min + new Vector2(2, StripHeight - TitleBar - 12) * s;
         DrawGlow(dl, min, max, s, Accent, 12 * s, 0.9f);
-        dl.AddRectFilled(min, max, U32(GlassTheme.White(0.55f)), s);
+        dl.AddRectFilled(min, max, U32(GlassTheme.Fg(0.55f)), s);
     }
 
     /// <param name="alpha">Overall opacity (fades popped steps).</param>
@@ -552,7 +645,7 @@ public sealed class TrailWindow : Window, IDisposable
             var clock = _engine?.Clock;
             var due = step.IsPrepull && step.At is { } at && clock >= at;
             var p = due ? (float)(0.5 - 0.5 * Math.Cos(Math.PI * _time / PulseHalfPeriod)) : 0f;
-            var ring = Vector4.Lerp(GlassTheme.White(0.95f), Gold, p);
+            var ring = Vector4.Lerp(GlassTheme.Fg(0.95f), Gold, p);
             var glow = Vector4.Lerp(Accent, Gold, p);
             DrawGlow(dl, min, max, rounding, glow, (22 + 6 * p) * s, 0.9f);
             dl.AddRect(min - new Vector2(1.5f * s), max + new Vector2(1.5f * s), U32(ring), rounding + 1.5f * s,
@@ -561,12 +654,12 @@ public sealed class TrailWindow : Window, IDisposable
 
         var wrap = _textures.GetFromGameIcon(new GameIconLookup(step.Ability.IconId)).GetWrapOrEmpty();
         dl.AddImageRounded(wrap.Handle, min, max, Vector2.Zero, Vector2.One, U32(new Vector4(1, 1, 1, alpha)), rounding);
-        dl.AddRect(min, max, U32(GlassTheme.White(0.35f * alpha)), rounding, ImDrawFlags.None, s);
+        dl.AddRect(min, max, U32(GlassTheme.Fg(0.35f * alpha)), rounding, ImDrawFlags.None, s);
 
         if (press > 0)
         {
             // White flash on the icon and an accent ring that bursts outward.
-            dl.AddRectFilled(min, max, U32(GlassTheme.White(0.45f * press * press)), rounding);
+            dl.AddRectFilled(min, max, U32(GlassTheme.Gloss(0.45f * press * press)), rounding);
             var burst = (1f - press) * 10f * s;
             dl.AddRect(min - new Vector2(burst), max + new Vector2(burst), U32(GlassTheme.WithAlpha(Accent, press)),
                 rounding + burst, ImDrawFlags.None, 2.5f * s);
@@ -585,15 +678,23 @@ public sealed class TrailWindow : Window, IDisposable
         var lift = PopLift * pop * s;
         if (_config.Keybinds != KeybindMode.Off)
         {
-            var label = _session.Keybinds.Label(step.Ability.Type, step.Ability.Id, _session.InputMode);
+            var label = _session.KeybindLabel(step.Ability.Type, step.Ability.Id);
+            var pad = PadButton.TryParse(label, out var button) ? button : (PadButton?)null;
+            if (pad is { } p) label = p.Trigger;
             var textSize = TextSize(label, 11f);
-            var chip = new Vector2(Math.Max(16 * s, textSize.X + 10 * s), ChipHeight * s);
+            var glyph = pad != null ? GlyphSize * s : 0f;
+            var contentWidth = textSize.X + (pad != null ? GlyphGap * s + glyph : 0f);
+            var chip = new Vector2(Math.Max(16 * s, contentWidth + 10 * s), ChipHeight * s);
             var chipLift = _config.Style == TrailStyle.CompactRail && item.IsCurrent ? CompactChipLift : 0f;
             var chipMin = new Vector2(center.X - chip.X / 2,
                 origin.Y + (top - ChipGap - ChipHeight - chipLift) * s - lift);
-            dl.AddRectFilled(chipMin, chipMin + chip, U32(new Vector4(10 / 255f, 12 / 255f, 20 / 255f, 0.7f * textAlpha)), 5 * s);
-            dl.AddRect(chipMin, chipMin + chip, U32(GlassTheme.White(0.22f * textAlpha)), 5 * s, ImDrawFlags.None, s);
-            DrawText(dl, chipMin + (chip - textSize) / 2, 11f, GlassTheme.White(textAlpha), label);
+            dl.AddRectFilled(chipMin, chipMin + chip, U32(GlassTheme.Palette.Chip * new Vector4(1, 1, 1, textAlpha)), 5 * s);
+            dl.AddRect(chipMin, chipMin + chip, U32(GlassTheme.Fg(0.22f * textAlpha)), 5 * s, ImDrawFlags.None, s);
+            var textPos = new Vector2(chipMin.X + (chip.X - contentWidth) / 2, chipMin.Y + (chip.Y - textSize.Y) / 2);
+            DrawText(dl, textPos, 11f, GlassTheme.Fg(textAlpha), label);
+            if (pad is { } padButton)
+                DrawPadGlyph(dl, new Vector2(textPos.X + textSize.X + GlyphGap * s + glyph / 2, chipMin.Y + chip.Y / 2),
+                    glyph, padButton, textAlpha);
         }
         if (step.IsPrepull && step.At is { } prepullAt)
         {
@@ -605,16 +706,54 @@ public sealed class TrailWindow : Window, IDisposable
         }
     }
 
+    /// <summary>
+    /// The game's cross hotbar glyph: four D-pad arms (a plus) or four face buttons (a diamond of dots), with the one
+    /// to press lit and the others dim.
+    /// </summary>
+    private static void DrawPadGlyph(ImDrawListPtr dl, Vector2 center, float size, PadButton button, float alpha)
+    {
+        var s = Scale;
+        var reach = size / 2 - s;
+        for (var d = 0; d < 4; d++)
+        {
+            var direction = (PadDirection)d;
+            var offset = direction switch
+            {
+                PadDirection.Left => new Vector2(-1, 0),
+                PadDirection.Up => new Vector2(0, -1),
+                PadDirection.Right => new Vector2(1, 0),
+                _ => new Vector2(0, 1),
+            };
+            var lit = direction == button.Direction;
+            var color = U32(GlassTheme.Fg((lit ? 1f : 0.3f) * alpha));
+            if (button.Face)
+            {
+                var dot = center + offset * (reach * 0.62f);
+                dl.AddCircleFilled(dot, reach * (lit ? 0.42f : 0.32f), color);
+            }
+            else
+            {
+                // An arm from the hub outward, as wide as a third of the glyph.
+                var half = new Vector2(Math.Abs(offset.Y), Math.Abs(offset.X)) * (size / 6);
+                var inner = center + offset * (size / 6);
+                var outer = center + offset * reach;
+                dl.AddRectFilled(Vector2.Min(inner, outer) - half, Vector2.Max(inner, outer) + half, color, s);
+            }
+        }
+        if (!button.Face)
+            dl.AddRectFilled(center - new Vector2(size / 6), center + new Vector2(size / 6), U32(GlassTheme.Fg(0.3f * alpha)));
+    }
+
     private void DrawCaption(ImDrawListPtr dl, Vector2 origin, PracticeEngine engine)
     {
         var s = Scale;
-        const float textPx = 13f;
+        const float textPx = CaptionPx;
         var lineHeight = TextSize("Ag", textPx).Y;
-        var pos = origin + new Vector2(18 * s, WindowHeight * s - 10 * s - lineHeight);
+        var pos = origin + new Vector2(CaptionInset * s, WindowHeight * s - 10 * s - lineHeight);
 
         if (engine.IsFinished)
         {
-            DrawText(dl, pos, textPx, GlassTheme.White(1f), "Opener complete");
+            DrawText(dl, pos, textPx, GlassTheme.Fg(1f), "Opener complete");
             return;
         }
         var step = _session.Sequence[engine.CurrentIndex];
@@ -624,18 +763,22 @@ public sealed class TrailWindow : Window, IDisposable
         var kindSize = TextSize(kind, 10f);
         var pad = new Vector2(6, 1) * s;
         var chipMin = new Vector2(pos.X, pos.Y + (lineHeight - kindSize.Y) / 2 - pad.Y);
-        dl.AddRectFilled(chipMin, chipMin + kindSize + pad * 2, U32(GlassTheme.White(0.14f)), 5 * s);
-        DrawText(dl, chipMin + pad, 10f, GlassTheme.White(0.85f), kind);
+        dl.AddRectFilled(chipMin, chipMin + kindSize + pad * 2, U32(GlassTheme.Fg(0.14f)), 5 * s);
+        DrawText(dl, chipMin + pad, 10f, GlassTheme.Fg(0.85f), kind);
 
         var x = chipMin.X + kindSize.X + pad.X * 2 + 10 * s;
-        x = DrawText(dl, new Vector2(x, pos.Y), textPx, GlassTheme.White(0.85f), "Next: ");
-        x = DrawText(dl, new Vector2(x, pos.Y), textPx, GlassTheme.White(1f), step.Ability.Name);
+        x = DrawText(dl, new Vector2(x, pos.Y), textPx, GlassTheme.Fg(0.85f), "Next: ");
+        var name = step.Ability.Category == AbilityCategory.Item && _config.PotionMatch == PotionMatch.AnyPotion
+            ? "any potion"
+            : step.Ability.Name;
+        x = DrawText(dl, new Vector2(x, pos.Y), textPx, GlassTheme.Fg(1f), name);
         if (step.IsPrepull && step.At is { } at && engine.Clock is { } clock && clock < at)
-            DrawText(dl, new Vector2(x, pos.Y), textPx, GlassTheme.White(0.85f),
+            DrawText(dl, new Vector2(x, pos.Y), textPx, GlassTheme.Fg(0.85f),
                 " · cast in " + (at - clock).ToString("0.0", CultureInfo.InvariantCulture) + "s");
     }
 
-    private void DrawCountdown(ImDrawListPtr dl, Vector2 origin, double? clock)
+    /// <param name="rightGap">Room kept free at the right end for the Skip button, in screen pixels.</param>
+    private void DrawCountdown(ImDrawListPtr dl, Vector2 origin, double? clock, float rightGap)
     {
         string? text = null;
         if (clock < 0) text = Math.Ceiling(-clock.Value).ToString(CultureInfo.InvariantCulture);
@@ -645,7 +788,7 @@ public sealed class TrailWindow : Window, IDisposable
         var s = Scale;
         const float px = 34f;
         var size = TextSize(text, px);
-        var pos = origin + new Vector2(_width * s - 22 * s - size.X, WindowHeight * s - 6 * s - size.Y);
+        var pos = origin + new Vector2(_width * s - CaptionInset * s - rightGap - size.X, WindowHeight * s - 6 * s - size.Y);
         // A soft accent glow behind the number.
         for (var i = 0; i < 8; i++)
         {
@@ -653,7 +796,7 @@ public sealed class TrailWindow : Window, IDisposable
             var d = new Vector2(MathF.Cos(angle), MathF.Sin(angle) + 0.5f) * 3 * s;
             DrawText(dl, pos + d, px, GlassTheme.WithAlpha(Accent, 0.22f), text);
         }
-        DrawText(dl, pos, px, GlassTheme.White(1f), text);
+        DrawText(dl, pos, px, GlassTheme.Fg(1f), text);
     }
 
     /// <summary>Soft rings outside a rounded rect, fading out over <paramref name="reach"/>.</summary>

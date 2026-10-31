@@ -34,6 +34,7 @@ public sealed class DebugWindow : Window, IDisposable
         var last = _lastUse;
         ImGui.TextUnformatted($"Job: {_session.Job ?? "-"}   Input: {_session.InputMode}");
         ImGui.TextUnformatted($"Last action: {(last == null ? "-" : $"{last.Type} {last.Id}")}");
+        ImGui.TextWrapped($"Cross hotbar: {_session.CrossHotbarDiagnostics}");
         ImGui.TextUnformatted($"Countdown: {(_countdown.SecondsRemaining is { } s ? $"{s:0.00} s" : "-")}");
         ImGui.Separator();
 
@@ -50,7 +51,7 @@ public sealed class DebugWindow : Window, IDisposable
             ImGui.TextUnformatted($"Paused: {engine.IsPaused}   Finished: {engine.IsFinished}");
             ImGui.TextUnformatted($"Step: {step?.Ability.Name ?? "-"}");
             ImGui.TextUnformatted(
-                $"Keybind: {(step == null ? "-" : _session.Keybinds.Label(step.Ability.Type, step.Ability.Id, _session.InputMode))}");
+                $"Keybind: {(step == null ? "-" : _session.KeybindLabel(step.Ability.Type, step.Ability.Id))}");
         }
 
         ImGui.Separator();

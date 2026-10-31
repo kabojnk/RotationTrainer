@@ -42,17 +42,33 @@ public static class GlassWidgets
         }
         dl.PopClipRect();
 
-        // Gradient rgb(40,46,64) → rgb(18,20,30) at about 160°.
+        // The theme's gradient at about 160°.
         var start = dl.VtxBuffer.Size;
         dl.AddRectFilled(min, max, U32(new Vector4(1, 1, 1, o)), rounding);
         var end = dl.VtxBuffer.Size;
         var height = max.Y - min.Y;
         ImGuiP.ShadeVertsLinearColorGradientKeepAlpha(dl, start, end, min, new Vector2(min.X + height * 0.36f, max.Y),
-            U32(new Vector4(40 / 255f, 46 / 255f, 64 / 255f, 1)), U32(new Vector4(18 / 255f, 20 / 255f, 30 / 255f, 1)));
+            U32(GlassTheme.Palette.GlassTop), U32(GlassTheme.Palette.GlassBottom));
 
-        dl.AddRect(min, max, U32(GlassTheme.White(0.18f * o)), rounding, ImDrawFlags.None, Scale);
+        dl.AddRect(min, max, U32(GlassTheme.Gloss(0.18f * o)), rounding, ImDrawFlags.None, Scale);
         dl.AddLine(new Vector2(min.X + rounding, min.Y + Scale), new Vector2(max.X - rounding, min.Y + Scale),
-            U32(GlassTheme.White(0.28f * o)), Scale);
+            U32(GlassTheme.Gloss(0.28f * o)), Scale);
+    }
+
+    /// <summary>
+    /// A tooltip in the theme's popup colours, whatever colours are pushed around it (the trail draws outside any
+    /// glass window, and Sakura's dark text would otherwise sit on ImGui's dark default).
+    /// </summary>
+    public static void Tooltip(string text)
+    {
+        var p = GlassTheme.Palette;
+        using var colors = ImRaii.PushColor(ImGuiCol.PopupBg, p.Popup)
+            .Push(ImGuiCol.Text, p.Ink)
+            .Push(ImGuiCol.Border, GlassTheme.Fg(0.18f));
+        using var style = ImRaii.PushStyle(ImGuiStyleVar.PopupRounding, 6 * Scale)
+            .Push(ImGuiStyleVar.PopupBorderSize, Scale)
+            .Push(ImGuiStyleVar.WindowPadding, new Vector2(8, 5) * Scale);
+        ImGui.SetTooltip(text);
     }
 
     /// <summary>A full-width sidebar entry with a Font Awesome icon. Returns true when clicked.</summary>
@@ -74,7 +90,7 @@ public static class GlassWidgets
         }
         else if (hovered)
         {
-            dl.AddRectFilled(pos, pos + size, U32(GlassTheme.White(0.06f)), rounding);
+            dl.AddRectFilled(pos, pos + size, U32(GlassTheme.Fg(0.06f)), rounding);
         }
 
         var textColor = U32(selected ? Vector4.One : hovered ? GlassTheme.Ink : GlassTheme.Dim);
@@ -119,7 +135,7 @@ public static class GlassWidgets
         var key = ImGui.GetID(id);
         var padding = new Vector2(14, 12) * Scale;
         var height = CardHeights.TryGetValue(key, out var h) ? h : ImGui.GetFrameHeightWithSpacing() * 2 + padding.Y * 2;
-        using (ImRaii.PushColor(ImGuiCol.ChildBg, GlassTheme.White(0.05f)).Push(ImGuiCol.Border, GlassTheme.White(0.08f)))
+        using (ImRaii.PushColor(ImGuiCol.ChildBg, GlassTheme.Fg(0.05f)).Push(ImGuiCol.Border, GlassTheme.Fg(0.08f)))
         using (ImRaii.PushStyle(ImGuiStyleVar.ChildBorderSize, Scale).Push(ImGuiStyleVar.WindowPadding, padding))
         {
             ImGui.BeginChild(id, new Vector2(width, height), true,
@@ -143,7 +159,7 @@ public static class GlassWidgets
 
         ImGui.BeginGroup();
         var start = ImGui.GetCursorScreenPos();
-        dl.AddRectFilled(start, start + total, U32(GlassTheme.White(0.06f)), GlassTheme.FrameRounding * Scale);
+        dl.AddRectFilled(start, start + total, U32(GlassTheme.Fg(0.06f)), GlassTheme.FrameRounding * Scale);
 
         var changed = false;
         var x = start.X + inset;
@@ -163,7 +179,7 @@ public static class GlassWidgets
             if (selected)
                 dl.AddRectFilled(pos, pos + size, U32(GlassTheme.CurrentAccent), 7 * Scale);
             else if (hovered)
-                dl.AddRectFilled(pos, pos + size, U32(GlassTheme.White(0.06f)), 7 * Scale);
+                dl.AddRectFilled(pos, pos + size, U32(GlassTheme.Fg(0.06f)), 7 * Scale);
 
             var textSize = ImGui.CalcTextSize(label);
             var color = selected ? GlassTheme.OnAccent : hovered ? GlassTheme.Ink : GlassTheme.Dim;
@@ -197,7 +213,7 @@ public static class GlassWidgets
         var hovered = ImGui.IsItemHovered();
 
         var trackPos = pos + new Vector2(0, Math.Max(0, (lineHeight - track.Y) / 2));
-        var fill = value ? GlassTheme.CurrentAccent : GlassTheme.White(hovered ? 0.24f : 0.18f);
+        var fill = value ? GlassTheme.CurrentAccent : GlassTheme.Fg(hovered ? 0.24f : 0.18f);
         dl.AddRectFilled(trackPos, trackPos + track, U32(fill), track.Y / 2);
         var knobRadius = track.Y / 2 - 2 * Scale;
         var knobX = value ? trackPos.X + track.X - track.Y / 2 : trackPos.X + track.Y / 2;

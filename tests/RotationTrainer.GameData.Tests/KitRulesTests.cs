@@ -97,4 +97,27 @@ public class KitRulesTests(GameDataFixture data)
                 Assert.True(Catalog.FindActionByName(job, name) == null, $"{job} kit has {name}");
         }
     }
+
+    [SqpackTheory]
+    [InlineData("PCT", "Pom Muse", "Living Muse")]        // shared charges
+    [InlineData("PCT", "Starry Muse", "Scenic Muse")]
+    [InlineData("PCT", "Hammer Brush", "Hammer Stamp")]   // combo chain
+    [InlineData("PCT", "Polishing Hammer", "Hammer Stamp")]
+    [InlineData("PCT", "Water in Blue", "Fire in Red")]   // curated table
+    [InlineData("PCT", "Pom Motif", "Creature Motif")]
+    [InlineData("VPR", "Hunter's Sting", "Steel Fangs")]
+    [InlineData("GNB", "Jugular Rip", "Continuation")]
+    [InlineData("SAM", "Midare Setsugekka", "Iaijutsu")]
+    [InlineData("NIN", "Hyosho Ranryu", "Ninjutsu")]
+    [InlineData("RDM", "Enchanted Zwerchhau", "Zwerchhau")] // the table beats the combo chain (which leads to Riposte)
+    public void ReplacementsKnowTheirButton(string job, string action, string host) =>
+        Assert.Contains(Find(job, host).Id, Catalog.ButtonHosts(job, Find(job, action).Id));
+
+    [SqpackFact]
+    public void ButtonsOfTheirOwnHaveNoHost()
+    {
+        Assert.Empty(Catalog.ButtonHosts("PCT", Find("PCT", "Fire in Red").Id));
+        Assert.Empty(Catalog.ButtonHosts("PCT", Find("PCT", "Living Muse").Id));
+        Assert.Empty(Catalog.ButtonHosts("RDM", Find("RDM", "Riposte").Id));
+    }
 }
