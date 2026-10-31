@@ -5,5 +5,6 @@
   "Punchline": "Drill openers and rotations into muscle memory.",
   "Description": "Practise openers and rotations against a scrolling trail of upcoming actions, with feedback on every press.",
   "ApplicableVersion": "any",
-  "Tags": ["rotation", "training", "opener"]
+  "Tags": ["rotation", "training", "opener"],
+  "IconUrl": "https://raw.githubusercontent.com/kabojnk/RotationTrainer/main/src/RotationTrainer/images/icon.png"
 }

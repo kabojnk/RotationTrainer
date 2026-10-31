@@ -122,6 +122,12 @@ public sealed class SettingsWindow : Window
     private void DrawTitle()
     {
         var scale = ImGuiHelpers.GlobalScale;
+        if (_plugin.Textures.GetFromManifestResource(typeof(Plugin).Assembly, "RotationTrainer.icon.png")
+                .GetWrapOrDefault() is { } logo)
+        {
+            ImGui.Image(logo.Handle, new Vector2(ImGui.GetFrameHeight()));
+            ImGui.SameLine();
+        }
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted("Rotation Trainer");
         ImGui.SameLine();
