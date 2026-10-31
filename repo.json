@@ -3,7 +3,7 @@
     "Author": "Big Bear",
     "Name": "Rotation Trainer",
     "InternalName": "RotationTrainer",
-    "AssemblyVersion": "1.0.3.0",
+    "AssemblyVersion": "1.0.4.0",
     "Description": "Practise openers and rotations against a scrolling trail of upcoming actions, with feedback on every press.",
     "ApplicableVersion": "any",
     "Tags": [
@@ -20,11 +20,11 @@
     "Punchline": "Drill openers and rotations into muscle memory.",
     "AcceptsFeedback": true,
     "RepoUrl": "https://github.com/kabojnk/RotationTrainer",
-    "DownloadLinkInstall": "https://github.com/kabojnk/RotationTrainer/releases/download/v1.0.3/latest.zip",
-    "DownloadLinkUpdate": "https://github.com/kabojnk/RotationTrainer/releases/download/v1.0.3/latest.zip",
-    "DownloadLinkTesting": "https://github.com/kabojnk/RotationTrainer/releases/download/v1.0.3/latest.zip",
+    "DownloadLinkInstall": "https://github.com/kabojnk/RotationTrainer/releases/download/v1.0.4/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/kabojnk/RotationTrainer/releases/download/v1.0.4/latest.zip",
+    "DownloadLinkTesting": "https://github.com/kabojnk/RotationTrainer/releases/download/v1.0.4/latest.zip",
     "IsHide": false,
     "IsTestingExclusive": false,
-    "LastUpdate": 1793482646
+    "LastUpdate": 1793484730
   }
 ]
