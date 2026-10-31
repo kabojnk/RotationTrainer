@@ -45,7 +45,7 @@ The version lives in `src/RotationTrainer/RotationTrainer.csproj` (`<Version>`).
 
 The first release publishes the project's version (1.0.0) as is. Each release bumps the version, builds and tests
 it, updates `repo.json`, commits, tags `vX.Y.Z`, pushes `main` and the tag, and creates a GitHub release with the
-plugin zip. It needs a clean `main`, an `origin` remote on GitHub, and the [GitHub CLI](https://cli.github.com)
+plugin zip. It needs a clean `main` that's up to date with GitHub's (run `git pull` first), an `origin` remote on GitHub, and the [GitHub CLI](https://cli.github.com)
 logged in (`gh auth login`). The repository must be public for players' Dalamud to read `repo.json`.
 
 ## Credits
