@@ -75,7 +75,7 @@ public sealed class Plugin : IDalamudPlugin
                 framework, gamepad, keys, log, Actions, Countdown);
             _debug = new DebugWindow(Session, Actions, Countdown);
             _settings = new SettingsWindow(this);
-            _trail = new TrailWindow(Config, Session, textures, clientState);
+            _trail = new TrailWindow(Config, Session, textures, clientState, _settings.Toggle);
             _builder = new BuilderWindow(this, catalog.Jobs);
 
             _windows.AddWindow(_trail);
