@@ -82,4 +82,46 @@ public class RotationLibraryTests
         Assert.Equal(new[] { "a", "b" }, lib.ForJob("PCT").Select(x => x.Id));
         Assert.Equal(new[] { "b" }, lib.ForJob("PCT", RotationKind.Loop).Select(x => x.Id));
     }
+
+    [Fact]
+    public void AddBuiltInsAddsEachOnlyOnce()
+    {
+        var lib = new RotationLibrary(new[] { R("mine") });
+        var offered = new HashSet<string>();
+        var changes = 0;
+        lib.Changed += () => changes++;
+
+        Assert.Equal(2, lib.AddBuiltIns(new[] { R("x"), R("y") }, offered));
+        Assert.Equal(new[] { "mine", "x", "y" }, lib.All.Select(r => r.Id));
+        Assert.Equal(new HashSet<string> { "x", "y" }, offered);
+
+        // A deleted built-in stays deleted; a new one in a later version is added.
+        lib.Delete("x");
+        Assert.Equal(1, lib.AddBuiltIns(new[] { R("x"), R("y"), R("z") }, offered));
+        Assert.Equal(new[] { "mine", "y", "z" }, lib.All.Select(r => r.Id));
+        Assert.Equal(3, changes); // two adds and the delete
+
+        Assert.Equal(0, lib.AddBuiltIns(new[] { R("x"), R("y"), R("z") }, offered));
+        Assert.Equal(3, changes);
+    }
+
+    [Fact]
+    public void AddBuiltInsKeepsAnEditedCopy()
+    {
+        var lib = new RotationLibrary(new[] { R("x", "My edit") });
+        var offered = new HashSet<string>();
+        Assert.Equal(0, lib.AddBuiltIns(new[] { R("x") }, offered));
+        Assert.Equal("My edit", lib.Get("x")!.Name);
+        Assert.Contains("x", offered);
+    }
+
+    [Fact]
+    public void RestoreBuiltInsReAddsDeletedOnesWithoutTouchingEdits()
+    {
+        var lib = new RotationLibrary(new[] { R("x", "My edit") });
+        Assert.Equal(1, lib.RestoreBuiltIns(new[] { R("x"), R("y") }));
+        Assert.Equal("My edit", lib.Get("x")!.Name);
+        Assert.NotNull(lib.Get("y"));
+        Assert.Equal(0, lib.RestoreBuiltIns(new[] { R("x"), R("y") }));
+    }
 }

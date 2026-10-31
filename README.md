@@ -13,8 +13,9 @@ until the opener is automatic.
    **Enabled**, and save.
 3. Install **Rotation Trainer** from `/xlplugins`, then open it with `/rtrain`.
 
-Import a rotation (see `examples/`) from the Rotation library tab, pick it on the Practice tab, and start a
-`/countdown` at a dummy. The [user guide](docs/user-guide.md) covers installing, the trail, every setting, the
+The library starts with 34 openers and loops for 18 jobs (see [Credits](#credits)). Pick one for your job on the
+Practice tab and start a `/countdown` at a dummy, or import your own (see `examples/`) from the Rotation library
+tab. The [user guide](docs/user-guide.md) covers installing, the trail, every setting, the
 rotation builder and troubleshooting.
 
 ## Build
@@ -46,3 +47,12 @@ The first release publishes the project's version (1.0.0) as is. Each release bu
 it, updates `repo.json`, commits, tags `vX.Y.Z`, pushes `main` and the tag, and creates a GitHub release with the
 plugin zip. It needs a clean `main`, an `origin` remote on GitHub, and the [GitHub CLI](https://cli.github.com)
 logged in (`gh auth login`). The repository must be public for players' Dalamud to read `repo.json`.
+
+## Credits
+
+Rotation Trainer is made by Big Bear.
+
+The built-in openers and loops in [`presets/balance-openers.json`](presets/balance-openers.json) are transcribed
+from the opener charts in [The Balance](https://www.thebalanceffxiv.com)'s job guides; each rotation's `source`
+names the chart it came from. Thank you to The Balance's guide writers. Read their guides for the reasoning behind
+each opener and how to adapt it to a fight.

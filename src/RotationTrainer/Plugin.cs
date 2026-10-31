@@ -34,6 +34,8 @@ public sealed class Plugin : IDalamudPlugin
     public IAbilityCatalog Catalog { get; }
     public LibraryStore Store { get; }
     public RotationLibrary Library { get; }
+    /// <summary>The rotations shipped with the plugin; new ones are added to the library on load.</summary>
+    public IReadOnlyList<Rotation> BuiltInRotations { get; }
     public ActionListener Actions { get; }
     public CountdownSource Countdown { get; } = new();
     public PracticeSession Session { get; }
@@ -66,6 +68,8 @@ public sealed class Plugin : IDalamudPlugin
         Catalog = catalog;
         Store = new LibraryStore(pluginInterface.GetPluginConfigDirectory(), Catalog, log);
         Library = Store.Load();
+        BuiltInRotations = LoadBuiltIns(catalog, log);
+        if (Library.AddBuiltIns(BuiltInRotations, Config.BuiltInsAdded) > 0) pluginInterface.SavePluginConfig(Config);
 
         // The hook is live from here on: if the rest of construction fails, Dispose never runs, so undo it here.
         Actions = new ActionListener(interop, playerState, log);
@@ -105,6 +109,16 @@ public sealed class Plugin : IDalamudPlugin
             Actions.Dispose();
             throw;
         }
+    }
+
+    private static IReadOnlyList<Rotation> LoadBuiltIns(IAbilityCatalog catalog, IPluginLog log)
+    {
+        using var stream = typeof(Plugin).Assembly.GetManifestResourceStream("RotationTrainer.presets.json");
+        if (stream == null) return Array.Empty<Rotation>();
+        var result = RotationJson.Import(new StreamReader(stream).ReadToEnd(), catalog, () => Guid.NewGuid().ToString());
+        foreach (var e in result.Errors)
+            log.Warning("Built-in rotation {Rotation}: {Message}", e.Rotation, e.Message);
+        return result.Rotations;
     }
 
     /// <summary>Saves the configuration and rebuilds the practice session from it.</summary>

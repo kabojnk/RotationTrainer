@@ -35,6 +35,29 @@ public sealed class RotationLibrary
         Changed?.Invoke();
     }
 
+    /// <summary>
+    /// Adds the built-in rotations not yet in <paramref name="offered"/>, then records them there, so one the
+    /// player deleted is not added back and one new in a later version is. Returns how many were added.
+    /// </summary>
+    public int AddBuiltIns(IEnumerable<Rotation> builtIns, ISet<string> offered) =>
+        AddMissing(builtIns.Where(r => offered.Add(r.Id)));
+
+    /// <summary>Adds back any built-in rotation missing from the library; edited ones are left as they are.</summary>
+    public int RestoreBuiltIns(IEnumerable<Rotation> builtIns) => AddMissing(builtIns);
+
+    private int AddMissing(IEnumerable<Rotation> rotations)
+    {
+        var added = 0;
+        foreach (var r in rotations.ToList())
+        {
+            if (Get(r.Id) != null) continue;
+            _rotations.Add(r);
+            added++;
+        }
+        if (added > 0) Changed?.Invoke();
+        return added;
+    }
+
     public void Save(Rotation rotation)
     {
         var idx = _rotations.FindIndex(x => x.Id == rotation.Id);
