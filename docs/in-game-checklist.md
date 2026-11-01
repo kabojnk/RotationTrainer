@@ -128,7 +128,9 @@ For each of Rail, Compact Rail and Timeline, in both Big and Small, compare agai
 5. **Card:** **Pin as card** opens it; it follows the guide. **Lock card** makes clicks pass through; unlock from the guide. The cog opens the guide, the X hides the card. Its opacity follows the Appearance tab slider.
 6. **No cards yet:** pick WHM. The guide and card say "Cards for this job are coming."
 7. **Level sync:** enter a synced dungeon. The card drops to the synced level.
-8. **Content:** read each tank card from your level up. Report any wrong button, wrong order or missing ability.
+8. **Information:** the i button in the guide's title bar opens "How the cards are chosen"; the text wraps and closes on a click outside.
+9. **Rounded corners:** the settings window, builder, guide and card all show fully rounded 16 px corners with the soft shadow, in every theme.
+10. **Content:** read each tank card from your level up. Report any wrong button, wrong order or missing ability.
 
 ## Known limitations to watch for
 - After switching cross hotbar sets, controller labels can name the previous set's button for up to 0.5 s.
