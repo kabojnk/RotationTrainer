@@ -9,6 +9,7 @@ using RotationTrainer.Services;
 using RotationTrainer.Ui;
 using RotationTrainer.Ui.Builder;
 using RotationTrainer.Ui.Glass;
+using RotationTrainer.Ui.Levelling;
 using RotationTrainer.Ui.Settings;
 using RotationTrainer.Ui.Trail;
 
@@ -40,12 +41,15 @@ public sealed class Plugin : IDalamudPlugin
     public ActionListener Actions { get; }
     public CountdownSource Countdown { get; } = new();
     public PracticeSession Session { get; }
+    public LevellingState Levelling { get; }
 
     private readonly WindowSystem _windows = new("RotationTrainer");
     private readonly SettingsWindow _settings;
     private readonly DebugWindow _debug;
     private readonly TrailWindow _trail;
     private readonly BuilderWindow _builder;
+    private readonly LevellingGuideWindow _guide;
+    private readonly ReferenceCardWindow _card;
 
     public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commands, IDataManager data,
         ITextureProvider textures, IClientState clientState, ICondition condition, IFramework framework,
@@ -85,18 +89,26 @@ public sealed class Plugin : IDalamudPlugin
             _trail = new TrailWindow(Config, Session, textures, clientState, _settings.Toggle,
                 () => pluginInterface.SavePluginConfig(Config));
             _builder = new BuilderWindow(this, catalog.Jobs);
+            Levelling = new LevellingState(playerState, data, Catalog, LoadLevellingDeck(catalog, log));
+            var chips = new CardChips(textures, Session);
+            _guide = new LevellingGuideWindow(Config, Levelling, Catalog, textures, chips,
+                () => pluginInterface.SavePluginConfig(Config));
+            _card = new ReferenceCardWindow(Config, Levelling, clientState, chips, OpenLevellingGuide,
+                () => pluginInterface.SavePluginConfig(Config));
 
             _windows.AddWindow(_trail);
             _windows.AddWindow(_settings);
             _windows.AddWindow(_debug);
             _windows.AddWindow(_builder);
+            _windows.AddWindow(_guide);
+            _windows.AddWindow(_card);
             pluginInterface.UiBuilder.Draw += DrawUi;
             pluginInterface.UiBuilder.OpenConfigUi += _settings.Toggle;
             pluginInterface.UiBuilder.OpenMainUi += _settings.Toggle;
 
             commands.AddHandler(Command, new CommandInfo(OnCommand)
             {
-                HelpMessage = "Toggle settings. Subcommands: trail, builder, debug.",
+                HelpMessage = "Toggle settings. Subcommands: trail, level, builder, debug.",
             });
         }
         catch
@@ -125,6 +137,23 @@ public sealed class Plugin : IDalamudPlugin
         return result.Rotations;
     }
 
+    private static LevellingDeck LoadLevellingDeck(IAbilityCatalog catalog, IPluginLog log)
+    {
+        using var stream = typeof(Plugin).Assembly.GetManifestResourceStream("RotationTrainer.levelling.json");
+        if (stream == null) return LevellingDeck.Parse("[]", catalog).Deck;
+        var (deck, errors) = LevellingDeck.Parse(new StreamReader(stream).ReadToEnd(), catalog);
+        foreach (var e in errors)
+            log.Warning("Levelling card {Card}: {Message}", e.Card, e.Message);
+        return deck;
+    }
+
+    /// <summary>Opens the levelling guide (<c>/rtrain level</c>).</summary>
+    public void OpenLevellingGuide()
+    {
+        _guide.IsOpen = true;
+        _guide.BringToFront();
+    }
+
     /// <summary>Saves the configuration and rebuilds the practice session from it.</summary>
     public void SaveConfig()
     {
@@ -138,6 +167,7 @@ public sealed class Plugin : IDalamudPlugin
     private void DrawUi()
     {
         GlassTheme.Use(Config.Theme);
+        Levelling.Update();
         _windows.Draw();
         _settings.DrawDialogs();
     }
@@ -152,6 +182,9 @@ public sealed class Plugin : IDalamudPlugin
             case "debug":
                 _debug.Toggle();
                 break;
+            case "level":
+                _guide.Toggle();
+                break;
             case "trail":
                 Config.ShowTrail = !Config.ShowTrail;
                 PluginInterface.SavePluginConfig(Config);
@@ -164,7 +197,7 @@ public sealed class Plugin : IDalamudPlugin
                     Log.Information("Log in to a combat job first.");
                 break;
             default:
-                Log.Warning("Unknown subcommand \"{Args}\". Try: /rtrain, /rtrain trail, /rtrain builder, /rtrain debug.",
+                Log.Warning("Unknown subcommand \"{Args}\". Try: /rtrain, /rtrain trail, /rtrain level, /rtrain builder, /rtrain debug.",
                     args.Trim());
                 break;
         }

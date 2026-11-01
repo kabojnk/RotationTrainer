@@ -52,6 +52,10 @@ public sealed class Configuration : IPluginConfiguration
     public bool TrailGlassStrip { get; set; } = true;
     /// <summary>IDs of built-in rotations already added to the library, so deleted ones are not added back.</summary>
     public HashSet<string> BuiltInsAdded { get; set; } = new();
+    /// <summary>The levelling reference card: shown, locked (clicks pass through) and its glass opacity.</summary>
+    public bool ShowLevellingCard { get; set; } = false;
+    public bool LockLevellingCard { get; set; } = false;
+    public float LevellingCardOpacity { get; set; } = 0.85f;
     /// <summary>Per job: hotbar slots seen showing a replacement action (see <see cref="LearnedKeybind"/>).</summary>
     public Dictionary<string, List<LearnedKeybind>> LearnedKeybinds { get; set; } = new();
 }
