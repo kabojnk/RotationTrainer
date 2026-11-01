@@ -17,8 +17,19 @@ public sealed class FakeCatalog : IAbilityCatalog
     private static readonly Ability Gemdraught =
         new(StepType.Item, 49235, "Gemdraught of Intelligence", 49235, AbilityCategory.Item, false, 0, 0, PaletteGroup.Medicine);
 
+    private static Ability Leveled(uint id, string name, bool gcd, int level) =>
+        new(StepType.Action, id, name, id, gcd ? AbilityCategory.Weaponskill : AbilityCategory.Ability, gcd, 0,
+            gcd ? 2500 : 0, gcd ? PaletteGroup.Gcd : PaletteGroup.Weave, level);
+
     private readonly Dictionary<string, List<Ability>> _jobs = new()
     {
+        ["PLD"] = new()
+        {
+            Leveled(100, "Fast Blade", true, 1), Leveled(101, "Riot Blade", true, 4),
+            Leveled(102, "Total Eclipse", true, 6), Leveled(103, "Fight or Flight", false, 2),
+            Leveled(104, "Rampart", false, 8), Leveled(105, "Royal Authority", true, 60),
+            Leveled(106, "Requiescat", false, 68),
+        },
         ["PCT"] = new()
         {
             Gcd(1, "Rainbow Drip", 4000, 6000), Gcd(2, "Wing Motif", 3000, 4000),

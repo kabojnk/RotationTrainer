@@ -55,12 +55,17 @@ public sealed class LuminaCatalog : IAbilityCatalog
         public readonly Dictionary<uint, uint> Canonical = new();
         public readonly Dictionary<uint, uint[]> Hosts = new();
         public IReadOnlyList<Ability> Palette = Array.Empty<Ability>();
+        public int StartLevel = 1;
+        /// <summary>Player actions (role actions aside) and traits, by level then name.</summary>
+        public IReadOnlyList<Unlock> Unlocks = Array.Empty<Unlock>();
     }
 
     private readonly Dictionary<string, Kit> _kits = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<uint, Ability> _itemsById = new();
     private readonly HashSet<uint> _medicine;
     private readonly Dictionary<string, Ability> _itemsByName = new();
+    // Class or job abbreviation -> the combat jobs it grows into.
+    private readonly Dictionary<string, List<string>> _jobsForClass = new(StringComparer.OrdinalIgnoreCase);
 
     public LuminaCatalog(ExcelModule excel)
     {
@@ -79,6 +84,8 @@ public sealed class LuminaCatalog : IAbilityCatalog
                         && a.ActionCategory.RowId is SpellCategory or WeaponskillCategory or AbilityCategoryRow)
             .ToList();
         var categories = excel.GetSheet<RawRow>(null, "ClassJobCategory");
+        var allClassJobs = excel.GetSheet<ClassJob>(Language.English);
+        var traits = excel.GetSheet<Trait>().Where(t => t.Level is >= 1 and <= MaxLevel && t.ClassJob.RowId != 0).ToList();
         var combatJobIds = jobs.Select(j => j.RowId).ToList();
         var shared = new Dictionary<uint, Ability>();
 
@@ -117,6 +124,24 @@ public sealed class LuminaCatalog : IAbilityCatalog
 
             FindHosts(kit, rows, excel);
 
+            var abbreviation = job.Abbreviation.ExtractText();
+            var parent = job.ClassJobParent.RowId;
+            kit.StartLevel = job.StartingLevel;
+            kit.Unlocks = rows.Where(r => r.IsPlayerAction && !r.IsRoleAction)
+                .Select(r => kit.ById[r.RowId])
+                .DistinctBy(a => Norm(a.Name))
+                .Select(a => new Unlock(a.Name, a.Level, a.IconId, false))
+                .Concat(traits.Where(t => t.ClassJob.RowId == job.RowId || t.ClassJob.RowId == parent)
+                    .Select(t => new Unlock(t.Name.ExtractText(), t.Level, (uint)t.Icon, true)))
+                .Where(u => u.Name.Length > 0)
+                .OrderBy(u => u.Level).ThenBy(u => u.Name, StringComparer.Ordinal)
+                .ToList();
+            foreach (var key in new[] { abbreviation, allClassJobs.GetRow(parent).Abbreviation.ExtractText() }.Distinct())
+            {
+                if (!_jobsForClass.TryGetValue(key, out var list)) _jobsForClass[key] = list = new List<string>();
+                list.Add(abbreviation);
+            }
+
             var primary = PrimaryStatName(excel, job);
             kit.Palette = kit.ByName.Values
                 .OrderBy(a => a.Group)
@@ -149,6 +174,16 @@ public sealed class LuminaCatalog : IAbilityCatalog
     public Ability? FindItemByName(string name) => _itemsByName.GetValueOrDefault(Norm(name));
 
     public bool IsMedicine(uint itemId) => _medicine.Contains(itemId);
+
+    public int StartLevel(string job) => _kits.TryGetValue(job, out var kit) ? kit.StartLevel : 1;
+
+    public IReadOnlyList<string> JobsForClass(string classAbbreviation) =>
+        _jobsForClass.TryGetValue(classAbbreviation, out var jobs) ? jobs : Array.Empty<string>();
+
+    public IReadOnlyList<Unlock> Unlocks(string job, int minLevel, int maxLevel) =>
+        _kits.TryGetValue(job, out var kit)
+            ? kit.Unlocks.Where(u => u.Level >= minLevel && u.Level <= maxLevel).ToList()
+            : Array.Empty<Unlock>();
 
     public IReadOnlyList<Ability> Palette(string job) =>
         _kits.TryGetValue(job, out var kit) ? kit.Palette : Array.Empty<Ability>();
@@ -214,7 +249,7 @@ public sealed class LuminaCatalog : IAbilityCatalog
         };
         var group = row.IsRoleAction ? PaletteGroup.Role : isGcd ? PaletteGroup.Gcd : PaletteGroup.Weave;
         return new Ability(StepType.Action, row.RowId, row.Name.ExtractText(), row.Icon, category,
-            isGcd, row.Cast100ms * 100, isGcd ? GcdRecastMs(row) : row.Recast100ms * 100, group);
+            isGcd, row.Cast100ms * 100, isGcd ? GcdRecastMs(row) : row.Recast100ms * 100, group, row.ClassJobLevel);
     }
 
     /// <summary>

@@ -68,7 +68,7 @@ public class ExampleFileTests(GameDataFixture data)
         Assert.All(result.Rotations, r => Assert.StartsWith("The Balance", r.Source));
     }
 
-    private static string RepoRoot()
+    internal static string RepoRoot()
     {
         for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir != null; dir = dir.Parent)
             if (File.Exists(Path.Combine(dir.FullName, "RotationTrainer.sln"))) return dir.FullName;

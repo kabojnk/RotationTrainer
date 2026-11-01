@@ -44,6 +44,7 @@ The trail needs no setup beyond picking a rotation. If you have not picked one y
 |---|---|
 | `/rtrain` | Opens or closes the settings window. |
 | `/rtrain trail` | Shows or hides the trail. The choice is remembered. |
+| `/rtrain level` | Opens or closes the levelling guide. |
 | `/rtrain builder` | Opens the rotation builder with a new, empty opener for your current job. You need to be logged in on a combat job, or nothing opens (a note appears in `/xllog`). |
 | `/rtrain debug` | Opens a small debug window. Only useful when reporting a problem. |
 
@@ -165,10 +166,11 @@ The glass look for the trail and the plugin's windows. 100% opacity is fully opa
 
 | Option | What it does |
 |---|---|
-| **Theme** | The glass itself: **Midnight** (dark navy), **Graphite** (dark grey) or **Sakura** (light cherry-blossom pink with dark text). Picking Sakura also sets the Sakura accent and raises both opacities to at least 90%, since light glass looks muddy with the game showing through. |
+| **Theme** | The glass itself: **Midnight** (dark navy), **Graphite** (dark grey) or **Sakura** (light cherry-blossom pink with dark text). Picking Sakura also sets the Sakura accent and raises the opacities to at least 90%, since light glass looks muddy with the game showing through. |
 | **Accent** | Highlight colour: **Sky**, **Violet**, **Mint**, **Gold** or **Sakura** (pastel pink). The trail's glass strip is tinted with it too. |
 | **Window opacity** | How see-through the settings and builder windows are (20% to 100%). |
 | **Trail opacity** | How see-through the trail's glass strip is (20% to 100%). |
+| **Levelling card opacity** | How see-through the pinned levelling card is (20% to 100%). |
 | **Trail backing** | **Glass strip** draws a backing behind the trail. **None** shows icons straight over the game. |
 
 ### Speed & timing tab
@@ -199,6 +201,18 @@ Every opener and loop you have imported or built, plus the built-in ones. The pl
 The table lists **Job**, **Name**, **Kind** (Opener or Loop) and **Notes**. Notes show a gold `potion` chip if the rotation has a potion, and a chip like `-4.5s` for the earliest pre-pull time. Each row has **Edit**, **Export** and **Delete**. Delete asks "Delete?" with **Yes** and **No** first.
 
 If your library file could not be read, a warning at the top explains what was left out, where a backup was saved, and the errors. If it cannot be saved at all, a banner says changes will not be kept this session and to check `/xllog`.
+
+## The levelling guide
+
+Short rotations for levelling a job through dungeons and trials. Open it with `/rtrain level` or the **Levelling guide** button on the Practice tab.
+
+- **Job and level.** The guide starts on your current job and your synced level, and follows you as you level or sync down. Pick another job or drag the slider to look ahead; **Use my level** goes back to following you. On a base class (Gladiator, Arcanist…) it shows the job's cards; Arcanist shows Summoner, with Scholar one click away.
+- **Bands.** Each job has a card per 10 levels (1-9, 10-19 … 90-99) and one for 100. Jobs that start later begin at their start level.
+- **Dungeon** shows the trash-pull loop (with how many enemies make AoE worth it), then the single-target loop, the cooldowns to use when ready, and tank mitigation. **Trial / boss** puts single target first with mitigation open. **Unlocks** lists the actions and traits you learn in the band.
+- **Greyed out** means you haven't reached that ability's level yet; it shows "Lv N" instead of a keybind. Keybinds come from your hotbars, like the trail.
+- **Pin as card** opens a small card with the same loops as icons, to keep beside your hotbar. **Lock card** stops it moving and lets clicks pass through. The cog on the card opens the guide.
+
+Cards are written for the tanks so far. Other jobs show "Cards for this job are coming."
 
 ## The rotation builder
 
