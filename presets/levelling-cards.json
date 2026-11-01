@@ -683,5 +683,645 @@
     "weave": ["No Mercy", "Bloodfest", "Reign of Beasts", "Double Down", "Sonic Break", "Gnashing Fang", "Continuation", "Bow Shock", "Blasting Zone"],
     "mitigation": ["Heart of Corundum", "Rampart", "Great Nebula", "Camouflage", "Aurora", "Reprisal", "Superbolide"],
     "tip": "Line up No Mercy and Bloodfest together."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Aero", "Stone"],
+      "note": "No AoE yet. Put Aero on each enemy."
+    },
+    "single": {
+      "steps": ["Aero", "Stone"],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": [],
+    "tip": "Use Cure when someone drops below half."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 10,
+    "maxLevel": 19,
+    "pull": {
+      "threshold": 0,
+      "steps": [
+        "Aero",
+        ["Stone II", "Stone"]
+      ],
+      "note": "No AoE yet. Put Aero on each enemy."
+    },
+    "single": {
+      "steps": [
+        "Aero",
+        ["Stone II", "Stone"]
+      ],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Use Medica when most of the party is hurt."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 20,
+    "maxLevel": 29,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Aero", "Stone II"],
+      "note": "No AoE yet. Put Aero on each enemy."
+    },
+    "single": {
+      "steps": ["Aero", "Stone II"],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Swiftcast makes your next Raise instant."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Aero", "Stone II"],
+      "note": "No AoE yet. Put Aero on each enemy."
+    },
+    "single": {
+      "steps": ["Aero", "Stone II"],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": ["Presence of Mind", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Put Regen on the tank before each pull. Cure II for big hits."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Aero II", "Aero"],
+        "Holy"
+      ],
+      "note": "Aero each enemy, then spam Holy from 45."
+    },
+    "single": {
+      "steps": [
+        ["Aero II", "Aero"],
+        "Stone II"
+      ],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": ["Presence of Mind", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Cure III heals everyone near the target."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy"],
+      "note": "Spam Holy on packs."
+    },
+    "single": {
+      "steps": [
+        "Aero II",
+        ["Stone III", "Stone II"]
+      ],
+      "note": "Weave Assize on cooldown from 56."
+    },
+    "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Afflatus Solace and Asylum first. Benediction saves the tank."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy"],
+      "note": "Spam Holy on packs."
+    },
+    "single": {
+      "steps": [
+        "Aero II",
+        ["Stone IV", "Stone III"]
+      ],
+      "note": "Weave Assize on cooldown."
+    },
+    "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Tetragrammaton and Divine Benison keep the tank up in pulls."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy", "Afflatus Misery"],
+      "note": "Afflatus Misery is ready after three Lily heals."
+    },
+    "single": {
+      "steps": [
+        ["Dia", "Aero II"],
+        ["Glare", "Stone IV"],
+        "Afflatus Misery"
+      ],
+      "note": "Refresh Dia every 30 seconds."
+    },
+    "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Spend Lilies on Afflatus Solace or Rapture; they cost no damage."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Holy III", "Holy"],
+        "Afflatus Misery"
+      ],
+      "note": "Afflatus Misery is ready after three Lily heals."
+    },
+    "single": {
+      "steps": [
+        "Dia",
+        ["Glare III", "Glare"],
+        "Afflatus Misery"
+      ],
+      "note": "Refresh Dia every 30 seconds."
+    },
+    "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Temperance and Aquaveil on the tank for big pulls."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy III", "Glare IV", "Afflatus Misery"],
+      "note": "Glare IV hits the pack after Presence of Mind."
+    },
+    "single": {
+      "steps": ["Dia", "Glare III", "Glare IV"],
+      "note": "Spend Glare IV after Presence of Mind."
+    },
+    "weave": ["Presence of Mind", "Assize", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Liturgy of the Bell heals as the party takes hits."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy III", "Glare IV", "Afflatus Misery"],
+      "note": "Glare IV hits the pack after Presence of Mind."
+    },
+    "single": {
+      "steps": ["Dia", "Glare III", "Glare IV"],
+      "note": "Spend Glare IV after Presence of Mind."
+    },
+    "weave": ["Presence of Mind", "Assize", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Divine Caress follows Temperance and shields the party."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Bio", "Ruin"],
+      "note": "No AoE yet. Put Bio on each enemy."
+    },
+    "single": {
+      "steps": ["Bio", "Ruin"],
+      "note": "Refresh Bio when it falls off."
+    },
+    "weave": [],
+    "tip": "Summon Eos; she heals for you. Physick when someone drops low."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 10,
+    "maxLevel": 19,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Bio", "Ruin"],
+      "note": "No AoE yet. Put Bio on each enemy."
+    },
+    "single": {
+      "steps": ["Bio", "Ruin"],
+      "note": "Refresh Bio when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Keep Eos out. Physick when someone drops low."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 20,
+    "maxLevel": 29,
+    "pull": {
+      "threshold": 0,
+      "steps": [
+        ["Bio II", "Bio"],
+        "Ruin"
+      ],
+      "note": "No AoE yet. Put Bio on each enemy."
+    },
+    "single": {
+      "steps": [
+        ["Bio II", "Bio"],
+        "Ruin"
+      ],
+      "note": "Refresh Bio when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Whispering Dawn heals the party over time."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Bio II", "Ruin II"],
+      "note": "No AoE yet. Put Bio on each enemy."
+    },
+    "single": {
+      "steps": ["Bio II", "Ruin"],
+      "note": "Ruin II is instant. Use it while moving."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Adloquium shields the tank before big hits."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Bio II", "Art of War"],
+      "note": "Bio each enemy, then spam Art of War from 46."
+    },
+    "single": {
+      "steps": ["Bio II", "Ruin"],
+      "note": "Spend Aetherflow on Energy Drain if no one needs healing."
+    },
+    "weave": ["Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Lustrate is a free strong heal. It costs Aetherflow."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": [
+        "Bio II",
+        ["Broil", "Ruin"]
+      ],
+      "note": "Spend spare Aetherflow on Energy Drain."
+    },
+    "weave": ["Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Sacred Soil and Indomitability first, then Succor."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": [
+        "Bio II",
+        ["Broil II", "Broil"]
+      ],
+      "note": "Use Chain Stratagem on cooldown from 66."
+    },
+    "weave": ["Chain Stratagem", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Excogitation on the tank before a big pull."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": [
+        ["Biolysis", "Bio II"],
+        ["Broil III", "Broil II"]
+      ],
+      "note": "Refresh Biolysis every 30 seconds."
+    },
+    "weave": ["Chain Stratagem", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Recitation makes your next heal free and critical."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 2,
+      "steps": [
+        ["Art of War II", "Art of War"]
+      ],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": [
+        "Biolysis",
+        ["Broil IV", "Broil III"]
+      ],
+      "note": "Refresh Biolysis every 30 seconds."
+    },
+    "weave": ["Chain Stratagem", "Aetherflow", "Energy Drain", "Summon Seraph", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Summon Seraph, then Consolation for party heals."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War II"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": ["Biolysis", "Broil IV"],
+      "note": "Baneful Impaction is ready after Chain Stratagem."
+    },
+    "weave": ["Chain Stratagem", "Baneful Impaction", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Expedient helps the party move and cuts damage."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War II"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": ["Biolysis", "Broil IV"],
+      "note": "Baneful Impaction is ready after Chain Stratagem."
+    },
+    "weave": ["Chain Stratagem", "Baneful Impaction", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Seraphism upgrades Adloquium and Succor for a short time."
+  },
+  {
+    "job": "AST",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Combust", "Malefic"],
+      "note": "No AoE yet. Put Combust on each enemy."
+    },
+    "single": {
+      "steps": ["Combust", "Malefic"],
+      "note": "Refresh Combust when it falls off."
+    },
+    "weave": ["Astral Draw", "Play I", "Lightspeed", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Play I buffs damage. Put it on a damage dealer."
+  },
+  {
+    "job": "AST",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Combust II", "Combust"],
+        "Gravity"
+      ],
+      "note": "Combust each enemy, then spam Gravity from 45."
+    },
+    "single": {
+      "steps": [
+        ["Combust II", "Combust"],
+        "Malefic"
+      ],
+      "note": "Refresh Combust when it falls off."
+    },
+    "weave": ["Astral Draw", "Play I", "Lightspeed", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Aspected Helios heals the party over time."
+  },
+  {
+    "job": "AST",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity"],
+      "note": "Spam Gravity on packs."
+    },
+    "single": {
+      "steps": [
+        "Combust II",
+        ["Malefic II", "Malefic"]
+      ],
+      "note": "Use Divination on cooldown."
+    },
+    "weave": ["Divination", "Astral Draw", "Play I", "Lightspeed", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Essential Dignity heals more the lower the target is."
+  },
+  {
+    "job": "AST",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity"],
+      "note": "Earthly Star under the pack on each pull."
+    },
+    "single": {
+      "steps": [
+        "Combust II",
+        ["Malefic III", "Malefic II"]
+      ],
+      "note": "Use Divination on cooldown."
+    },
+    "weave": ["Divination", "Earthly Star", "Astral Draw", "Play I", "Lightspeed", "Lucid Dreaming"],
+    "tip": "Celestial Opposition heals the whole party."
+  },
+  {
+    "job": "AST",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity"],
+      "note": "Earthly Star under the pack on each pull."
+    },
+    "single": {
+      "steps": [
+        ["Combust III", "Combust II"],
+        ["Malefic IV", "Malefic III"]
+      ],
+      "note": "Refresh Combust every 30 seconds."
+    },
+    "weave": ["Divination", "Earthly Star", "Astral Draw", "Play I", "Minor Arcana", "Lightspeed", "Lucid Dreaming"],
+    "tip": "Celestial Intersection shields the tank."
+  },
+  {
+    "job": "AST",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Gravity II", "Gravity"]
+      ],
+      "note": "Earthly Star under the pack on each pull."
+    },
+    "single": {
+      "steps": [
+        "Combust III",
+        ["Fall Malefic", "Malefic IV"]
+      ],
+      "note": "Refresh Combust every 30 seconds."
+    },
+    "weave": ["Divination", "Earthly Star", "Astral Draw", "Play I", "Minor Arcana", "Lightspeed", "Lucid Dreaming"],
+    "tip": "Neutral Sect adds shields to your party heals."
+  },
+  {
+    "job": "AST",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity II"],
+      "note": "Macrocosmos on big pulls; it heals when it ends."
+    },
+    "single": {
+      "steps": ["Combust III", "Fall Malefic"],
+      "note": "Oracle is ready after Divination."
+    },
+    "weave": ["Divination", "Oracle", "Earthly Star", "Astral Draw", "Play I", "Minor Arcana", "Lightspeed"],
+    "tip": "Exaltation on the tank before a big hit."
+  },
+  {
+    "job": "AST",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity II"],
+      "note": "Macrocosmos on big pulls; it heals when it ends."
+    },
+    "single": {
+      "steps": ["Combust III", "Fall Malefic"],
+      "note": "Oracle is ready after Divination."
+    },
+    "weave": ["Divination", "Oracle", "Earthly Star", "Astral Draw", "Play I", "Minor Arcana", "Lightspeed"],
+    "tip": "Sun Sign follows Neutral Sect and cuts party damage."
+  },
+  {
+    "job": "SGE",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Dyskrasia",
+        ["Phlegma II", "Phlegma"]
+      ],
+      "note": "Phlegma hits the whole pack. Use its charges on pulls."
+    },
+    "single": {
+      "steps": [
+        "Eukrasia",
+        ["Dosis II", "Dosis"],
+        ["Phlegma II", "Phlegma"]
+      ],
+      "note": "Eukrasia turns Dosis into a DoT. Refresh it every 30 seconds."
+    },
+    "weave": [
+      "Kardia",
+      ["Phlegma II", "Phlegma"],
+      "Toxikon",
+      "Lucid Dreaming",
+      "Swiftcast"
+    ],
+    "tip": "Kardia on the tank heals them as you deal damage."
+  },
+  {
+    "job": "SGE",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Dyskrasia II", "Dyskrasia"],
+        ["Phlegma III", "Phlegma II"],
+        ["Toxikon II", "Toxikon"]
+      ],
+      "note": "Toxikon spends Addersting on the pack."
+    },
+    "single": {
+      "steps": [
+        "Eukrasia",
+        ["Dosis III", "Dosis II"],
+        ["Phlegma III", "Phlegma II"]
+      ],
+      "note": "Refresh the Eukrasian DoT every 30 seconds."
+    },
+    "weave": [
+      "Kardia",
+      ["Phlegma III", "Phlegma II"],
+      ["Toxikon II", "Toxikon"],
+      "Lucid Dreaming",
+      "Swiftcast"
+    ],
+    "tip": "Kerachole and Panhaima cover big pulls."
+  },
+  {
+    "job": "SGE",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Dyskrasia II", "Phlegma III", "Toxikon II"],
+      "note": "Psyche hits the pack from 92."
+    },
+    "single": {
+      "steps": ["Eukrasia", "Dosis III", "Phlegma III"],
+      "note": "Pneuma deals damage and heals the party."
+    },
+    "weave": ["Kardia", "Psyche", "Pneuma", "Phlegma III", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Taurochole and Haima on the tank for big pulls."
+  },
+  {
+    "job": "SGE",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Dyskrasia II", "Phlegma III", "Toxikon II"],
+      "note": "Psyche hits the pack."
+    },
+    "single": {
+      "steps": ["Eukrasia", "Dosis III", "Phlegma III"],
+      "note": "Pneuma deals damage and heals the party."
+    },
+    "weave": ["Kardia", "Psyche", "Pneuma", "Phlegma III", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Philosophia makes your damage heal the party."
   }
 ]
