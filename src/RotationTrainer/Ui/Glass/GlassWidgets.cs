@@ -19,6 +19,8 @@ public static class GlassWidgets
     /// Draws the translucent window background (no blur) behind the current window's contents: a diagonal
     /// gradient, a 1 px border, a top highlight and a soft shadow outside the edges. Call first in Draw.
     /// <paramref name="opacity"/> is the fill's alpha (1 = opaque) and multiplies the other alphas.
+    /// ImGui clips a window's contents to its rect inset by half the padding, which would cut off the rounded
+    /// corners, so the clip is lifted while drawing.
     /// </summary>
     public static void DrawGlassBackground(float opacity)
     {
@@ -40,7 +42,6 @@ public static class GlassWidgets
             dl.AddRect(min - new Vector2(grow) + offset, max + new Vector2(grow) + offset, U32(new Vector4(0, 0, 0, alpha)),
                 rounding + grow, ImDrawFlags.None, reach / ShadowRings + 1);
         }
-        dl.PopClipRect();
 
         // The theme's gradient at about 160°.
         var start = dl.VtxBuffer.Size;
@@ -53,6 +54,7 @@ public static class GlassWidgets
         dl.AddRect(min, max, U32(GlassTheme.Gloss(0.18f * o)), rounding, ImDrawFlags.None, Scale);
         dl.AddLine(new Vector2(min.X + rounding, min.Y + Scale), new Vector2(max.X - rounding, min.Y + Scale),
             U32(GlassTheme.Gloss(0.28f * o)), Scale);
+        dl.PopClipRect();
     }
 
     /// <summary>
