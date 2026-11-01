@@ -120,6 +120,16 @@ For each of Rail, Compact Rail and Timeline, in both Big and Small, compare agai
 4. **Credits tab:** the sidebar has Credits last. It names Big Bear and The Balance, shows the rotation count, and the button opens thebalanceffxiv.com in your browser.
 5. **Author:** `/xlplugins` shows the author as Big Bear.
 
+## Levelling guide
+1. **Opens:** `/rtrain level` and the Practice tab's **Levelling guide** button both open it. It shows your job and synced level.
+2. **Base class:** on Gladiator below 30 the guide shows PLD cards and the card title says GLA. On Arcanist it shows SMN; clicking SCH switches and still follows your level.
+3. **Slider:** drag the level down and up. Abilities above the level grey out with "Lv N" in the guide and on the card. **Use my level** returns to your level.
+4. **Keybinds:** chips show the same keybinds as your hotbars (keyboard and controller). Abilities not on a hotbar show no keybind.
+5. **Card:** **Pin as card** opens it; it follows the guide. **Lock card** makes clicks pass through; unlock from the guide. The cog opens the guide, the X hides the card. Its opacity follows the Appearance tab slider.
+6. **No cards yet:** pick WHM. The guide and card say "Cards for this job are coming."
+7. **Level sync:** enter a synced dungeon. The card drops to the synced level.
+8. **Content:** read each tank card from your level up. Report any wrong button, wrong order or missing ability.
+
 ## Known limitations to watch for
 - After switching cross hotbar sets, controller labels can name the previous set's button for up to 0.5 s.
 - GCDs whose GCD lock comes only from a secondary cooldown group are scheduled at a flat 2.5 s (Viper's Vicewinder may really be 3.0 s).

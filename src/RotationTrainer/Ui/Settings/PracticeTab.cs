@@ -97,6 +97,8 @@ internal sealed class PracticeTab(Plugin plugin, Action importFile)
         {
             if (ImGui.Button("Restart opener")) plugin.Session.Restart();
         }
+        ImGui.SameLine();
+        if (ImGui.Button("Levelling guide")) plugin.OpenLevellingGuide();
     }
 
     private void DrawSelection(string job)
