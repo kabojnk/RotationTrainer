@@ -81,24 +81,47 @@ public sealed class LevellingDeck
             problems.Add($"Levels must run from 1 to {MaxLevel}, low to high.");
 
         var errs = problems;
-        IReadOnlyList<Ability> Steps(JsonElement parent, string name)
+        Ability? Resolve(JsonElement step, string name)
         {
-            var result = new List<Ability>();
+            if (step.ValueKind != JsonValueKind.String)
+            {
+                errs.Add($"Steps in \"{name}\" must be ability names, or lists of them.");
+                return null;
+            }
+            var stepName = step.GetString()!;
+            if (catalog.FindActionByName(job, stepName) is not { } ability)
+                errs.Add($"\"{stepName}\" is not a {job} action.");
+            else if (ability.Level > max)
+                errs.Add($"\"{ability.Name}\" unlocks at {ability.Level}, above this band.");
+            else
+                return ability;
+            return null;
+        }
+
+        // A step is a name, or an upgrade chain of names, newest first.
+        IReadOnlyList<CardStep> Steps(JsonElement parent, string name)
+        {
+            var result = new List<CardStep>();
             if (!parent.TryGetProperty(name, out var list) || list.ValueKind != JsonValueKind.Array) return result;
             foreach (var step in list.EnumerateArray())
             {
-                if (step.ValueKind != JsonValueKind.String)
+                var raw = step.ValueKind == JsonValueKind.Array ? step.EnumerateArray().ToList() : new List<JsonElement> { step };
+                if (raw.Count == 0 || raw.Any(r => r.ValueKind != JsonValueKind.String))
                 {
-                    errs.Add($"Steps in \"{name}\" must be ability names.");
+                    errs.Add($"Steps in \"{name}\" must be ability names, or lists of them.");
                     continue;
                 }
-                var stepName = step.GetString()!;
-                if (catalog.FindActionByName(job, stepName) is not { } ability)
-                    errs.Add($"\"{stepName}\" is not a {job} action.");
-                else if (ability.Level > max)
-                    errs.Add($"\"{ability.Name}\" unlocks at {ability.Level}, above this band.");
-                else
-                    result.Add(ability);
+                var options = raw.Select(r => Resolve(r, name)).ToList();
+                if (options.Any(o => o == null)) continue;
+                var chain = options.Cast<Ability>().ToList();
+                for (var i = 1; i < chain.Count; i++)
+                {
+                    if (chain[i].Level < chain[i - 1].Level) continue;
+                    errs.Add($"List upgrades newest first: \"{chain[i].Name}\" before \"{chain[i - 1].Name}\".");
+                    chain.Clear();
+                    break;
+                }
+                if (chain.Count > 0) result.Add(new CardStep(chain));
             }
             return result;
         }
@@ -109,7 +132,7 @@ public sealed class LevellingDeck
             if (element.ValueKind != JsonValueKind.Object)
             {
                 errs.Add($"Missing \"{name}\".");
-                return new CardVignette(Array.Empty<Ability>(), "");
+                return new CardVignette(Array.Empty<CardStep>(), "");
             }
             if (!element.TryGetProperty("steps", out var raw) || raw.ValueKind != JsonValueKind.Array
                 || raw.GetArrayLength() == 0)
