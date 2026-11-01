@@ -4,8 +4,9 @@ public enum AbilityCategory { Spell, Weaponskill, Ability, Item }
 
 public enum PaletteGroup { Gcd, Weave, Role, Medicine }
 
+/// <param name="Level">The level the action unlocks at (0 for items and when unknown).</param>
 public sealed record Ability(StepType Type, uint Id, string Name, uint IconId, AbilityCategory Category,
-    bool IsGcd, int BaseCastMs, int BaseRecastMs, PaletteGroup Group);
+    bool IsGcd, int BaseCastMs, int BaseRecastMs, PaletteGroup Group, int Level = 0);
 
 public interface IAbilityCatalog
 {
