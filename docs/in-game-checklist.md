@@ -130,7 +130,7 @@ For each of Rail, Compact Rail and Timeline, in both Big and Small, compare agai
 7. **Level sync:** enter a synced dungeon. The card drops to the synced level.
 8. **Information:** the i button in the guide's title bar opens "How the cards are chosen"; the text wraps and closes on a click outside.
 9. **Rounded corners:** the settings window, builder, guide and card all show fully rounded 16 px corners with the soft shadow, in every theme.
-10. **Content:** read each tank and healer card from your level up. Report any wrong button, wrong order or missing ability.
+10. **Content:** read each tank, healer and melee card from your level up. Report any wrong button, wrong order or missing ability.
 11. **Upgrades:** on WHM, drag the slider from 50 to 59. Stone II shows until 53, then Stone III. On PLD at 80, Sheltron shows; at 82, Holy Sheltron.
 
 ## Known limitations to watch for
