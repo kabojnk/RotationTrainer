@@ -30,7 +30,16 @@ public interface IAbilityCatalog
     /// for Pom Muse, Fire in Red for Aero in Green). Empty when it has its own button or none is known.
     /// </summary>
     IReadOnlyList<uint> ButtonHosts(string job, uint id) => Array.Empty<uint>();
+    /// <summary>The level a job starts at: 1 for jobs with a base class, otherwise 30, 50, 60, 70 or 80.</summary>
+    int StartLevel(string job) => 1;
+    /// <summary>The combat jobs a class grows into (ACN: SMN and SCH). A job maps to itself; others to none.</summary>
+    IReadOnlyList<string> JobsForClass(string classAbbreviation) => Array.Empty<string>();
+    /// <summary>The job's actions (role actions aside) and traits that unlock in this level range, by level then name.</summary>
+    IReadOnlyList<Unlock> Unlocks(string job, int minLevel, int maxLevel) => Array.Empty<Unlock>();
 }
+
+/// <summary>An action or trait a job learns at a level.</summary>
+public sealed record Unlock(string Name, int Level, uint IconId, bool IsTrait);
 
 public static class ItemIds
 {
