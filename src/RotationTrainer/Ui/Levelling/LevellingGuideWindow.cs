@@ -20,6 +20,34 @@ public sealed class LevellingGuideWindow : Window
 {
     private enum Tab { Dungeon, Trial, Unlocks }
 
+    private const string InfoPopup = "##levellingInfo";
+
+    /// <summary>The Information popup: how the cards are put together, heading then text.</summary>
+    private static readonly (string Heading, string Text)[] Info =
+    {
+        ("Game data",
+            "Every ability's name, icon and unlock level come from the game's own data files. A card never lists an "
+            + "ability above its band, and anything you haven't reached yet is greyed out with the level it unlocks at."),
+        ("Combos and cooldowns",
+            "The game data also links each combo step to the one before it, which sets the order of the loops. "
+            + "Recast times decide what goes in Cooldowns: use those whenever they are ready."),
+        ("Potency",
+            "The game data does not store potencies in a form the plugin can read; they only appear in tooltip text. "
+            + "So the order inside each band is written by hand from each job's tooltips at that level: finish the "
+            + "combo, spend gauge before it caps, and use cooldowns on time."),
+        ("Single target or AoE",
+            "\"3 or more enemies\" is the enemy count where the AoE buttons deal more damage than the single-target "
+            + "combo at that level. Below it, stay on single target."),
+        ("Gear and stats",
+            "Cards assume average gear for your level. While levelling, gear changes how fast you press buttons "
+            + "(skill and spell speed), not which buttons are best, so the cards don't change with it."),
+        ("Keybinds",
+            "Keybinds are read from your hotbars, keyboard or controller, the same way the trail reads them."),
+        ("Checks",
+            "Each build tests every card against the game data, so names, unlock levels and level bands stay correct "
+            + "after a patch."),
+    };
+
     private static readonly (string Role, string[] Jobs)[] Roles =
     {
         ("Tank", new[] { "PLD", "WAR", "DRK", "GNB" }),
@@ -112,16 +140,42 @@ public sealed class LevellingGuideWindow : Window
             ImGui.TextUnformatted("Rotation Trainer");
         using (ImRaii.PushFont(UiBuilder.IconFont))
         {
-            var icon = FontAwesomeIcon.Times.ToIconString();
-            var width = ImGui.CalcTextSize(icon).X + ImGui.GetStyle().FramePadding.X * 2;
+            var info = FontAwesomeIcon.InfoCircle.ToIconString();
+            var close = FontAwesomeIcon.Times.ToIconString();
+            var pad = ImGui.GetStyle().FramePadding.X * 2;
+            var width = ImGui.CalcTextSize(info).X + ImGui.CalcTextSize(close).X + pad * 2 + ImGui.GetStyle().ItemSpacing.X;
             ImGui.SameLine(ImGui.GetWindowContentRegionMax().X - width);
             using (ImRaii.PushColor(ImGuiCol.Button, Vector4.Zero).Push(ImGuiCol.Text, GlassTheme.Dim))
             {
-                if (ImGui.Button(icon)) IsOpen = false;
+                if (ImGui.Button(info)) ImGui.OpenPopup(InfoPopup);
+                if (ImGui.IsItemHovered()) GlassWidgets.Tooltip("How the cards are chosen");
+                ImGui.SameLine();
+                if (ImGui.Button(close)) IsOpen = false;
             }
         }
+        DrawInfo();
         ImGui.Separator();
         ImGui.Spacing();
+    }
+
+    private static void DrawInfo()
+    {
+        using var popup = ImRaii.Popup(InfoPopup);
+        if (!popup) return;
+        var width = 420 * Scale;
+        ImGui.TextUnformatted("How the cards are chosen");
+        ImGui.Spacing();
+        using (ImRaii.TextWrapPos(ImGui.GetCursorPosX() + width))
+        {
+            foreach (var (heading, text) in Info)
+            {
+                using (ImRaii.PushColor(ImGuiCol.Text, GlassTheme.CurrentAccent))
+                    ImGui.TextUnformatted(heading);
+                using (ImRaii.PushColor(ImGuiCol.Text, GlassTheme.Dim))
+                    ImGui.TextUnformatted(text);
+                ImGui.Spacing();
+            }
+        }
     }
 
     private void DrawJobs()
