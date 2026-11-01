@@ -16,6 +16,8 @@ public class LevellingDeckTests
           "weave": ["Fight or Flight"], "mitigation": ["Rampart"], "tip": "A tip." }
         """;
 
+    private static IEnumerable<string> Names(IEnumerable<CardStep> steps) => steps.Select(s => s.Options[0].Name);
+
     private static (LevellingDeck Deck, IReadOnlyList<CardError> Errors) Parse(params string[] cards) =>
         LevellingDeck.Parse("[" + string.Join(",", cards) + "]", Catalog);
 
@@ -25,11 +27,11 @@ public class LevellingDeckTests
         var (deck, errors) = Parse(Card("PLD", 60, 69, "\"Fast Blade\", \"Riot Blade\", \"Royal Authority\""));
         Assert.Empty(errors);
         var card = deck.Find("PLD", 64)!;
-        Assert.Equal(new[] { "Fast Blade", "Riot Blade", "Royal Authority" }, card.Single.Steps.Select(a => a.Name));
+        Assert.Equal(new[] { "Fast Blade", "Riot Blade", "Royal Authority" }, Names(card.Single.Steps));
         Assert.Equal(3, card.Pull.Threshold);
         Assert.Equal("Pull note.", card.Pull.Note);
-        Assert.Equal(new[] { "Fight or Flight" }, card.Weave.Select(a => a.Name));
-        Assert.Equal(new[] { "Rampart" }, card.Mitigation.Select(a => a.Name));
+        Assert.Equal(new[] { "Fight or Flight" }, Names(card.Weave));
+        Assert.Equal(new[] { "Rampart" }, Names(card.Mitigation));
         Assert.Equal("A tip.", card.Tip);
     }
 
@@ -133,5 +135,38 @@ public class LevellingDeckTests
         var (deck, errors) = Parse("1", "\"PLD\"", Card("PLD", 50, 59, "42"), Card("PLD", 60, 69));
         Assert.Equal(3, errors.Count);
         Assert.Single(deck.All);
+    }
+
+    [Fact]
+    public void UpgradeChainShowsTheStepUnlockedAtTheLevel()
+    {
+        var json = """
+            [{ "job": "PLD", "minLevel": 60, "maxLevel": 69,
+               "pull": { "steps": ["Total Eclipse"], "note": "" },
+               "single": { "steps": ["Fast Blade"], "note": "" },
+               "weave": [["Requiescat", "Fight or Flight"]] }]
+            """;
+        var (deck, errors) = LevellingDeck.Parse(json, Catalog);
+        Assert.Empty(errors);
+        var step = deck.Find("PLD", 60)!.Weave[0];
+        Assert.Equal("Fight or Flight", step.At(64).Name);
+        Assert.Equal("Requiescat", step.At(68).Name);
+        Assert.Equal("Fight or Flight", step.At(1).Name);
+        Assert.Equal("Fast Blade", deck.Find("PLD", 60)!.Single.Steps[0].At(60).Name);
+    }
+
+    [Fact]
+    public void UpgradeChainMustListTheNewestFirst()
+    {
+        var (deck, errors) = Parse(Card("PLD", 60, 69, "[\"Fast Blade\", \"Royal Authority\"]"));
+        Assert.Contains("newest first", Assert.Single(errors).Message);
+        Assert.Empty(deck.All);
+    }
+
+    [Fact]
+    public void UpgradeChainOfNonStringsIsAnError()
+    {
+        var (_, errors) = Parse(Card("PLD", 60, 69, "[1, 2]"));
+        Assert.Single(errors);
     }
 }
