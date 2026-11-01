@@ -37,8 +37,15 @@ public sealed class LevellingDeck
                 errors.Add(new CardError(RotationJson.FileScope, "Expected an array of cards."));
                 return (new LevellingDeck(cards), errors);
             }
+            var index = 0;
             foreach (var item in doc.RootElement.EnumerateArray())
             {
+                index++;
+                if (item.ValueKind != JsonValueKind.Object)
+                {
+                    errors.Add(new CardError($"(card {index})", "Expected a card object."));
+                    continue;
+                }
                 var card = ReadCard(item, catalog, out var label, out var problems);
                 if (card != null && cards.FirstOrDefault(c => c.Job == card.Job
                         && card.MinLevel <= c.MaxLevel && c.MinLevel <= card.MaxLevel) is { } other)
@@ -80,7 +87,12 @@ public sealed class LevellingDeck
             if (!parent.TryGetProperty(name, out var list) || list.ValueKind != JsonValueKind.Array) return result;
             foreach (var step in list.EnumerateArray())
             {
-                var stepName = step.GetString() ?? "";
+                if (step.ValueKind != JsonValueKind.String)
+                {
+                    errs.Add($"Steps in \"{name}\" must be ability names.");
+                    continue;
+                }
+                var stepName = step.GetString()!;
                 if (catalog.FindActionByName(job, stepName) is not { } ability)
                     errs.Add($"\"{stepName}\" is not a {job} action.");
                 else if (ability.Level > max)

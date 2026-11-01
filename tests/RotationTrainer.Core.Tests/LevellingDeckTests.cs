@@ -126,4 +126,12 @@ public class LevellingDeckTests
         Assert.Empty(deck.All);
         Assert.Single(errors);
     }
+
+    [Fact]
+    public void NonObjectCardsAndNonStringStepsAreErrorsNotThrows()
+    {
+        var (deck, errors) = Parse("1", "\"PLD\"", Card("PLD", 50, 59, "42"), Card("PLD", 60, 69));
+        Assert.Equal(3, errors.Count);
+        Assert.Single(deck.All);
+    }
 }

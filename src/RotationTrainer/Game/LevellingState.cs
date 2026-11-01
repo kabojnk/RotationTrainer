@@ -64,7 +64,7 @@ public sealed class LevellingState(IPlayerState player, IDataManager data, IAbil
         }
         else
         {
-            Selection.Select(job);
+            Selection.Select(job, catalog.StartLevel(job));
         }
     }
 

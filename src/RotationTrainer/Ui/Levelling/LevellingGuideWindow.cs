@@ -13,7 +13,7 @@ using RotationTrainer.Ui.Glass;
 namespace RotationTrainer.Ui.Levelling;
 
 /// <summary>
-/// The levelling guide (<c>/rtrain level</c>): pick a job and level and see that band's short rotations, the off-GCDs
+/// The levelling guide (<c>/rtrain level</c>): pick a job and level and see that band's short rotations, the cooldowns
 /// and what unlocks in the band. "Pin as card" opens the compact <see cref="ReferenceCardWindow"/>.
 /// </summary>
 public sealed class LevellingGuideWindow : Window
@@ -190,7 +190,7 @@ public sealed class LevellingGuideWindow : Window
         var order = _tab == Tab.Trial ? new[] { single, pull } : new[] { pull, single };
         foreach (var section in order) DrawSection(section, level);
 
-        DrawList("Off-GCDs", "use on cooldown", card.Weave, level);
+        DrawList("Cooldowns", "use when ready", card.Weave, level);
         // Expanded on the Trial tab; one click away on the Dungeon tab.
         if (_tab == Tab.Trial)
             DrawList("Mitigation", "stagger these through the fight", card.Mitigation, level);

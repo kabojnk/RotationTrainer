@@ -21,9 +21,11 @@ public sealed class LevellingSelection
         Level = Math.Clamp(level, MinLevel, MaxLevel);
     }
 
-    public void Select(string job)
+    /// <summary>Shows a job and stops following; a level below the job's start level is raised to it.</summary>
+    public void Select(string job, int startLevel = MinLevel)
     {
         Job = job;
+        Level = Math.Max(Level, startLevel);
         FollowsPlayer = false;
     }
 
