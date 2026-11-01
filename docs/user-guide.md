@@ -209,11 +209,12 @@ Short rotations for levelling a job through dungeons and trials. Open it with `/
 - **Job and level.** The guide starts on your current job and your synced level, and follows you as you level or sync down. Pick another job or drag the slider to look ahead; **Use my level** goes back to following you. On a base class (Gladiator, Arcanist…) it shows the job's cards; Arcanist shows Summoner, with Scholar one click away.
 - **Bands.** Each job has a card per 10 levels (1-9, 10-19 … 90-99) and one for 100. Jobs that start later begin at their start level.
 - **Dungeon** shows the trash-pull loop (with how many enemies make AoE worth it), then the single-target loop, the cooldowns to use when ready, and tank mitigation. **Trial / boss** puts single target first with mitigation open. **Unlocks** lists the actions and traits you learn in the band.
+- **Upgrades.** When a button upgrades partway through a band (Stone II becomes Stone III at 54), the card shows whichever one you have at the selected level.
 - **Greyed out** means you haven't reached that ability's level yet; it shows "Lv N" instead of a keybind. Keybinds come from your hotbars, like the trail.
 - **Information** (the i button in the title bar) explains how the cards are chosen: unlock levels and combos from the game data, priorities written by hand from each job's tooltips, and why gear doesn't change them.
 - **Pin as card** opens a small card with the same loops as icons, to keep beside your hotbar. **Lock card** stops it moving and lets clicks pass through. The cog on the card opens the guide.
 
-Cards are written for the tanks so far. Other jobs show "Cards for this job are coming."
+Cards are written for the tanks and healers so far. Other jobs show "Cards for this job are coming."
 
 ## The rotation builder
 

@@ -260,14 +260,15 @@ public sealed class LevellingGuideWindow : Window
         }
     }
 
-    private sealed record Section(string Title, string Subtitle, IReadOnlyList<Ability> Steps, string Note);
+    private sealed record Section(string Title, string Subtitle, IReadOnlyList<CardStep> Steps, string Note);
 
     private void DrawSection(Section section, int level)
     {
         using (GlassWidgets.Card(section.Title))
         {
             Heading(section.Title, section.Subtitle);
-            CardChips.Flow(section.Steps, a => _chips.ChipWidth(a, level), a => _chips.Chip(a, level), "›");
+            CardChips.Flow(section.Steps.Select(st => st.At(level)).ToList(), a => _chips.ChipWidth(a, level),
+                a => _chips.Chip(a, level), "›");
             if (section.Note.Length > 0)
             {
                 using (ImRaii.PushColor(ImGuiCol.Text, GlassTheme.Dim))
@@ -276,9 +277,10 @@ public sealed class LevellingGuideWindow : Window
         }
     }
 
-    private void DrawList(string title, string subtitle, IReadOnlyList<Ability> abilities, int level)
+    private void DrawList(string title, string subtitle, IReadOnlyList<CardStep> steps, int level)
     {
-        if (abilities.Count == 0) return;
+        if (steps.Count == 0) return;
+        var abilities = steps.Select(st => st.At(level)).ToList();
         Heading(title, subtitle);
         CardChips.Flow(abilities, a => _chips.ChipWidth(a, level), a => _chips.Chip(a, level));
         ImGui.Spacing();
