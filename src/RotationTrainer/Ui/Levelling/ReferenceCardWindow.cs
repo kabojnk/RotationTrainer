@@ -89,7 +89,7 @@ public sealed class ReferenceCardWindow : Window
 
         Row("Single target", "loop", card.Single.Steps, level);
         Row(card.Pull.Threshold > 0 ? $"{card.Pull.Threshold}+ enemies" : "Pull", "loop", card.Pull.Steps, level);
-        Row("Off-GCDs", "on cooldown", card.Weave, level);
+        Row("Cooldowns", "when ready", card.Weave, level);
         Row("Mitigation", "stagger", card.Mitigation, level);
         if (card.Tip.Length > 0)
         {

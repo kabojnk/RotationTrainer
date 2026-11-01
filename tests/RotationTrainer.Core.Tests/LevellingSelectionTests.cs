@@ -61,4 +61,15 @@ public class LevellingSelectionTests
         Assert.Equal("PLD", s.Job);
         Assert.Equal(40, s.Level);
     }
+
+    [Fact]
+    public void SelectingAJobRaisesLevelToItsStart()
+    {
+        var s = new LevellingSelection();
+        s.Follow("PLD", 22);
+        s.Select("DRK", startLevel: 30);
+        Assert.Equal(30, s.Level);
+        s.Select("WAR", startLevel: 1);
+        Assert.Equal(30, s.Level);
+    }
 }
