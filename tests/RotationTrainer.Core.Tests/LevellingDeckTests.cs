@@ -169,4 +169,14 @@ public class LevellingDeckTests
         var (_, errors) = Parse(Card("PLD", 60, 69, "[1, 2]"));
         Assert.Single(errors);
     }
+
+    [Theory]
+    [InlineData("[]")]
+    [InlineData("[[\"Fast Blade\"]]")]
+    public void EmptyOrNestedChainIsAnError(string step)
+    {
+        var (deck, errors) = Parse(Card("PLD", 60, 69, step));
+        Assert.NotEmpty(errors);
+        Assert.Empty(deck.All);
+    }
 }

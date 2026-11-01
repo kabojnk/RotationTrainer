@@ -793,7 +793,7 @@
       "note": "Weave Assize on cooldown from 56."
     },
     "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
-    "tip": "Afflatus Solace and Asylum first. Benediction saves the tank."
+    "tip": "Heal with Afflatus Solace and Asylum before Cure II. Benediction saves the tank."
   },
   {
     "job": "WHM",
@@ -855,7 +855,7 @@
       "note": "Refresh Dia every 30 seconds."
     },
     "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
-    "tip": "Temperance and Aquaveil on the tank for big pulls."
+    "tip": "Aquaveil on the tank and Temperance for big pulls."
   },
   {
     "job": "WHM",
@@ -950,11 +950,11 @@
     "pull": {
       "threshold": 0,
       "steps": ["Bio II", "Ruin II"],
-      "note": "No AoE yet. Put Bio on each enemy."
+      "note": "No AoE yet. Bio each enemy; Ruin II is instant while moving."
     },
     "single": {
       "steps": ["Bio II", "Ruin"],
-      "note": "Ruin II is instant. Use it while moving."
+      "note": "Refresh Bio when it falls off."
     },
     "weave": ["Lucid Dreaming", "Swiftcast"],
     "tip": "Adloquium shields the tank before big hits."
@@ -973,7 +973,7 @@
       "note": "Spend Aetherflow on Energy Drain if no one needs healing."
     },
     "weave": ["Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
-    "tip": "Lustrate is a free strong heal. It costs Aetherflow."
+    "tip": "Lustrate is a strong instant heal. It costs Aetherflow."
   },
   {
     "job": "SCH",
@@ -1030,7 +1030,7 @@
       "note": "Refresh Biolysis every 30 seconds."
     },
     "weave": ["Chain Stratagem", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
-    "tip": "Recitation makes your next heal free and critical."
+    "tip": "Recitation makes your next Adloquium or Indomitability free and critical."
   },
   {
     "job": "SCH",
@@ -1253,13 +1253,7 @@
       ],
       "note": "Eukrasia turns Dosis into a DoT. Refresh it every 30 seconds."
     },
-    "weave": [
-      "Kardia",
-      ["Phlegma II", "Phlegma"],
-      "Toxikon",
-      "Lucid Dreaming",
-      "Swiftcast"
-    ],
+    "weave": ["Kardia", "Toxikon", "Lucid Dreaming", "Swiftcast"],
     "tip": "Kardia on the tank heals them as you deal damage."
   },
   {
@@ -1269,11 +1263,12 @@
     "pull": {
       "threshold": 3,
       "steps": [
+        "Eukrasia",
         ["Dyskrasia II", "Dyskrasia"],
         ["Phlegma III", "Phlegma II"],
         ["Toxikon II", "Toxikon"]
       ],
-      "note": "Toxikon spends Addersting on the pack."
+      "note": "From 82, Eukrasia then Dyskrasia puts a DoT on the pack."
     },
     "single": {
       "steps": [
@@ -1285,7 +1280,6 @@
     },
     "weave": [
       "Kardia",
-      ["Phlegma III", "Phlegma II"],
       ["Toxikon II", "Toxikon"],
       "Lucid Dreaming",
       "Swiftcast"
@@ -1298,14 +1292,14 @@
     "maxLevel": 99,
     "pull": {
       "threshold": 3,
-      "steps": ["Dyskrasia II", "Phlegma III", "Toxikon II"],
-      "note": "Psyche hits the pack from 92."
+      "steps": ["Eukrasia", "Dyskrasia II", "Phlegma III", "Toxikon II"],
+      "note": "Eukrasia then Dyskrasia puts a DoT on the pack. Psyche from 92."
     },
     "single": {
       "steps": ["Eukrasia", "Dosis III", "Phlegma III"],
       "note": "Pneuma deals damage and heals the party."
     },
-    "weave": ["Kardia", "Psyche", "Pneuma", "Phlegma III", "Lucid Dreaming", "Swiftcast"],
+    "weave": ["Kardia", "Psyche", "Pneuma", "Lucid Dreaming", "Swiftcast"],
     "tip": "Taurochole and Haima on the tank for big pulls."
   },
   {
@@ -1314,14 +1308,14 @@
     "maxLevel": 100,
     "pull": {
       "threshold": 3,
-      "steps": ["Dyskrasia II", "Phlegma III", "Toxikon II"],
-      "note": "Psyche hits the pack."
+      "steps": ["Eukrasia", "Dyskrasia II", "Phlegma III", "Toxikon II"],
+      "note": "Eukrasia then Dyskrasia puts a DoT on the pack."
     },
     "single": {
       "steps": ["Eukrasia", "Dosis III", "Phlegma III"],
       "note": "Pneuma deals damage and heals the party."
     },
-    "weave": ["Kardia", "Psyche", "Pneuma", "Phlegma III", "Lucid Dreaming", "Swiftcast"],
+    "weave": ["Kardia", "Psyche", "Pneuma", "Lucid Dreaming", "Swiftcast"],
     "tip": "Philosophia makes your damage heal the party."
   }
 ]
