@@ -29,6 +29,7 @@ internal sealed class AppearanceTab(Plugin plugin)
                     config.Accent = Accent.Sakura;
                     config.GlassOpacity = Math.Max(config.GlassOpacity, SakuraMinOpacity);
                     config.TrailOpacity = Math.Max(config.TrailOpacity, SakuraMinOpacity);
+                    config.LevellingCardOpacity = Math.Max(config.LevellingCardOpacity, SakuraMinOpacity);
                 }
                 plugin.SaveConfig();
             }
@@ -50,6 +51,10 @@ internal sealed class AppearanceTab(Plugin plugin)
             SettingsWindow.RowLabel("Trail opacity");
             var trail = config.TrailOpacity;
             if (OpacitySlider("##trailOpacity", ref trail)) config.TrailOpacity = trail;
+
+            SettingsWindow.RowLabel("Levelling card opacity");
+            var card = config.LevellingCardOpacity;
+            if (OpacitySlider("##cardOpacity", ref card)) config.LevellingCardOpacity = card;
 
             SettingsWindow.RowLabel("Trail backing");
             var strip = config.TrailGlassStrip;

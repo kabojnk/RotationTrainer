@@ -720,7 +720,7 @@ public sealed class TrailWindow : Window, IDisposable
     /// The game's cross hotbar glyph: four D-pad arms (a plus) or four face buttons (a diamond of dots), with the one
     /// to press lit and the others dim.
     /// </summary>
-    private static void DrawPadGlyph(ImDrawListPtr dl, Vector2 center, float size, PadButton button, float alpha)
+    internal static void DrawPadGlyph(ImDrawListPtr dl, Vector2 center, float size, PadButton button, float alpha)
     {
         var s = Scale;
         var reach = size / 2 - s;
