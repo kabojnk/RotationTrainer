@@ -1377,7 +1377,7 @@
     },
     "single": {
       "steps": ["Bootshine", "Twin Snakes", "True Strike", "Demolish", "Snap Punch"],
-      "note": "Alternate Demolish and Snap Punch in Coeurl form."
+      "note": "In Coeurl form, Demolish then two Snap Punches."
     },
     "weave": ["Steel Peak", "Thunderclap"],
     "tip": "Thunderclap closes the gap to an enemy."
@@ -1609,7 +1609,7 @@
       "note": "Dragonfire Dive hits the pack."
     },
     "single": {
-      "steps": ["True Thrust", "Disembowel", "Chaos Thrust", "True Thrust", "Vorpal Thrust", "Full Thrust", "Fang and Claw"],
+      "steps": ["True Thrust", "Disembowel", "Chaos Thrust", "Wheeling Thrust", "True Thrust", "Vorpal Thrust", "Full Thrust", "Fang and Claw"],
       "note": "Chaos Thrust ends the Disembowel combo."
     },
     "weave": ["Lance Charge", "Battle Litany", "Jump", "Dragonfire Dive", "Life Surge"],
@@ -1785,7 +1785,7 @@
     },
     "single": {
       "steps": ["Spinning Edge", "Gust Slash", "Aeolian Edge"],
-      "note": "Ten, Chi, Ninjutsu is Raiton. Use it on cooldown."
+      "note": "From 35, Ten, Chi, Ninjutsu is Raiton. Use it on cooldown."
     },
     "weave": ["Ten", "Chi", "Ninjutsu", "Mug", "Trick Attack"],
     "tip": "Use Hide out of combat to reset your mudras."
@@ -1816,7 +1816,7 @@
       "note": "Two-hit AoE combo from 52."
     },
     "single": {
-      "steps": ["Spinning Edge", "Gust Slash", "Aeolian Edge"],
+      "steps": ["Spinning Edge", "Gust Slash", "Aeolian Edge", "Armor Crush"],
       "note": "From 54, Armor Crush when Kazematoi is empty."
     },
     "weave": [
@@ -1853,7 +1853,8 @@
       ["Dokumori", "Mug"],
       "Trick Attack",
       "Dream Within a Dream",
-      "Bhavacakra"
+      "Bhavacakra",
+      "Hellfrog Medium"
     ],
     "tip": "Dokumori replaces Mug at 66."
   },
@@ -1870,7 +1871,7 @@
       "steps": ["Spinning Edge", "Gust Slash", "Aeolian Edge", "Armor Crush"],
       "note": "Ten Chi Jin inside Trick Attack."
     },
-    "weave": ["Ten", "Chi", "Jin", "Ninjutsu", "Kassatsu", "Ten Chi Jin", "Dokumori", "Trick Attack", "Dream Within a Dream", "Bhavacakra"],
+    "weave": ["Ten", "Chi", "Jin", "Ninjutsu", "Kassatsu", "Ten Chi Jin", "Dokumori", "Trick Attack", "Dream Within a Dream", "Bhavacakra", "Hellfrog Medium"],
     "tip": "Meisui turns Suiton into Ninki."
   },
   {
@@ -1886,8 +1887,8 @@
       "steps": ["Spinning Edge", "Gust Slash", "Aeolian Edge", "Armor Crush"],
       "note": "Phantom Kamaitachi follows Bunshin."
     },
-    "weave": ["Bunshin", "Ten", "Chi", "Jin", "Ninjutsu", "Kassatsu", "Ten Chi Jin", "Dokumori", "Trick Attack", "Dream Within a Dream", "Bhavacakra"],
-    "tip": "Use Bunshin before spending Ninki."
+    "weave": ["Bunshin", "Ten", "Chi", "Jin", "Ninjutsu", "Kassatsu", "Ten Chi Jin", "Dokumori", "Trick Attack", "Dream Within a Dream", "Bhavacakra", "Hellfrog Medium"],
+    "tip": "Spend Ninki on Bunshin first."
   },
   {
     "job": "NIN",
@@ -1913,7 +1914,8 @@
       "Dokumori",
       ["Kunai's Bane", "Trick Attack"],
       "Dream Within a Dream",
-      "Bhavacakra"
+      "Bhavacakra",
+      "Hellfrog Medium"
     ],
     "tip": "Kunai's Bane replaces Trick Attack at 92."
   },
@@ -1930,7 +1932,7 @@
       "steps": ["Spinning Edge", "Gust Slash", "Aeolian Edge", "Armor Crush"],
       "note": "Raiton readies Raiju. Spend it right away."
     },
-    "weave": ["Bunshin", "Ten", "Chi", "Jin", "Ninjutsu", "Kassatsu", "Ten Chi Jin", "Dokumori", "Kunai's Bane", "Dream Within a Dream", "Bhavacakra"],
+    "weave": ["Bunshin", "Ten", "Chi", "Jin", "Ninjutsu", "Kassatsu", "Ten Chi Jin", "Dokumori", "Kunai's Bane", "Dream Within a Dream", "Bhavacakra", "Hellfrog Medium"],
     "tip": "Line up Dokumori and Kunai's Bane together."
   },
   {
@@ -1976,7 +1978,7 @@
     },
     "single": {
       "steps": ["Hakaze", "Jinpu", "Gekko", "Hakaze", "Shifu", "Kasha", "Hakaze", "Yukikaze", "Iaijutsu"],
-      "note": "From 74, Tsubame-gaeshi repeats your last Iaijutsu."
+      "note": "From 74, Tsubame-gaeshi repeats Midare Setsugekka."
     },
     "weave": ["Meikyo Shisui", "Ikishoten", "Hissatsu: Senei", "Hissatsu: Guren", "Tsubame-gaeshi", "Hissatsu: Shinten", "Hissatsu: Kyuten"],
     "tip": "Senei on bosses, Guren on packs."
@@ -1987,7 +1989,13 @@
     "maxLevel": 89,
     "pull": {
       "threshold": 3,
-      "steps": ["Fuga", "Mangetsu", "Fuga", "Oka", "Iaijutsu"],
+      "steps": [
+        ["Fuko", "Fuga"],
+        "Mangetsu",
+        ["Fuko", "Fuga"],
+        "Oka",
+        "Iaijutsu"
+      ],
       "note": "Fuko replaces Fuga at 86."
     },
     "single": {
@@ -1995,7 +2003,7 @@
       "note": "Spend Meditation on Shoha."
     },
     "weave": ["Meikyo Shisui", "Ikishoten", "Hissatsu: Senei", "Hissatsu: Guren", "Tsubame-gaeshi", "Shoha", "Hissatsu: Shinten"],
-    "tip": "Tengentsu blocks a hit and heals you."
+    "tip": "Tengentsu cuts damage and heals you when hit."
   },
   {
     "job": "SAM",
@@ -2020,7 +2028,7 @@
       ],
       "note": "Ogi Namikiri is ready after Ikishoten."
     },
-    "weave": ["Meikyo Shisui", "Ikishoten", "Ogi Namikiri", "Hissatsu: Senei", "Tsubame-gaeshi", "Shoha", "Hissatsu: Shinten"],
+    "weave": ["Meikyo Shisui", "Ikishoten", "Ogi Namikiri", "Zanshin", "Hissatsu: Senei", "Tsubame-gaeshi", "Shoha"],
     "tip": "Gyofu replaces Hakaze at 92."
   },
   {
@@ -2050,9 +2058,9 @@
     },
     "single": {
       "steps": ["Shadow of Death", "Soul Slice", "Blood Stalk", "Gibbet", "Gallows", "Slice", "Waxing Slice", "Infernal Slice"],
-      "note": "Spend 50 Soul on Blood Stalk, then Gibbet and Gallows."
+      "note": "Blood Stalk readies one Gibbet or Gallows; Gluttony readies two."
     },
-    "weave": ["Arcane Circle", "Gluttony", "Blood Stalk", "Soul Slice"],
+    "weave": ["Arcane Circle", "Gluttony", "Blood Stalk"],
     "tip": "Keep Shadow of Death on the boss."
   },
   {
@@ -2068,7 +2076,7 @@
       "steps": ["Shadow of Death", "Soul Slice", "Blood Stalk", "Gibbet", "Gallows", "Slice", "Waxing Slice", "Infernal Slice"],
       "note": "At 50 Shroud, Enshroud, then the Reaping buttons."
     },
-    "weave": ["Arcane Circle", "Enshroud", "Gluttony", "Blood Stalk", "Soulsow"],
+    "weave": ["Arcane Circle", "Plentiful Harvest", "Enshroud", "Gluttony", "Blood Stalk", "Soulsow"],
     "tip": "Use Soulsow out of combat for Harvest Moon."
   },
   {
@@ -2116,7 +2124,7 @@
       "steps": ["Steel Fangs", "Reaving Fangs", "Vicewinder", "Hunter's Coil", "Swiftskin's Coil"],
       "note": "Each Fangs button changes as you press it. Follow the glow."
     },
-    "weave": ["Serpent's Tail", "Twinfang", "Twinblood", "Uncoiled Fury"],
+    "weave": ["Serpent's Ire", "Serpent's Tail", "Twinfang", "Twinblood", "Uncoiled Fury"],
     "tip": "Spend Rattling Coils on Uncoiled Fury from 82."
   },
   {
