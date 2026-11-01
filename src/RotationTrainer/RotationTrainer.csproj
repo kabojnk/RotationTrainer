@@ -19,6 +19,7 @@
     <EmbeddedResource Include="images\icon.png" LogicalName="RotationTrainer.icon.png" />
     <!-- Rotations every library starts with (see Plugin.BuiltInRotations). -->
     <EmbeddedResource Include="..\..\presets\balance-openers.json" LogicalName="RotationTrainer.presets.json" />
+    <EmbeddedResource Include="..\..\presets\levelling-cards.json" LogicalName="RotationTrainer.levelling.json" />
   </ItemGroup>
 
   <ItemGroup>
