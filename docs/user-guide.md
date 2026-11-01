@@ -214,7 +214,7 @@ Short rotations for levelling a job through dungeons and trials. Open it with `/
 - **Information** (the i button in the title bar) explains how the cards are chosen: unlock levels and combos from the game data, priorities written by hand from each job's tooltips, and why gear doesn't change them.
 - **Pin as card** opens a small card with the same loops as icons, to keep beside your hotbar. **Lock card** stops it moving and lets clicks pass through. The cog on the card opens the guide.
 
-Cards are written for the tanks, healers and melee so far. Other jobs show "Cards for this job are coming."
+Every combat job has cards. Blue Mage and other jobs without cards show "Cards for this job are coming."
 
 ## The rotation builder
 
