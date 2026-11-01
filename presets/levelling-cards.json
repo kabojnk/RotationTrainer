@@ -2158,5 +2158,1077 @@
     },
     "weave": ["Reawaken", "Serpent's Ire", "Serpent's Tail", "Twinfang", "Twinblood", "Uncoiled Fury"],
     "tip": "Line up Serpent's Ire with your party's buffs."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Venomous Bite", "Heavy Shot"],
+      "note": "No AoE yet. Bite each enemy."
+    },
+    "single": {
+      "steps": ["Venomous Bite", "Heavy Shot", "Straight Shot"],
+      "note": "Straight Shot when it lights up."
+    },
+    "weave": ["Raging Strikes"],
+    "tip": "Use Raging Strikes at the start of each pull."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 10,
+    "maxLevel": 19,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Quick Nock"],
+      "note": "Spam Quick Nock on packs from 18."
+    },
+    "single": {
+      "steps": ["Venomous Bite", "Heavy Shot", "Straight Shot"],
+      "note": "Straight Shot when it lights up."
+    },
+    "weave": ["Raging Strikes", "Bloodletter"],
+    "tip": "Bloodletter on cooldown."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 20,
+    "maxLevel": 29,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Quick Nock", "Wide Volley"],
+      "note": "Wide Volley when it lights up."
+    },
+    "single": {
+      "steps": ["Venomous Bite", "Heavy Shot", "Straight Shot"],
+      "note": "Straight Shot when it lights up."
+    },
+    "weave": ["Raging Strikes", "Bloodletter"],
+    "tip": "Bloodletter on cooldown."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Quick Nock", "Wide Volley"],
+      "note": "Wide Volley when it lights up."
+    },
+    "single": {
+      "steps": ["Venomous Bite", "Windbite", "Heavy Shot", "Straight Shot"],
+      "note": "Keep both DoTs on bosses."
+    },
+    "weave": ["Mage's Ballad", "Raging Strikes", "Barrage", "Bloodletter"],
+    "tip": "Mage's Ballad speeds up Bloodletter."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Quick Nock", "Wide Volley"],
+      "note": "From 45, Rain of Death in place of Bloodletter on packs."
+    },
+    "single": {
+      "steps": ["Venomous Bite", "Windbite", "Heavy Shot", "Straight Shot"],
+      "note": "Keep both DoTs on bosses."
+    },
+    "weave": ["Mage's Ballad", "Army's Paeon", "Raging Strikes", "Barrage", "Bloodletter", "Rain of Death"],
+    "tip": "Play Mage's Ballad, then Army's Paeon."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Quick Nock", "Wide Volley"],
+      "note": "Rain of Death on packs."
+    },
+    "single": {
+      "steps": ["Venomous Bite", "Windbite", "Heavy Shot", "Straight Shot", "Iron Jaws"],
+      "note": "From 56, Iron Jaws refreshes both DoTs."
+    },
+    "weave": ["The Wanderer's Minuet", "Mage's Ballad", "Army's Paeon", "Raging Strikes", "Battle Voice", "Barrage", "Empyreal Arrow", "Pitch Perfect", "Bloodletter"],
+    "tip": "Rotate songs: Minuet, Ballad, Paeon."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Quick Nock", "Wide Volley"],
+      "note": "Rain of Death on packs."
+    },
+    "single": {
+      "steps": [
+        ["Caustic Bite", "Venomous Bite"],
+        ["Stormbite", "Windbite"],
+        "Heavy Shot",
+        "Straight Shot",
+        "Iron Jaws"
+      ],
+      "note": "Iron Jaws refreshes both DoTs."
+    },
+    "weave": ["The Wanderer's Minuet", "Mage's Ballad", "Army's Paeon", "Raging Strikes", "Battle Voice", "Barrage", "Empyreal Arrow", "Sidewinder", "Pitch Perfect", "Bloodletter"],
+    "tip": "Spend Pitch Perfect at three stacks in Minuet."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 2,
+      "steps": [
+        "Quick Nock",
+        ["Shadowbite", "Wide Volley"]
+      ],
+      "note": "Shadowbite when it lights up."
+    },
+    "single": {
+      "steps": [
+        "Caustic Bite",
+        "Stormbite",
+        ["Burst Shot", "Heavy Shot"],
+        "Refulgent Arrow",
+        "Iron Jaws"
+      ],
+      "note": "Refulgent Arrow when it lights up."
+    },
+    "weave": ["The Wanderer's Minuet", "Mage's Ballad", "Army's Paeon", "Raging Strikes", "Battle Voice", "Barrage", "Empyreal Arrow", "Sidewinder", "Pitch Perfect", "Bloodletter"],
+    "tip": "Line up Raging Strikes and Battle Voice together."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 2,
+      "steps": [
+        ["Ladonsbite", "Quick Nock"],
+        "Shadowbite",
+        "Apex Arrow"
+      ],
+      "note": "Apex Arrow hits a line."
+    },
+    "single": {
+      "steps": ["Caustic Bite", "Stormbite", "Burst Shot", "Refulgent Arrow", "Iron Jaws", "Apex Arrow"],
+      "note": "Apex Arrow at full Soul Voice. Blast Arrow follows from 86."
+    },
+    "weave": ["The Wanderer's Minuet", "Mage's Ballad", "Army's Paeon", "Raging Strikes", "Battle Voice", "Barrage", "Empyreal Arrow", "Sidewinder", "Pitch Perfect", "Bloodletter", "Rain of Death"],
+    "tip": "Line up Raging Strikes and Battle Voice together."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Ladonsbite", "Shadowbite", "Apex Arrow"],
+      "note": "Resonant Arrow follows Barrage from 96."
+    },
+    "single": {
+      "steps": ["Caustic Bite", "Stormbite", "Burst Shot", "Refulgent Arrow", "Iron Jaws", "Apex Arrow"],
+      "note": "Apex Arrow at full Soul Voice."
+    },
+    "weave": [
+      "The Wanderer's Minuet",
+      "Mage's Ballad",
+      "Army's Paeon",
+      "Radiant Finale",
+      "Raging Strikes",
+      "Battle Voice",
+      "Barrage",
+      "Resonant Arrow",
+      "Empyreal Arrow",
+      "Sidewinder",
+      "Pitch Perfect",
+      ["Heartbreak Shot", "Bloodletter"],
+      "Rain of Death"
+    ],
+    "tip": "Use Radiant Finale with Battle Voice."
+  },
+  {
+    "job": "BRD",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Ladonsbite", "Shadowbite", "Apex Arrow"],
+      "note": "Resonant Arrow follows Barrage."
+    },
+    "single": {
+      "steps": ["Caustic Bite", "Stormbite", "Burst Shot", "Refulgent Arrow", "Iron Jaws", "Apex Arrow"],
+      "note": "Radiant Encore follows Radiant Finale."
+    },
+    "weave": ["The Wanderer's Minuet", "Mage's Ballad", "Army's Paeon", "Radiant Finale", "Radiant Encore", "Raging Strikes", "Battle Voice", "Barrage", "Resonant Arrow", "Empyreal Arrow", "Sidewinder", "Pitch Perfect", "Heartbreak Shot", "Rain of Death"],
+    "tip": "Line up your buffs, then spend procs inside them."
+  },
+  {
+    "job": "MCH",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Spread Shot"],
+      "note": "Spam Spread Shot on packs."
+    },
+    "single": {
+      "steps": ["Hot Shot", "Split Shot", "Slug Shot", "Clean Shot"],
+      "note": "Hot Shot on cooldown."
+    },
+    "weave": ["Reassemble", "Gauss Round", "Hypercharge"],
+    "tip": "From 35, at 50 Heat, Hypercharge then Heat Blast until it ends."
+  },
+  {
+    "job": "MCH",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Spread Shot"],
+      "note": "Spam Spread Shot on packs."
+    },
+    "single": {
+      "steps": ["Hot Shot", "Split Shot", "Slug Shot", "Clean Shot", "Heat Blast"],
+      "note": "At 50 Heat, Hypercharge then Heat Blast."
+    },
+    "weave": ["Wildfire", "Hypercharge", "Rook Autoturret", "Reassemble", "Gauss Round"],
+    "tip": "Wildfire just before Hypercharge."
+  },
+  {
+    "job": "MCH",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Spread Shot", "Auto Crossbow"],
+      "note": "In Hypercharge, Auto Crossbow on packs."
+    },
+    "single": {
+      "steps": [
+        "Drill",
+        "Hot Shot",
+        ["Heated Split Shot", "Split Shot"],
+        "Slug Shot",
+        "Clean Shot",
+        "Heat Blast"
+      ],
+      "note": "Reassemble before Drill from 58."
+    },
+    "weave": ["Wildfire", "Hypercharge", "Rook Autoturret", "Reassemble", "Gauss Round", "Ricochet"],
+    "tip": "Use Gauss Round and Ricochet charges on cooldown."
+  },
+  {
+    "job": "MCH",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Spread Shot", "Auto Crossbow"],
+      "note": "In Hypercharge, Auto Crossbow on packs."
+    },
+    "single": {
+      "steps": [
+        "Drill",
+        "Hot Shot",
+        "Heated Split Shot",
+        "Heated Slug Shot",
+        ["Heated Clean Shot", "Clean Shot"],
+        ["Blazing Shot", "Heat Blast"]
+      ],
+      "note": "Reassemble before Drill."
+    },
+    "weave": ["Barrel Stabilizer", "Wildfire", "Hypercharge", "Rook Autoturret", "Reassemble", "Gauss Round", "Ricochet"],
+    "tip": "Barrel Stabilizer gives a free Hypercharge from 66."
+  },
+  {
+    "job": "MCH",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Bioblaster", "Spread Shot", "Auto Crossbow"],
+      "note": "Bioblaster first; Flamethrower on big packs."
+    },
+    "single": {
+      "steps": [
+        ["Air Anchor", "Hot Shot"],
+        "Drill",
+        "Heated Split Shot",
+        "Heated Slug Shot",
+        "Heated Clean Shot",
+        "Blazing Shot"
+      ],
+      "note": "Air Anchor replaces Hot Shot at 76."
+    },
+    "weave": ["Barrel Stabilizer", "Wildfire", "Hypercharge", "Rook Autoturret", "Reassemble", "Gauss Round", "Ricochet"],
+    "tip": "Wildfire just before Hypercharge."
+  },
+  {
+    "job": "MCH",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Bioblaster",
+        ["Scattergun", "Spread Shot"],
+        "Auto Crossbow"
+      ],
+      "note": "Scattergun replaces Spread Shot at 82."
+    },
+    "single": {
+      "steps": ["Air Anchor", "Drill", "Heated Split Shot", "Heated Slug Shot", "Heated Clean Shot", "Blazing Shot"],
+      "note": "Reassemble before Drill or Air Anchor."
+    },
+    "weave": ["Barrel Stabilizer", "Wildfire", "Hypercharge", "Automaton Queen", "Reassemble", "Gauss Round", "Ricochet"],
+    "tip": "Automaton Queen at high Battery."
+  },
+  {
+    "job": "MCH",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Bioblaster", "Chain Saw", "Scattergun", "Auto Crossbow"],
+      "note": "Chain Saw hits a line."
+    },
+    "single": {
+      "steps": ["Air Anchor", "Drill", "Heated Split Shot", "Heated Slug Shot", "Heated Clean Shot", "Blazing Shot", "Chain Saw"],
+      "note": "Reassemble before Chain Saw. It becomes Excavator from 96."
+    },
+    "weave": [
+      "Barrel Stabilizer",
+      "Wildfire",
+      "Hypercharge",
+      "Automaton Queen",
+      "Reassemble",
+      ["Double Check", "Gauss Round"],
+      ["Checkmate", "Ricochet"]
+    ],
+    "tip": "Double Check and Checkmate replace Gauss Round and Ricochet at 92."
+  },
+  {
+    "job": "MCH",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Bioblaster", "Chain Saw", "Scattergun", "Auto Crossbow"],
+      "note": "Full Metal Field follows Barrel Stabilizer."
+    },
+    "single": {
+      "steps": ["Air Anchor", "Drill", "Heated Split Shot", "Heated Slug Shot", "Heated Clean Shot", "Blazing Shot", "Chain Saw", "Full Metal Field"],
+      "note": "Full Metal Field follows Barrel Stabilizer."
+    },
+    "weave": ["Barrel Stabilizer", "Wildfire", "Hypercharge", "Automaton Queen", "Reassemble", "Double Check", "Checkmate"],
+    "tip": "Line up Wildfire and Hypercharge together."
+  },
+  {
+    "job": "DNC",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Standard Step", "Windmill", "Bladeshower", "Rising Windmill", "Bloodshower"],
+      "note": "Spend feathers on Fan Dance II in pulls."
+    },
+    "single": {
+      "steps": ["Standard Step", "Cascade", "Fountain", "Reverse Cascade", "Fountainfall"],
+      "note": "Press the steps the game shows, then finish. Procs when they light up."
+    },
+    "weave": ["Devilment", "Closed Position", "Fan Dance", "Fan Dance II", "Fan Dance III"],
+    "tip": "Closed Position on your best damage dealer."
+  },
+  {
+    "job": "DNC",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Technical Step", "Standard Step", "Windmill", "Bladeshower", "Rising Windmill", "Bloodshower", "Saber Dance"],
+      "note": "Spend Esprit on Saber Dance from 76."
+    },
+    "single": {
+      "steps": ["Technical Step", "Standard Step", "Cascade", "Fountain", "Reverse Cascade", "Fountainfall", "Saber Dance"],
+      "note": "Technical Step every two minutes. Saber Dance at 50 Esprit."
+    },
+    "weave": ["Devilment", "Flourish", "Closed Position", "Fan Dance", "Fan Dance II", "Fan Dance III"],
+    "tip": "Line up Technical Step and Devilment together."
+  },
+  {
+    "job": "DNC",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Technical Step", "Standard Step", "Windmill", "Bladeshower", "Rising Windmill", "Bloodshower", "Saber Dance"],
+      "note": "Fan Dance IV hits a cone after Flourish from 86."
+    },
+    "single": {
+      "steps": ["Technical Step", "Standard Step", "Cascade", "Fountain", "Reverse Cascade", "Fountainfall", "Saber Dance"],
+      "note": "Saber Dance at 50 Esprit."
+    },
+    "weave": ["Devilment", "Flourish", "Closed Position", "Fan Dance", "Fan Dance II", "Fan Dance III", "Fan Dance IV"],
+    "tip": "Improvisation heals the party over time."
+  },
+  {
+    "job": "DNC",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Technical Step", "Standard Step", "Windmill", "Bladeshower", "Rising Windmill", "Bloodshower", "Saber Dance", "Starfall Dance", "Last Dance"],
+      "note": "Last Dance follows Standard Finish from 92."
+    },
+    "single": {
+      "steps": ["Technical Step", "Standard Step", "Cascade", "Fountain", "Reverse Cascade", "Fountainfall", "Saber Dance", "Starfall Dance", "Last Dance"],
+      "note": "Starfall Dance is ready after Devilment."
+    },
+    "weave": ["Devilment", "Flourish", "Closed Position", "Fan Dance", "Fan Dance II", "Fan Dance III", "Fan Dance IV"],
+    "tip": "Line up Technical Step and Devilment together."
+  },
+  {
+    "job": "DNC",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Technical Step", "Standard Step", "Windmill", "Bladeshower", "Rising Windmill", "Bloodshower", "Saber Dance", "Starfall Dance", "Last Dance"],
+      "note": "Last Dance follows Standard Finish."
+    },
+    "single": {
+      "steps": ["Technical Step", "Standard Step", "Cascade", "Fountain", "Reverse Cascade", "Fountainfall", "Saber Dance", "Starfall Dance", "Last Dance"],
+      "note": "Starfall Dance is ready after Devilment."
+    },
+    "weave": ["Devilment", "Flourish", "Closed Position", "Fan Dance", "Fan Dance II", "Fan Dance III", "Fan Dance IV"],
+    "tip": "Spend procs inside Technical Finish."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Fire", "Transpose", "Blizzard", "Thunder"],
+      "note": "No AoE yet."
+    },
+    "single": {
+      "steps": ["Fire", "Transpose", "Blizzard", "Transpose", "Thunder"],
+      "note": "Fire until MP runs low, then Transpose and Blizzard to refill."
+    },
+    "weave": ["Transpose"],
+    "tip": "Refresh Thunder when it falls off."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 10,
+    "maxLevel": 19,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Fire II", "Transpose", "Blizzard II"],
+      "note": "Fire II from 18 until MP runs low, then ice."
+    },
+    "single": {
+      "steps": ["Fire", "Transpose", "Blizzard", "Transpose", "Thunder"],
+      "note": "Fire until MP runs low, then Transpose and Blizzard to refill."
+    },
+    "weave": ["Transpose", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Refresh Thunder when it falls off."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 20,
+    "maxLevel": 29,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Fire II", "Transpose", "Blizzard II", "Thunder II"],
+      "note": "Thunder II from 26 hits the pack."
+    },
+    "single": {
+      "steps": ["Fire", "Transpose", "Blizzard", "Transpose", "Thunder"],
+      "note": "Fire until MP runs low, then Transpose and Blizzard to refill."
+    },
+    "weave": ["Transpose", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Refresh Thunder when it falls off."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Fire II", "Transpose", "Blizzard II", "Thunder II"],
+      "note": "Fire II until MP runs low, then ice."
+    },
+    "single": {
+      "steps": ["Fire III", "Fire", "Blizzard III", "Thunder"],
+      "note": "From 35, Fire III and Blizzard III switch phase in one cast."
+    },
+    "weave": ["Manafont", "Transpose", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Manafont refills MP. Umbral Soul keeps ice up between pulls."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Blizzard II", "Freeze", "Fire II", "Thunder II"],
+      "note": "Freeze refills MP faster."
+    },
+    "single": {
+      "steps": [
+        "Fire III",
+        "Fire",
+        "Blizzard III",
+        ["Thunder III", "Thunder"]
+      ],
+      "note": "Thunder III from 45."
+    },
+    "weave": ["Manafont", "Transpose", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Umbral Soul keeps ice up between pulls."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Blizzard II", "Freeze", "Fire II", "Flare"],
+      "note": "Flare spends the last of your MP."
+    },
+    "single": {
+      "steps": ["Fire III", "Fire", "Blizzard III", "Blizzard IV", "Thunder III"],
+      "note": "From 58, Blizzard IV in ice."
+    },
+    "weave": ["Ley Lines", "Manafont", "Transpose", "Swiftcast"],
+    "tip": "Stand in Ley Lines to cast faster."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Blizzard II",
+        "Freeze",
+        "Fire II",
+        "Flare",
+        ["Thunder IV", "Thunder II"]
+      ],
+      "note": "Thunder IV hits the pack from 64."
+    },
+    "single": {
+      "steps": ["Blizzard III", "Blizzard IV", "Fire III", "Fire IV", "Thunder III"],
+      "note": "Fire IV until MP runs low, then back to ice."
+    },
+    "weave": ["Ley Lines", "Triplecast", "Manafont", "Transpose", "Swiftcast"],
+    "tip": "Triplecast makes your next three spells instant."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Blizzard II", "Freeze", "Fire II", "Flare", "Foul"],
+      "note": "Foul spends Polyglot on the pack."
+    },
+    "single": {
+      "steps": ["Blizzard III", "Blizzard IV", "Fire III", "Fire IV", "Despair", "Thunder III"],
+      "note": "Despair ends each fire phase from 72."
+    },
+    "weave": ["Ley Lines", "Triplecast", "Manafont", "Transpose", "Swiftcast"],
+    "tip": "Spend Polyglot before it caps."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["High Blizzard II", "Blizzard II"],
+        "Freeze",
+        ["High Fire II", "Fire II"],
+        "Flare",
+        "Foul",
+        "Thunder IV"
+      ],
+      "note": "High Fire II replaces Fire II at 82."
+    },
+    "single": {
+      "steps": ["Blizzard III", "Blizzard IV", "Fire III", "Fire IV", "Despair", "Xenoglossy", "Thunder III"],
+      "note": "Xenoglossy spends Polyglot on bosses."
+    },
+    "weave": ["Ley Lines", "Amplifier", "Triplecast", "Manafont", "Transpose", "Swiftcast"],
+    "tip": "Amplifier gives Polyglot from 86."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "High Blizzard II",
+        "Freeze",
+        "High Fire II",
+        "Flare",
+        "Foul",
+        ["High Thunder II", "Thunder IV"]
+      ],
+      "note": "High Thunder II from 92."
+    },
+    "single": {
+      "steps": [
+        "Blizzard III",
+        "Blizzard IV",
+        "Fire III",
+        "Fire IV",
+        "Despair",
+        "Xenoglossy",
+        ["High Thunder", "Thunder III"]
+      ],
+      "note": "Fire and Blizzard become Paradox when it lights up."
+    },
+    "weave": ["Ley Lines", "Amplifier", "Triplecast", "Manafont", "Retrace", "Swiftcast"],
+    "tip": "Retrace moves your Ley Lines under you from 96."
+  },
+  {
+    "job": "BLM",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["High Blizzard II", "Freeze", "High Fire II", "Flare", "Flare Star", "Foul", "High Thunder II"],
+      "note": "Flare Star is ready at six Astral Soul."
+    },
+    "single": {
+      "steps": ["Blizzard III", "Blizzard IV", "Fire III", "Fire IV", "Flare Star", "Despair", "Xenoglossy", "High Thunder"],
+      "note": "Fire IV adds Astral Soul; Flare Star at six."
+    },
+    "weave": ["Ley Lines", "Amplifier", "Triplecast", "Manafont", "Retrace", "Swiftcast"],
+    "tip": "Spend Polyglot before it caps."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Ruin"],
+      "note": "No AoE yet."
+    },
+    "single": {
+      "steps": ["Aethercharge", "Summon Ruby", "Gemshine", "Ruin"],
+      "note": "From 6, Summon Ruby, then Gemshine."
+    },
+    "weave": [],
+    "tip": "Summon Carbuncle before each pull."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 10,
+    "maxLevel": 19,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Summon Ruby", "Gemshine", "Ruin"],
+      "note": "No AoE yet."
+    },
+    "single": {
+      "steps": ["Aethercharge", "Summon Ruby", "Gemshine", "Summon Topaz", "Gemshine", "Ruin"],
+      "note": "Summon each gem, then spend it with Gemshine."
+    },
+    "weave": ["Energy Drain", "Fester"],
+    "tip": "Energy Drain, then Fester."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 20,
+    "maxLevel": 29,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Aethercharge", "Summon Ruby", "Precious Brilliance", "Outburst"],
+      "note": "From 26, Precious Brilliance and Outburst on packs."
+    },
+    "single": {
+      "steps": ["Aethercharge", "Summon Topaz", "Gemshine", "Summon Emerald", "Gemshine", "Summon Ruby", "Gemshine", "Ruin"],
+      "note": "Summon each gem, then spend it."
+    },
+    "weave": ["Energy Drain", "Fester"],
+    "tip": "Energy Drain, then Fester."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Aethercharge",
+        ["Summon Titan", "Summon Topaz"],
+        "Precious Brilliance",
+        "Summon Ifrit",
+        "Precious Brilliance",
+        "Outburst"
+      ],
+      "note": "Spend each summon on Precious Brilliance."
+    },
+    "single": {
+      "steps": [
+        "Aethercharge",
+        ["Summon Titan", "Summon Topaz"],
+        "Gemshine",
+        "Summon Emerald",
+        "Gemshine",
+        "Summon Ifrit",
+        "Gemshine",
+        "Ruin II"
+      ],
+      "note": "Ruin II is instant. Use it while moving."
+    },
+    "weave": ["Energy Drain", "Fester"],
+    "tip": "Ifrit's spells are slow casts. Stand still for them."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Aethercharge",
+        "Summon Titan",
+        "Precious Brilliance",
+        ["Summon Garuda", "Summon Emerald"],
+        "Precious Brilliance",
+        "Summon Ifrit",
+        "Outburst"
+      ],
+      "note": "Painflare spends Aetherflow on packs."
+    },
+    "single": {
+      "steps": [
+        "Aethercharge",
+        "Summon Titan",
+        "Gemshine",
+        ["Summon Garuda", "Summon Emerald"],
+        "Gemshine",
+        "Summon Ifrit",
+        "Gemshine",
+        "Ruin II"
+      ],
+      "note": "Summon each primal, then spend it."
+    },
+    "weave": ["Energy Drain", "Fester", "Painflare"],
+    "tip": "Garuda arrives at 45."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Dreadwyrm Trance", "Aethercharge"],
+        "Summon Titan",
+        "Precious Brilliance",
+        "Summon Garuda",
+        "Precious Brilliance",
+        "Summon Ifrit",
+        "Precious Brilliance",
+        "Outburst"
+      ],
+      "note": "Energy Siphon, then Painflare on packs."
+    },
+    "single": {
+      "steps": [
+        ["Dreadwyrm Trance", "Aethercharge"],
+        "Summon Titan",
+        "Gemshine",
+        "Summon Garuda",
+        "Gemshine",
+        "Summon Ifrit",
+        "Gemshine",
+        ["Ruin III", "Ruin II"]
+      ],
+      "note": "Dreadwyrm Trance replaces Aethercharge at 58."
+    },
+    "weave": ["Energy Drain", "Energy Siphon", "Fester", "Painflare"],
+    "tip": "Ruin III is your filler from 54."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Dreadwyrm Trance", "Summon Titan", "Precious Brilliance", "Summon Garuda", "Precious Brilliance", "Summon Ifrit", "Precious Brilliance", "Outburst"],
+      "note": "Energy Siphon, then Painflare on packs."
+    },
+    "single": {
+      "steps": ["Dreadwyrm Trance", "Astral Flow", "Summon Titan", "Gemshine", "Summon Garuda", "Gemshine", "Summon Ifrit", "Gemshine", "Ruin III", "Ruin IV"],
+      "note": "Astral Flow in each trance. Ruin IV when it lights up."
+    },
+    "weave": ["Searing Light", "Energy Drain", "Energy Siphon", "Fester", "Painflare"],
+    "tip": "Ruin IV is ready after Energy Drain from 62."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Summon Bahamut",
+        "Summon Titan",
+        "Precious Brilliance",
+        "Summon Garuda",
+        "Precious Brilliance",
+        "Summon Ifrit",
+        "Precious Brilliance",
+        ["Tri-disaster", "Outburst"]
+      ],
+      "note": "Tri-disaster replaces Outburst at 74."
+    },
+    "single": {
+      "steps": ["Summon Bahamut", "Summon Titan", "Gemshine", "Summon Garuda", "Gemshine", "Summon Ifrit", "Gemshine", "Ruin III"],
+      "note": "Enkindle Bahamut and Astral Flow while Bahamut is out."
+    },
+    "weave": ["Searing Light", "Enkindle Bahamut", "Astral Flow", "Energy Drain", "Energy Siphon", "Fester", "Painflare"],
+    "tip": "Line up Searing Light and Summon Bahamut together."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Summon Bahamut", "Summon Titan", "Precious Brilliance", "Summon Garuda", "Precious Brilliance", "Summon Ifrit", "Precious Brilliance", "Tri-disaster"],
+      "note": "Spend each summon on Precious Brilliance."
+    },
+    "single": {
+      "steps": ["Summon Bahamut", "Summon Titan", "Gemshine", "Summon Garuda", "Gemshine", "Summon Ifrit", "Gemshine", "Ruin III"],
+      "note": "From 80, Summon Bahamut alternates with Summon Phoenix on the same button."
+    },
+    "weave": ["Searing Light", "Enkindle Bahamut", "Astral Flow", "Energy Drain", "Energy Siphon", "Fester", "Painflare"],
+    "tip": "Line up Searing Light and Summon Bahamut together."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Summon Bahamut", "Summon Titan II", "Precious Brilliance", "Summon Garuda II", "Precious Brilliance", "Summon Ifrit II", "Precious Brilliance", "Tri-disaster"],
+      "note": "Spend each summon on Precious Brilliance."
+    },
+    "single": {
+      "steps": ["Summon Bahamut", "Summon Titan II", "Gemshine", "Summon Garuda II", "Gemshine", "Summon Ifrit II", "Gemshine", "Ruin III"],
+      "note": "The primals upgrade at 90."
+    },
+    "weave": [
+      "Searing Light",
+      "Searing Flash",
+      "Enkindle Bahamut",
+      "Astral Flow",
+      "Energy Drain",
+      "Energy Siphon",
+      ["Necrotize", "Fester"],
+      "Painflare"
+    ],
+    "tip": "Necrotize replaces Fester at 92."
+  },
+  {
+    "job": "SMN",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Summon Bahamut", "Summon Titan II", "Precious Brilliance", "Summon Garuda II", "Precious Brilliance", "Summon Ifrit II", "Precious Brilliance", "Tri-disaster"],
+      "note": "Spend each summon on Precious Brilliance."
+    },
+    "single": {
+      "steps": ["Summon Bahamut", "Summon Titan II", "Gemshine", "Summon Garuda II", "Gemshine", "Summon Ifrit II", "Gemshine", "Ruin III"],
+      "note": "Lux Solaris heals the party after Solar Bahamut."
+    },
+    "weave": ["Searing Light", "Searing Flash", "Enkindle Bahamut", "Astral Flow", "Lux Solaris", "Energy Drain", "Energy Siphon", "Necrotize", "Painflare"],
+    "tip": "Line up Searing Light and your demi-summon together."
+  },
+  {
+    "job": "RDM",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Verthunder II", "Scatter", "Veraero II", "Scatter", "Moulinet"],
+      "note": "Every second spell is instant. Spend Mana on Moulinet."
+    },
+    "single": {
+      "steps": ["Jolt", "Verthunder", "Verfire", "Veraero", "Verstone", "Riposte", "Zwerchhau", "Redoublement"],
+      "note": "Every second spell is instant: follow a cast with Verthunder or Veraero."
+    },
+    "weave": ["Fleche", "Acceleration", "Corps-a-corps", "Engagement", "Contre Sixte", "Embolden", "Swiftcast"],
+    "tip": "At 50 of each Mana, Riposte, Zwerchhau, Redoublement."
+  },
+  {
+    "job": "RDM",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Verthunder II",
+        ["Impact", "Scatter"],
+        "Veraero II",
+        ["Impact", "Scatter"],
+        "Moulinet"
+      ],
+      "note": "Impact replaces Scatter at 66."
+    },
+    "single": {
+      "steps": [
+        ["Jolt II", "Jolt"],
+        "Verthunder",
+        "Verfire",
+        "Veraero",
+        "Verstone",
+        "Riposte",
+        "Zwerchhau",
+        "Redoublement"
+      ],
+      "note": "Every second spell is instant: follow a cast with Verthunder or Veraero."
+    },
+    "weave": ["Embolden", "Manafication", "Fleche", "Contre Sixte", "Acceleration", "Corps-a-corps", "Engagement"],
+    "tip": "Keep Black and White Mana within 30 of each other."
+  },
+  {
+    "job": "RDM",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Verthunder II", "Impact", "Veraero II", "Impact", "Moulinet"],
+      "note": "After Moulinet, finish with Verflare or Verholy."
+    },
+    "single": {
+      "steps": ["Jolt II", "Verthunder", "Verfire", "Veraero", "Verstone", "Riposte", "Zwerchhau", "Redoublement"],
+      "note": "After Redoublement, Verflare or Verholy: pick the lower Mana's colour."
+    },
+    "weave": ["Embolden", "Manafication", "Fleche", "Contre Sixte", "Acceleration", "Corps-a-corps", "Engagement"],
+    "tip": "Acceleration readies Verfire or Verstone."
+  },
+  {
+    "job": "RDM",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Verthunder II", "Impact", "Veraero II", "Impact", "Moulinet"],
+      "note": "Scorch follows Verflare or Verholy."
+    },
+    "single": {
+      "steps": [
+        ["Jolt III", "Jolt II"],
+        ["Verthunder III", "Verthunder"],
+        "Verfire",
+        ["Veraero III", "Veraero"],
+        "Verstone",
+        "Riposte",
+        "Zwerchhau",
+        "Redoublement"
+      ],
+      "note": "After the finisher, Scorch."
+    },
+    "weave": ["Embolden", "Manafication", "Fleche", "Contre Sixte", "Acceleration", "Corps-a-corps", "Engagement"],
+    "tip": "Line up Embolden and Manafication together."
+  },
+  {
+    "job": "RDM",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Verthunder II", "Impact", "Veraero II", "Impact", "Moulinet"],
+      "note": "Resolution follows Scorch."
+    },
+    "single": {
+      "steps": ["Jolt III", "Verthunder III", "Verfire", "Veraero III", "Verstone", "Riposte", "Zwerchhau", "Redoublement"],
+      "note": "Scorch, then Resolution."
+    },
+    "weave": ["Embolden", "Manafication", "Vice of Thorns", "Fleche", "Contre Sixte", "Acceleration", "Corps-a-corps"],
+    "tip": "Vice of Thorns follows Embolden from 92."
+  },
+  {
+    "job": "RDM",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Verthunder II", "Impact", "Veraero II", "Impact", "Moulinet"],
+      "note": "Resolution follows Scorch."
+    },
+    "single": {
+      "steps": ["Jolt III", "Verthunder III", "Verfire", "Veraero III", "Verstone", "Riposte", "Zwerchhau", "Redoublement"],
+      "note": "Scorch, then Resolution."
+    },
+    "weave": ["Embolden", "Manafication", "Vice of Thorns", "Prefulgence", "Fleche", "Contre Sixte", "Acceleration"],
+    "tip": "Prefulgence follows Manafication."
+  },
+  {
+    "job": "PCT",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Fire II in Red", "Hammer Stamp", "Subtractive Palette", "Blizzard II in Cyan", "Holy in White"],
+      "note": "Fire II in Red changes colour as you press it."
+    },
+    "single": {
+      "steps": ["Fire in Red", "Hammer Stamp", "Subtractive Palette", "Blizzard in Cyan", "Holy in White"],
+      "note": "Fire in Red changes colour as you press it."
+    },
+    "weave": ["Scenic Muse", "Living Muse", "Steel Muse", "Mog of the Ages", "Swiftcast"],
+    "tip": "Paint all three motifs before each pull."
+  },
+  {
+    "job": "PCT",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Fire II in Red", "Hammer Stamp", "Subtractive Palette", "Blizzard II in Cyan", "Holy in White", "Comet in Black"],
+      "note": "After a Subtractive combo, Holy in White becomes Comet in Black."
+    },
+    "single": {
+      "steps": ["Fire in Red", "Hammer Stamp", "Subtractive Palette", "Blizzard in Cyan", "Holy in White", "Comet in Black", "Rainbow Drip"],
+      "note": "Rainbow Drip is instant after Starry Muse from 92."
+    },
+    "weave": ["Scenic Muse", "Living Muse", "Steel Muse", "Mog of the Ages", "Swiftcast"],
+    "tip": "Hammer Stamp three times after Steel Muse."
+  },
+  {
+    "job": "PCT",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Fire II in Red", "Hammer Stamp", "Subtractive Palette", "Blizzard II in Cyan", "Holy in White", "Comet in Black"],
+      "note": "After a Subtractive combo, Holy in White becomes Comet in Black."
+    },
+    "single": {
+      "steps": ["Fire in Red", "Hammer Stamp", "Subtractive Palette", "Blizzard in Cyan", "Holy in White", "Comet in Black", "Star Prism", "Rainbow Drip"],
+      "note": "Star Prism follows Starry Muse."
+    },
+    "weave": ["Scenic Muse", "Living Muse", "Steel Muse", "Mog of the Ages", "Swiftcast"],
+    "tip": "Paint all three motifs before each pull."
   }
 ]
