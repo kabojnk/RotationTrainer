@@ -5,24 +5,15 @@
     "maxLevel": 9,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Total Eclipse"
-      ],
+      "steps": ["Total Eclipse"],
       "note": "Spam Total Eclipse on packs."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade"
-      ],
+      "steps": ["Fast Blade", "Riot Blade"],
       "note": "Two-hit combo."
     },
-    "weave": [
-      "Fight or Flight"
-    ],
-    "mitigation": [
-      "Rampart"
-    ],
+    "weave": ["Fight or Flight"],
+    "mitigation": ["Rampart"],
     "tip": "Use Fight or Flight at the start of each pull."
   },
   {
@@ -31,26 +22,15 @@
     "maxLevel": 19,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Shield Lob",
-        "Total Eclipse"
-      ],
+      "steps": ["Shield Lob", "Total Eclipse"],
       "note": "Pull with Shield Lob, then spam Total Eclipse."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade"
-      ],
+      "steps": ["Fast Blade", "Riot Blade"],
       "note": "Use Shield Bash or Low Blow to stun casts."
     },
-    "weave": [
-      "Fight or Flight",
-      "Interject"
-    ],
-    "mitigation": [
-      "Rampart"
-    ],
+    "weave": ["Fight or Flight", "Interject"],
+    "mitigation": ["Rampart"],
     "tip": "Turn on Iron Will so enemies stay on you."
   },
   {
@@ -59,28 +39,15 @@
     "maxLevel": 29,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Shield Lob",
-        "Total Eclipse"
-      ],
+      "steps": ["Shield Lob", "Total Eclipse"],
       "note": "Pull with Shield Lob, then spam Total Eclipse."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Rage of Halone"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Rage of Halone"],
       "note": "Three-hit combo from 26."
     },
-    "weave": [
-      "Fight or Flight",
-      "Interject"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Reprisal"
-    ],
+    "weave": ["Fight or Flight", "Interject"],
+    "mitigation": ["Rampart", "Reprisal"],
     "tip": "Use Rampart first, then Reprisal when it ends."
   },
   {
@@ -89,30 +56,15 @@
     "maxLevel": 39,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Shield Lob",
-        "Total Eclipse"
-      ],
+      "steps": ["Shield Lob", "Total Eclipse"],
       "note": "Weave Spirits Within on cooldown."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Rage of Halone"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Rage of Halone"],
       "note": "Weave Spirits Within on cooldown."
     },
-    "weave": [
-      "Fight or Flight",
-      "Spirits Within"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Sentinel",
-      "Sheltron",
-      "Reprisal"
-    ],
+    "weave": ["Fight or Flight", "Spirits Within"],
+    "mitigation": ["Rampart", "Sentinel", "Sheltron", "Reprisal"],
     "tip": "Use Sentinel on big pulls, Rampart on the next."
   },
   {
@@ -121,30 +73,15 @@
     "maxLevel": 49,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Total Eclipse",
-        "Prominence"
-      ],
+      "steps": ["Total Eclipse", "Prominence"],
       "note": "Two-hit AoE combo from 40."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Rage of Halone"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Rage of Halone"],
       "note": "Weave Spirits Within on cooldown."
     },
-    "weave": [
-      "Fight or Flight",
-      "Spirits Within"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Sentinel",
-      "Sheltron",
-      "Reprisal"
-    ],
+    "weave": ["Fight or Flight", "Spirits Within"],
+    "mitigation": ["Rampart", "Sentinel", "Sheltron", "Reprisal"],
     "tip": "Stagger mitigation so one is always up."
   },
   {
@@ -153,34 +90,15 @@
     "maxLevel": 59,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Total Eclipse",
-        "Prominence"
-      ],
+      "steps": ["Total Eclipse", "Prominence"],
       "note": "Use Circle of Scorn on every pull."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Rage of Halone"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Rage of Halone"],
       "note": "Goring Blade once after each Fight or Flight."
     },
-    "weave": [
-      "Fight or Flight",
-      "Goring Blade",
-      "Circle of Scorn",
-      "Spirits Within"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Sentinel",
-      "Bulwark",
-      "Sheltron",
-      "Reprisal",
-      "Hallowed Ground"
-    ],
+    "weave": ["Fight or Flight", "Goring Blade", "Circle of Scorn", "Spirits Within"],
+    "mitigation": ["Rampart", "Sentinel", "Bulwark", "Sheltron", "Reprisal", "Hallowed Ground"],
     "tip": "Hallowed Ground saves a pull that is going badly."
   },
   {
@@ -189,37 +107,15 @@
     "maxLevel": 69,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Total Eclipse",
-        "Prominence"
-      ],
+      "steps": ["Total Eclipse", "Prominence"],
       "note": "Use Circle of Scorn on every pull."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Royal Authority",
-        "Holy Spirit"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Royal Authority", "Holy Spirit"],
       "note": "Holy Spirit is instant after Royal Authority."
     },
-    "weave": [
-      "Fight or Flight",
-      "Goring Blade",
-      "Circle of Scorn",
-      "Spirits Within",
-      "Intervene",
-      "Requiescat"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Sentinel",
-      "Bulwark",
-      "Sheltron",
-      "Reprisal",
-      "Hallowed Ground"
-    ],
+    "weave": ["Fight or Flight", "Goring Blade", "Circle of Scorn", "Spirits Within", "Intervene", "Requiescat"],
+    "mitigation": ["Rampart", "Sentinel", "Bulwark", "Sheltron", "Reprisal", "Hallowed Ground"],
     "tip": "Requiescat makes Holy Spirit stronger. Use it with Fight or Flight."
   },
   {
@@ -228,39 +124,15 @@
     "maxLevel": 79,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Total Eclipse",
-        "Prominence",
-        "Holy Circle"
-      ],
+      "steps": ["Total Eclipse", "Prominence", "Holy Circle"],
       "note": "Holy Circle is free after Prominence."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Royal Authority",
-        "Atonement",
-        "Holy Spirit"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Royal Authority", "Atonement", "Holy Spirit"],
       "note": "Press Atonement three times after Royal Authority."
     },
-    "weave": [
-      "Fight or Flight",
-      "Requiescat",
-      "Goring Blade",
-      "Circle of Scorn",
-      "Spirits Within",
-      "Intervene"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Sentinel",
-      "Bulwark",
-      "Sheltron",
-      "Reprisal",
-      "Hallowed Ground"
-    ],
+    "weave": ["Fight or Flight", "Requiescat", "Goring Blade", "Circle of Scorn", "Spirits Within", "Intervene"],
+    "mitigation": ["Rampart", "Sentinel", "Bulwark", "Sheltron", "Reprisal", "Hallowed Ground"],
     "tip": "Spend Requiescat on Holy Circle in pulls and Holy Spirit on bosses."
   },
   {
@@ -269,21 +141,11 @@
     "maxLevel": 89,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Total Eclipse",
-        "Prominence",
-        "Holy Circle"
-      ],
+      "steps": ["Total Eclipse", "Prominence", "Holy Circle"],
       "note": "After Requiescat, end with Confiteor."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Royal Authority",
-        "Atonement",
-        "Holy Spirit"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Royal Authority", "Atonement", "Holy Spirit"],
       "note": "Requiescat, then Confiteor and Holy Spirit."
     },
     "weave": [
@@ -292,14 +154,14 @@
       "Confiteor",
       "Goring Blade",
       "Circle of Scorn",
-      "Expiacion",
+      ["Expiacion", "Spirits Within"],
       "Intervene"
     ],
     "mitigation": [
       "Rampart",
       "Sentinel",
       "Bulwark",
-      "Holy Sheltron",
+      ["Holy Sheltron", "Sheltron"],
       "Reprisal",
       "Hallowed Ground"
     ],
@@ -311,26 +173,16 @@
     "maxLevel": 99,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Total Eclipse",
-        "Prominence",
-        "Holy Circle"
-      ],
+      "steps": ["Total Eclipse", "Prominence", "Holy Circle"],
       "note": "After Requiescat, press Confiteor four times."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Royal Authority",
-        "Atonement",
-        "Holy Spirit"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Royal Authority", "Atonement", "Holy Spirit"],
       "note": "Confiteor turns into the Blade combo. Keep pressing it."
     },
     "weave": [
       "Fight or Flight",
-      "Imperator",
+      ["Imperator", "Requiescat"],
       "Confiteor",
       "Goring Blade",
       "Circle of Scorn",
@@ -339,7 +191,7 @@
     ],
     "mitigation": [
       "Rampart",
-      "Guardian",
+      ["Guardian", "Sentinel"],
       "Bulwark",
       "Holy Sheltron",
       "Reprisal",
@@ -353,40 +205,15 @@
     "maxLevel": 100,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Total Eclipse",
-        "Prominence",
-        "Holy Circle"
-      ],
+      "steps": ["Total Eclipse", "Prominence", "Holy Circle"],
       "note": "After Imperator, press Confiteor four times."
     },
     "single": {
-      "steps": [
-        "Fast Blade",
-        "Riot Blade",
-        "Royal Authority",
-        "Atonement",
-        "Holy Spirit"
-      ],
+      "steps": ["Fast Blade", "Riot Blade", "Royal Authority", "Atonement", "Holy Spirit"],
       "note": "Imperator becomes Blade of Honor after the Blade combo."
     },
-    "weave": [
-      "Fight or Flight",
-      "Imperator",
-      "Confiteor",
-      "Goring Blade",
-      "Circle of Scorn",
-      "Expiacion",
-      "Intervene"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Guardian",
-      "Bulwark",
-      "Holy Sheltron",
-      "Reprisal",
-      "Hallowed Ground"
-    ],
+    "weave": ["Fight or Flight", "Imperator", "Confiteor", "Goring Blade", "Circle of Scorn", "Expiacion", "Intervene"],
+    "mitigation": ["Rampart", "Guardian", "Bulwark", "Holy Sheltron", "Reprisal", "Hallowed Ground"],
     "tip": "Line up Fight or Flight and Imperator together."
   },
   {
@@ -395,25 +222,15 @@
     "maxLevel": 9,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Heavy Swing",
-        "Maim"
-      ],
+      "steps": ["Heavy Swing", "Maim"],
       "note": "No AoE yet."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim"
-      ],
+      "steps": ["Heavy Swing", "Maim"],
       "note": "Two-hit combo."
     },
-    "weave": [
-      "Berserk"
-    ],
-    "mitigation": [
-      "Rampart"
-    ],
+    "weave": ["Berserk"],
+    "mitigation": ["Rampart"],
     "tip": "Use Berserk at the start of each pull."
   },
   {
@@ -422,26 +239,15 @@
     "maxLevel": 19,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Tomahawk",
-        "Overpower"
-      ],
+      "steps": ["Tomahawk", "Overpower"],
       "note": "Pull with Tomahawk, then spam Overpower."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim"
-      ],
+      "steps": ["Heavy Swing", "Maim"],
       "note": "Use Low Blow to stun casts."
     },
-    "weave": [
-      "Berserk",
-      "Interject"
-    ],
-    "mitigation": [
-      "Rampart"
-    ],
+    "weave": ["Berserk", "Interject"],
+    "mitigation": ["Rampart"],
     "tip": "Turn on Defiance so enemies stay on you."
   },
   {
@@ -450,28 +256,15 @@
     "maxLevel": 29,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Tomahawk",
-        "Overpower"
-      ],
+      "steps": ["Tomahawk", "Overpower"],
       "note": "Pull with Tomahawk, then spam Overpower."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim",
-        "Storm's Path"
-      ],
+      "steps": ["Heavy Swing", "Maim", "Storm's Path"],
       "note": "Three-hit combo from 26."
     },
-    "weave": [
-      "Berserk",
-      "Interject"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Reprisal"
-    ],
+    "weave": ["Berserk", "Interject"],
+    "mitigation": ["Rampart", "Reprisal"],
     "tip": "Use Rampart first, then Reprisal when it ends."
   },
   {
@@ -480,29 +273,15 @@
     "maxLevel": 39,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Overpower"
-      ],
+      "steps": ["Overpower"],
       "note": "Spend Beast Gauge on Inner Beast at 50."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim",
-        "Storm's Path",
-        "Inner Beast"
-      ],
+      "steps": ["Heavy Swing", "Maim", "Storm's Path", "Inner Beast"],
       "note": "Inner Beast costs 50 gauge."
     },
-    "weave": [
-      "Berserk"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Vengeance",
-      "Thrill of Battle",
-      "Reprisal"
-    ],
+    "weave": ["Berserk"],
+    "mitigation": ["Rampart", "Vengeance", "Thrill of Battle", "Reprisal"],
     "tip": "Use Vengeance on big pulls, Rampart on the next."
   },
   {
@@ -511,32 +290,15 @@
     "maxLevel": 49,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Overpower",
-        "Mythril Tempest",
-        "Steel Cyclone"
-      ],
+      "steps": ["Overpower", "Mythril Tempest", "Steel Cyclone"],
       "note": "Spend gauge on Steel Cyclone in pulls."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim",
-        "Storm's Path",
-        "Inner Beast"
-      ],
+      "steps": ["Heavy Swing", "Maim", "Storm's Path", "Inner Beast"],
       "note": "Inner Beast costs 50 gauge."
     },
-    "weave": [
-      "Berserk"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Vengeance",
-      "Thrill of Battle",
-      "Holmgang",
-      "Reprisal"
-    ],
+    "weave": ["Berserk"],
+    "mitigation": ["Rampart", "Vengeance", "Thrill of Battle", "Holmgang", "Reprisal"],
     "tip": "Holmgang keeps you alive for 10 seconds."
   },
   {
@@ -545,11 +307,7 @@
     "maxLevel": 59,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Overpower",
-        "Mythril Tempest",
-        "Steel Cyclone"
-      ],
+      "steps": ["Overpower", "Mythril Tempest", "Steel Cyclone"],
       "note": "Use Infuriate for extra gauge."
     },
     "single": {
@@ -557,23 +315,12 @@
         "Heavy Swing",
         "Maim",
         "Storm's Eye",
-        "Fell Cleave"
+        ["Fell Cleave", "Inner Beast"]
       ],
       "note": "Alternate Storm's Eye and Storm's Path to keep the damage buff up."
     },
-    "weave": [
-      "Berserk",
-      "Infuriate"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Vengeance",
-      "Raw Intuition",
-      "Thrill of Battle",
-      "Equilibrium",
-      "Holmgang",
-      "Reprisal"
-    ],
+    "weave": ["Berserk", "Infuriate"],
+    "mitigation": ["Rampart", "Vengeance", "Raw Intuition", "Thrill of Battle", "Equilibrium", "Holmgang", "Reprisal"],
     "tip": "Raw Intuition heals you on every hit. Use it often."
   },
   {
@@ -582,38 +329,15 @@
     "maxLevel": 69,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Overpower",
-        "Mythril Tempest",
-        "Decimate"
-      ],
+      "steps": ["Overpower", "Mythril Tempest", "Decimate"],
       "note": "Decimate replaces Steel Cyclone at 60."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim",
-        "Storm's Eye",
-        "Fell Cleave"
-      ],
+      "steps": ["Heavy Swing", "Maim", "Storm's Eye", "Fell Cleave"],
       "note": "Weave Upheaval on cooldown."
     },
-    "weave": [
-      "Berserk",
-      "Infuriate",
-      "Upheaval",
-      "Onslaught"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Vengeance",
-      "Raw Intuition",
-      "Thrill of Battle",
-      "Equilibrium",
-      "Holmgang",
-      "Reprisal",
-      "Shake It Off"
-    ],
+    "weave": ["Berserk", "Infuriate", "Upheaval", "Onslaught"],
+    "mitigation": ["Rampart", "Vengeance", "Raw Intuition", "Thrill of Battle", "Equilibrium", "Holmgang", "Reprisal", "Shake It Off"],
     "tip": "Keep the Storm's Eye buff up in pulls with Mythril Tempest."
   },
   {
@@ -622,38 +346,15 @@
     "maxLevel": 79,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Overpower",
-        "Mythril Tempest",
-        "Decimate"
-      ],
+      "steps": ["Overpower", "Mythril Tempest", "Decimate"],
       "note": "Inner Release, then three free Decimates."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim",
-        "Storm's Eye",
-        "Fell Cleave"
-      ],
+      "steps": ["Heavy Swing", "Maim", "Storm's Eye", "Fell Cleave"],
       "note": "Inner Release, then three free Fell Cleaves."
     },
-    "weave": [
-      "Inner Release",
-      "Infuriate",
-      "Upheaval",
-      "Onslaught"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Vengeance",
-      "Raw Intuition",
-      "Thrill of Battle",
-      "Equilibrium",
-      "Holmgang",
-      "Reprisal",
-      "Shake It Off"
-    ],
+    "weave": ["Inner Release", "Infuriate", "Upheaval", "Onslaught"],
+    "mitigation": ["Rampart", "Vengeance", "Raw Intuition", "Thrill of Battle", "Equilibrium", "Holmgang", "Reprisal", "Shake It Off"],
     "tip": "Inner Release replaces Berserk at 70."
   },
   {
@@ -662,33 +363,18 @@
     "maxLevel": 89,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Overpower",
-        "Mythril Tempest",
-        "Decimate"
-      ],
+      "steps": ["Overpower", "Mythril Tempest", "Decimate"],
       "note": "Use Orogeny on packs from 86."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim",
-        "Storm's Eye",
-        "Fell Cleave"
-      ],
+      "steps": ["Heavy Swing", "Maim", "Storm's Eye", "Fell Cleave"],
       "note": "Inner Release, then three free Fell Cleaves."
     },
-    "weave": [
-      "Inner Release",
-      "Infuriate",
-      "Upheaval",
-      "Orogeny",
-      "Onslaught"
-    ],
+    "weave": ["Inner Release", "Infuriate", "Upheaval", "Orogeny", "Onslaught"],
     "mitigation": [
       "Rampart",
       "Vengeance",
-      "Bloodwhetting",
+      ["Bloodwhetting", "Raw Intuition"],
       "Thrill of Battle",
       "Equilibrium",
       "Holmgang",
@@ -703,33 +389,17 @@
     "maxLevel": 99,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Overpower",
-        "Mythril Tempest",
-        "Decimate"
-      ],
+      "steps": ["Overpower", "Mythril Tempest", "Decimate"],
       "note": "Primal Rend hits the whole pack."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim",
-        "Storm's Eye",
-        "Fell Cleave"
-      ],
+      "steps": ["Heavy Swing", "Maim", "Storm's Eye", "Fell Cleave"],
       "note": "Primal Rend becomes ready after Inner Release."
     },
-    "weave": [
-      "Inner Release",
-      "Primal Rend",
-      "Infuriate",
-      "Upheaval",
-      "Orogeny",
-      "Onslaught"
-    ],
+    "weave": ["Inner Release", "Primal Rend", "Infuriate", "Upheaval", "Orogeny", "Onslaught"],
     "mitigation": [
       "Rampart",
-      "Damnation",
+      ["Damnation", "Vengeance"],
       "Bloodwhetting",
       "Thrill of Battle",
       "Equilibrium",
@@ -745,40 +415,15 @@
     "maxLevel": 100,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Overpower",
-        "Mythril Tempest",
-        "Decimate"
-      ],
+      "steps": ["Overpower", "Mythril Tempest", "Decimate"],
       "note": "Primal Rend hits the whole pack."
     },
     "single": {
-      "steps": [
-        "Heavy Swing",
-        "Maim",
-        "Storm's Eye",
-        "Fell Cleave"
-      ],
+      "steps": ["Heavy Swing", "Maim", "Storm's Eye", "Fell Cleave"],
       "note": "Primal Rend turns into Primal Ruination."
     },
-    "weave": [
-      "Inner Release",
-      "Primal Rend",
-      "Infuriate",
-      "Upheaval",
-      "Orogeny",
-      "Onslaught"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Damnation",
-      "Bloodwhetting",
-      "Thrill of Battle",
-      "Equilibrium",
-      "Holmgang",
-      "Reprisal",
-      "Shake It Off"
-    ],
+    "weave": ["Inner Release", "Primal Rend", "Infuriate", "Upheaval", "Orogeny", "Onslaught"],
+    "mitigation": ["Rampart", "Damnation", "Bloodwhetting", "Thrill of Battle", "Equilibrium", "Holmgang", "Reprisal", "Shake It Off"],
     "tip": "Use Primal Wrath after three gauge spenders in Inner Release."
   },
   {
@@ -787,29 +432,15 @@
     "maxLevel": 39,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Unmend",
-        "Unleash"
-      ],
+      "steps": ["Unmend", "Unleash"],
       "note": "Spend MP on Flood of Darkness."
     },
     "single": {
-      "steps": [
-        "Hard Slash",
-        "Syphon Strike",
-        "Souleater"
-      ],
+      "steps": ["Hard Slash", "Syphon Strike", "Souleater"],
       "note": "Three-hit combo."
     },
-    "weave": [
-      "Flood of Darkness",
-      "Blood Weapon"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Shadow Wall",
-      "Reprisal"
-    ],
+    "weave": ["Flood of Darkness", "Blood Weapon"],
+    "mitigation": ["Rampart", "Shadow Wall", "Reprisal"],
     "tip": "Turn on Grit so enemies stay on you."
   },
   {
@@ -818,31 +449,15 @@
     "maxLevel": 49,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Unleash",
-        "Stalwart Soul"
-      ],
+      "steps": ["Unleash", "Stalwart Soul"],
       "note": "Spend MP on Flood of Darkness."
     },
     "single": {
-      "steps": [
-        "Hard Slash",
-        "Syphon Strike",
-        "Souleater"
-      ],
+      "steps": ["Hard Slash", "Syphon Strike", "Souleater"],
       "note": "Spend MP on Edge of Darkness."
     },
-    "weave": [
-      "Blood Weapon",
-      "Flood of Darkness",
-      "Edge of Darkness"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Shadow Wall",
-      "Dark Mind",
-      "Reprisal"
-    ],
+    "weave": ["Blood Weapon", "Flood of Darkness", "Edge of Darkness"],
+    "mitigation": ["Rampart", "Shadow Wall", "Dark Mind", "Reprisal"],
     "tip": "Use Shadow Wall on big pulls, Rampart on the next."
   },
   {
@@ -851,35 +466,15 @@
     "maxLevel": 59,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Unleash",
-        "Stalwart Soul"
-      ],
+      "steps": ["Unleash", "Stalwart Soul"],
       "note": "Salted Earth and Abyssal Drain on every pull."
     },
     "single": {
-      "steps": [
-        "Hard Slash",
-        "Syphon Strike",
-        "Souleater"
-      ],
+      "steps": ["Hard Slash", "Syphon Strike", "Souleater"],
       "note": "Spend MP on Edge of Darkness."
     },
-    "weave": [
-      "Blood Weapon",
-      "Salted Earth",
-      "Abyssal Drain",
-      "Flood of Darkness",
-      "Edge of Darkness",
-      "Shadowstride"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Shadow Wall",
-      "Dark Mind",
-      "Reprisal",
-      "Living Dead"
-    ],
+    "weave": ["Blood Weapon", "Salted Earth", "Abyssal Drain", "Flood of Darkness", "Edge of Darkness", "Shadowstride"],
+    "mitigation": ["Rampart", "Shadow Wall", "Dark Mind", "Reprisal", "Living Dead"],
     "tip": "Living Dead saves a pull that is going badly."
   },
   {
@@ -888,37 +483,22 @@
     "maxLevel": 69,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Unleash",
-        "Stalwart Soul",
-        "Quietus"
-      ],
+      "steps": ["Unleash", "Stalwart Soul", "Quietus"],
       "note": "Spend Blood on Quietus at 64."
     },
     "single": {
-      "steps": [
-        "Hard Slash",
-        "Syphon Strike",
-        "Souleater",
-        "Bloodspiller"
-      ],
+      "steps": ["Hard Slash", "Syphon Strike", "Souleater", "Bloodspiller"],
       "note": "Bloodspiller costs 50 Blood."
     },
     "weave": [
-      "Delirium",
+      ["Delirium", "Blood Weapon"],
       "Carve and Spit",
       "Salted Earth",
       "Abyssal Drain",
       "Edge of Darkness",
       "Shadowstride"
     ],
-    "mitigation": [
-      "Rampart",
-      "Shadow Wall",
-      "Dark Mind",
-      "Reprisal",
-      "Living Dead"
-    ],
+    "mitigation": ["Rampart", "Shadow Wall", "Dark Mind", "Reprisal", "Living Dead"],
     "tip": "Delirium gives free Bloodspillers or Quietus."
   },
   {
@@ -927,20 +507,11 @@
     "maxLevel": 79,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Unleash",
-        "Stalwart Soul",
-        "Quietus"
-      ],
+      "steps": ["Unleash", "Stalwart Soul", "Quietus"],
       "note": "Flood of Shadow replaces Flood of Darkness at 74."
     },
     "single": {
-      "steps": [
-        "Hard Slash",
-        "Syphon Strike",
-        "Souleater",
-        "Bloodspiller"
-      ],
+      "steps": ["Hard Slash", "Syphon Strike", "Souleater", "Bloodspiller"],
       "note": "Spend MP on Edge of Shadow."
     },
     "weave": [
@@ -948,17 +519,10 @@
       "Carve and Spit",
       "Salted Earth",
       "Abyssal Drain",
-      "Edge of Shadow",
+      ["Edge of Shadow", "Edge of Darkness"],
       "Shadowstride"
     ],
-    "mitigation": [
-      "The Blackest Night",
-      "Rampart",
-      "Shadow Wall",
-      "Dark Mind",
-      "Reprisal",
-      "Living Dead"
-    ],
+    "mitigation": ["The Blackest Night", "Rampart", "Shadow Wall", "Dark Mind", "Reprisal", "Living Dead"],
     "tip": "When The Blackest Night breaks, you get a free Edge of Shadow."
   },
   {
@@ -967,39 +531,15 @@
     "maxLevel": 89,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Unleash",
-        "Stalwart Soul",
-        "Quietus"
-      ],
+      "steps": ["Unleash", "Stalwart Soul", "Quietus"],
       "note": "Use Salt and Darkness inside Salted Earth."
     },
     "single": {
-      "steps": [
-        "Hard Slash",
-        "Syphon Strike",
-        "Souleater",
-        "Bloodspiller"
-      ],
+      "steps": ["Hard Slash", "Syphon Strike", "Souleater", "Bloodspiller"],
       "note": "Use Living Shadow on cooldown."
     },
-    "weave": [
-      "Living Shadow",
-      "Delirium",
-      "Carve and Spit",
-      "Salted Earth",
-      "Salt and Darkness",
-      "Abyssal Drain",
-      "Edge of Shadow"
-    ],
-    "mitigation": [
-      "The Blackest Night",
-      "Oblation",
-      "Rampart",
-      "Shadow Wall",
-      "Reprisal",
-      "Living Dead"
-    ],
+    "weave": ["Living Shadow", "Delirium", "Carve and Spit", "Salted Earth", "Salt and Darkness", "Abyssal Drain", "Edge of Shadow"],
+    "mitigation": ["The Blackest Night", "Oblation", "Rampart", "Shadow Wall", "Reprisal", "Living Dead"],
     "tip": "Oblation is a short cooldown. Use it on every pull."
   },
   {
@@ -1008,36 +548,19 @@
     "maxLevel": 99,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Unleash",
-        "Stalwart Soul",
-        "Quietus"
-      ],
+      "steps": ["Unleash", "Stalwart Soul", "Quietus"],
       "note": "Shadowbringer hits the whole pack."
     },
     "single": {
-      "steps": [
-        "Hard Slash",
-        "Syphon Strike",
-        "Souleater",
-        "Bloodspiller"
-      ],
+      "steps": ["Hard Slash", "Syphon Strike", "Souleater", "Bloodspiller"],
       "note": "From 96, Delirium turns Bloodspiller into a three-hit combo."
     },
-    "weave": [
-      "Living Shadow",
-      "Delirium",
-      "Shadowbringer",
-      "Carve and Spit",
-      "Salted Earth",
-      "Abyssal Drain",
-      "Edge of Shadow"
-    ],
+    "weave": ["Living Shadow", "Delirium", "Shadowbringer", "Carve and Spit", "Salted Earth", "Abyssal Drain", "Edge of Shadow"],
     "mitigation": [
       "The Blackest Night",
       "Oblation",
       "Rampart",
-      "Shadowed Vigil",
+      ["Shadowed Vigil", "Shadow Wall"],
       "Reprisal",
       "Living Dead"
     ],
@@ -1049,39 +572,15 @@
     "maxLevel": 100,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Unleash",
-        "Stalwart Soul",
-        "Quietus"
-      ],
+      "steps": ["Unleash", "Stalwart Soul", "Quietus"],
       "note": "Disesteem hits everything in a line."
     },
     "single": {
-      "steps": [
-        "Hard Slash",
-        "Syphon Strike",
-        "Souleater",
-        "Bloodspiller"
-      ],
+      "steps": ["Hard Slash", "Syphon Strike", "Souleater", "Bloodspiller"],
       "note": "Disesteem is ready after Living Shadow."
     },
-    "weave": [
-      "Living Shadow",
-      "Delirium",
-      "Shadowbringer",
-      "Disesteem",
-      "Carve and Spit",
-      "Salted Earth",
-      "Edge of Shadow"
-    ],
-    "mitigation": [
-      "The Blackest Night",
-      "Oblation",
-      "Rampart",
-      "Shadowed Vigil",
-      "Reprisal",
-      "Living Dead"
-    ],
+    "weave": ["Living Shadow", "Delirium", "Shadowbringer", "Disesteem", "Carve and Spit", "Salted Earth", "Edge of Shadow"],
+    "mitigation": ["The Blackest Night", "Oblation", "Rampart", "Shadowed Vigil", "Reprisal", "Living Dead"],
     "tip": "Line up Delirium and Living Shadow together."
   },
   {
@@ -1090,37 +589,15 @@
     "maxLevel": 69,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Demon Slice",
-        "Demon Slaughter"
-      ],
+      "steps": ["Demon Slice", "Demon Slaughter"],
       "note": "Use Bow Shock on every pull."
     },
     "single": {
-      "steps": [
-        "Keen Edge",
-        "Brutal Shell",
-        "Solid Barrel"
-      ],
+      "steps": ["Keen Edge", "Brutal Shell", "Solid Barrel"],
       "note": "Spend cartridges on Gnashing Fang, then Burst Strike."
     },
-    "weave": [
-      "No Mercy",
-      "Sonic Break",
-      "Gnashing Fang",
-      "Bow Shock",
-      "Danger Zone",
-      "Trajectory"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Nebula",
-      "Camouflage",
-      "Heart of Stone",
-      "Aurora",
-      "Reprisal",
-      "Superbolide"
-    ],
+    "weave": ["No Mercy", "Sonic Break", "Gnashing Fang", "Bow Shock", "Danger Zone", "Trajectory"],
+    "mitigation": ["Rampart", "Nebula", "Camouflage", "Heart of Stone", "Aurora", "Reprisal", "Superbolide"],
     "tip": "Turn on Royal Guard so enemies stay on you."
   },
   {
@@ -1129,39 +606,15 @@
     "maxLevel": 79,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Demon Slice",
-        "Demon Slaughter",
-        "Fated Circle"
-      ],
+      "steps": ["Demon Slice", "Demon Slaughter", "Fated Circle"],
       "note": "Spend cartridges on Fated Circle in pulls."
     },
     "single": {
-      "steps": [
-        "Keen Edge",
-        "Brutal Shell",
-        "Solid Barrel"
-      ],
+      "steps": ["Keen Edge", "Brutal Shell", "Solid Barrel"],
       "note": "Gnashing Fang changes each press. Weave Continuation after each hit."
     },
-    "weave": [
-      "No Mercy",
-      "Bloodfest",
-      "Sonic Break",
-      "Gnashing Fang",
-      "Continuation",
-      "Bow Shock",
-      "Danger Zone"
-    ],
-    "mitigation": [
-      "Rampart",
-      "Nebula",
-      "Camouflage",
-      "Heart of Stone",
-      "Aurora",
-      "Reprisal",
-      "Superbolide"
-    ],
+    "weave": ["No Mercy", "Bloodfest", "Sonic Break", "Gnashing Fang", "Continuation", "Bow Shock", "Danger Zone"],
+    "mitigation": ["Rampart", "Nebula", "Camouflage", "Heart of Stone", "Aurora", "Reprisal", "Superbolide"],
     "tip": "Use Bloodfest when you have no cartridges."
   },
   {
@@ -1170,32 +623,16 @@
     "maxLevel": 89,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Demon Slice",
-        "Demon Slaughter",
-        "Fated Circle"
-      ],
+      "steps": ["Demon Slice", "Demon Slaughter", "Fated Circle"],
       "note": "Spend cartridges on Fated Circle in pulls."
     },
     "single": {
-      "steps": [
-        "Keen Edge",
-        "Brutal Shell",
-        "Solid Barrel"
-      ],
+      "steps": ["Keen Edge", "Brutal Shell", "Solid Barrel"],
       "note": "Weave Continuation after Gnashing Fang hits and Burst Strike."
     },
-    "weave": [
-      "No Mercy",
-      "Bloodfest",
-      "Sonic Break",
-      "Gnashing Fang",
-      "Continuation",
-      "Bow Shock",
-      "Blasting Zone"
-    ],
+    "weave": ["No Mercy", "Bloodfest", "Sonic Break", "Gnashing Fang", "Continuation", "Bow Shock", "Blasting Zone"],
     "mitigation": [
-      "Heart of Corundum",
+      ["Heart of Corundum", "Heart of Stone"],
       "Rampart",
       "Nebula",
       "Camouflage",
@@ -1211,35 +648,18 @@
     "maxLevel": 99,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Demon Slice",
-        "Demon Slaughter",
-        "Fated Circle"
-      ],
+      "steps": ["Demon Slice", "Demon Slaughter", "Fated Circle"],
       "note": "Double Down hits the whole pack."
     },
     "single": {
-      "steps": [
-        "Keen Edge",
-        "Brutal Shell",
-        "Solid Barrel"
-      ],
+      "steps": ["Keen Edge", "Brutal Shell", "Solid Barrel"],
       "note": "Use Double Down inside No Mercy."
     },
-    "weave": [
-      "No Mercy",
-      "Bloodfest",
-      "Double Down",
-      "Sonic Break",
-      "Gnashing Fang",
-      "Continuation",
-      "Bow Shock",
-      "Blasting Zone"
-    ],
+    "weave": ["No Mercy", "Bloodfest", "Double Down", "Sonic Break", "Gnashing Fang", "Continuation", "Bow Shock", "Blasting Zone"],
     "mitigation": [
       "Heart of Corundum",
       "Rampart",
-      "Great Nebula",
+      ["Great Nebula", "Nebula"],
       "Camouflage",
       "Aurora",
       "Reprisal",
@@ -1253,41 +673,649 @@
     "maxLevel": 100,
     "pull": {
       "threshold": 3,
-      "steps": [
-        "Demon Slice",
-        "Demon Slaughter",
-        "Fated Circle"
-      ],
+      "steps": ["Demon Slice", "Demon Slaughter", "Fated Circle"],
       "note": "Double Down hits the whole pack."
     },
     "single": {
-      "steps": [
-        "Keen Edge",
-        "Brutal Shell",
-        "Solid Barrel"
-      ],
+      "steps": ["Keen Edge", "Brutal Shell", "Solid Barrel"],
       "note": "Reign of Beasts is ready after Bloodfest."
     },
-    "weave": [
-      "No Mercy",
-      "Bloodfest",
-      "Reign of Beasts",
-      "Double Down",
-      "Sonic Break",
-      "Gnashing Fang",
-      "Continuation",
-      "Bow Shock",
-      "Blasting Zone"
-    ],
-    "mitigation": [
-      "Heart of Corundum",
-      "Rampart",
-      "Great Nebula",
-      "Camouflage",
-      "Aurora",
-      "Reprisal",
-      "Superbolide"
-    ],
+    "weave": ["No Mercy", "Bloodfest", "Reign of Beasts", "Double Down", "Sonic Break", "Gnashing Fang", "Continuation", "Bow Shock", "Blasting Zone"],
+    "mitigation": ["Heart of Corundum", "Rampart", "Great Nebula", "Camouflage", "Aurora", "Reprisal", "Superbolide"],
     "tip": "Line up No Mercy and Bloodfest together."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Aero", "Stone"],
+      "note": "No AoE yet. Put Aero on each enemy."
+    },
+    "single": {
+      "steps": ["Aero", "Stone"],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": [],
+    "tip": "Use Cure when someone drops below half."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 10,
+    "maxLevel": 19,
+    "pull": {
+      "threshold": 0,
+      "steps": [
+        "Aero",
+        ["Stone II", "Stone"]
+      ],
+      "note": "No AoE yet. Put Aero on each enemy."
+    },
+    "single": {
+      "steps": [
+        "Aero",
+        ["Stone II", "Stone"]
+      ],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Use Medica when most of the party is hurt."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 20,
+    "maxLevel": 29,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Aero", "Stone II"],
+      "note": "No AoE yet. Put Aero on each enemy."
+    },
+    "single": {
+      "steps": ["Aero", "Stone II"],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Swiftcast makes your next Raise instant."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Aero", "Stone II"],
+      "note": "No AoE yet. Put Aero on each enemy."
+    },
+    "single": {
+      "steps": ["Aero", "Stone II"],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": ["Presence of Mind", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Put Regen on the tank before each pull. Cure II for big hits."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Aero II", "Aero"],
+        "Holy"
+      ],
+      "note": "Aero each enemy, then spam Holy from 45."
+    },
+    "single": {
+      "steps": [
+        ["Aero II", "Aero"],
+        "Stone II"
+      ],
+      "note": "Refresh Aero when it falls off."
+    },
+    "weave": ["Presence of Mind", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Cure III heals everyone near the target."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy"],
+      "note": "Spam Holy on packs."
+    },
+    "single": {
+      "steps": [
+        "Aero II",
+        ["Stone III", "Stone II"]
+      ],
+      "note": "Weave Assize on cooldown from 56."
+    },
+    "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Heal with Afflatus Solace and Asylum before Cure II. Benediction saves the tank."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy"],
+      "note": "Spam Holy on packs."
+    },
+    "single": {
+      "steps": [
+        "Aero II",
+        ["Stone IV", "Stone III"]
+      ],
+      "note": "Weave Assize on cooldown."
+    },
+    "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Tetragrammaton and Divine Benison keep the tank up in pulls."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy", "Afflatus Misery"],
+      "note": "Afflatus Misery is ready after three Lily heals."
+    },
+    "single": {
+      "steps": [
+        ["Dia", "Aero II"],
+        ["Glare", "Stone IV"],
+        "Afflatus Misery"
+      ],
+      "note": "Refresh Dia every 30 seconds."
+    },
+    "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Spend Lilies on Afflatus Solace or Rapture; they cost no damage."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Holy III", "Holy"],
+        "Afflatus Misery"
+      ],
+      "note": "Afflatus Misery is ready after three Lily heals."
+    },
+    "single": {
+      "steps": [
+        "Dia",
+        ["Glare III", "Glare"],
+        "Afflatus Misery"
+      ],
+      "note": "Refresh Dia every 30 seconds."
+    },
+    "weave": ["Assize", "Presence of Mind", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Aquaveil on the tank and Temperance for big pulls."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy III", "Glare IV", "Afflatus Misery"],
+      "note": "Glare IV hits the pack after Presence of Mind."
+    },
+    "single": {
+      "steps": ["Dia", "Glare III", "Glare IV"],
+      "note": "Spend Glare IV after Presence of Mind."
+    },
+    "weave": ["Presence of Mind", "Assize", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Liturgy of the Bell heals as the party takes hits."
+  },
+  {
+    "job": "WHM",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Holy III", "Glare IV", "Afflatus Misery"],
+      "note": "Glare IV hits the pack after Presence of Mind."
+    },
+    "single": {
+      "steps": ["Dia", "Glare III", "Glare IV"],
+      "note": "Spend Glare IV after Presence of Mind."
+    },
+    "weave": ["Presence of Mind", "Assize", "Thin Air", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Divine Caress follows Temperance and shields the party."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 1,
+    "maxLevel": 9,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Bio", "Ruin"],
+      "note": "No AoE yet. Put Bio on each enemy."
+    },
+    "single": {
+      "steps": ["Bio", "Ruin"],
+      "note": "Refresh Bio when it falls off."
+    },
+    "weave": [],
+    "tip": "Summon Eos; she heals for you. Physick when someone drops low."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 10,
+    "maxLevel": 19,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Bio", "Ruin"],
+      "note": "No AoE yet. Put Bio on each enemy."
+    },
+    "single": {
+      "steps": ["Bio", "Ruin"],
+      "note": "Refresh Bio when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Keep Eos out. Physick when someone drops low."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 20,
+    "maxLevel": 29,
+    "pull": {
+      "threshold": 0,
+      "steps": [
+        ["Bio II", "Bio"],
+        "Ruin"
+      ],
+      "note": "No AoE yet. Put Bio on each enemy."
+    },
+    "single": {
+      "steps": [
+        ["Bio II", "Bio"],
+        "Ruin"
+      ],
+      "note": "Refresh Bio when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Whispering Dawn heals the party over time."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Bio II", "Ruin II"],
+      "note": "No AoE yet. Bio each enemy; Ruin II is instant while moving."
+    },
+    "single": {
+      "steps": ["Bio II", "Ruin"],
+      "note": "Refresh Bio when it falls off."
+    },
+    "weave": ["Lucid Dreaming", "Swiftcast"],
+    "tip": "Adloquium shields the tank before big hits."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Bio II", "Art of War"],
+      "note": "Bio each enemy, then spam Art of War from 46."
+    },
+    "single": {
+      "steps": ["Bio II", "Ruin"],
+      "note": "Spend Aetherflow on Energy Drain if no one needs healing."
+    },
+    "weave": ["Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Lustrate is a strong instant heal. It costs Aetherflow."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": [
+        "Bio II",
+        ["Broil", "Ruin"]
+      ],
+      "note": "Spend spare Aetherflow on Energy Drain."
+    },
+    "weave": ["Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Sacred Soil and Indomitability first, then Succor."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": [
+        "Bio II",
+        ["Broil II", "Broil"]
+      ],
+      "note": "Use Chain Stratagem on cooldown from 66."
+    },
+    "weave": ["Chain Stratagem", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Excogitation on the tank before a big pull."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": [
+        ["Biolysis", "Bio II"],
+        ["Broil III", "Broil II"]
+      ],
+      "note": "Refresh Biolysis every 30 seconds."
+    },
+    "weave": ["Chain Stratagem", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Recitation makes your next Adloquium or Indomitability free and critical."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 2,
+      "steps": [
+        ["Art of War II", "Art of War"]
+      ],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": [
+        "Biolysis",
+        ["Broil IV", "Broil III"]
+      ],
+      "note": "Refresh Biolysis every 30 seconds."
+    },
+    "weave": ["Chain Stratagem", "Aetherflow", "Energy Drain", "Summon Seraph", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Summon Seraph, then Consolation for party heals."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War II"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": ["Biolysis", "Broil IV"],
+      "note": "Baneful Impaction is ready after Chain Stratagem."
+    },
+    "weave": ["Chain Stratagem", "Baneful Impaction", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Expedient helps the party move and cuts damage."
+  },
+  {
+    "job": "SCH",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 2,
+      "steps": ["Art of War II"],
+      "note": "Sacred Soil under the tank on each pull."
+    },
+    "single": {
+      "steps": ["Biolysis", "Broil IV"],
+      "note": "Baneful Impaction is ready after Chain Stratagem."
+    },
+    "weave": ["Chain Stratagem", "Baneful Impaction", "Aetherflow", "Energy Drain", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Seraphism upgrades Adloquium and Succor for a short time."
+  },
+  {
+    "job": "AST",
+    "minLevel": 30,
+    "maxLevel": 39,
+    "pull": {
+      "threshold": 0,
+      "steps": ["Combust", "Malefic"],
+      "note": "No AoE yet. Put Combust on each enemy."
+    },
+    "single": {
+      "steps": ["Combust", "Malefic"],
+      "note": "Refresh Combust when it falls off."
+    },
+    "weave": ["Astral Draw", "Play I", "Lightspeed", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Play I buffs damage. Put it on a damage dealer."
+  },
+  {
+    "job": "AST",
+    "minLevel": 40,
+    "maxLevel": 49,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Combust II", "Combust"],
+        "Gravity"
+      ],
+      "note": "Combust each enemy, then spam Gravity from 45."
+    },
+    "single": {
+      "steps": [
+        ["Combust II", "Combust"],
+        "Malefic"
+      ],
+      "note": "Refresh Combust when it falls off."
+    },
+    "weave": ["Astral Draw", "Play I", "Lightspeed", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Aspected Helios heals the party over time."
+  },
+  {
+    "job": "AST",
+    "minLevel": 50,
+    "maxLevel": 59,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity"],
+      "note": "Spam Gravity on packs."
+    },
+    "single": {
+      "steps": [
+        "Combust II",
+        ["Malefic II", "Malefic"]
+      ],
+      "note": "Use Divination on cooldown."
+    },
+    "weave": ["Divination", "Astral Draw", "Play I", "Lightspeed", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Essential Dignity heals more the lower the target is."
+  },
+  {
+    "job": "AST",
+    "minLevel": 60,
+    "maxLevel": 69,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity"],
+      "note": "Earthly Star under the pack on each pull."
+    },
+    "single": {
+      "steps": [
+        "Combust II",
+        ["Malefic III", "Malefic II"]
+      ],
+      "note": "Use Divination on cooldown."
+    },
+    "weave": ["Divination", "Earthly Star", "Astral Draw", "Play I", "Lightspeed", "Lucid Dreaming"],
+    "tip": "Celestial Opposition heals the whole party."
+  },
+  {
+    "job": "AST",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity"],
+      "note": "Earthly Star under the pack on each pull."
+    },
+    "single": {
+      "steps": [
+        ["Combust III", "Combust II"],
+        ["Malefic IV", "Malefic III"]
+      ],
+      "note": "Refresh Combust every 30 seconds."
+    },
+    "weave": ["Divination", "Earthly Star", "Astral Draw", "Play I", "Minor Arcana", "Lightspeed", "Lucid Dreaming"],
+    "tip": "Celestial Intersection shields the tank."
+  },
+  {
+    "job": "AST",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        ["Gravity II", "Gravity"]
+      ],
+      "note": "Earthly Star under the pack on each pull."
+    },
+    "single": {
+      "steps": [
+        "Combust III",
+        ["Fall Malefic", "Malefic IV"]
+      ],
+      "note": "Refresh Combust every 30 seconds."
+    },
+    "weave": ["Divination", "Earthly Star", "Astral Draw", "Play I", "Minor Arcana", "Lightspeed", "Lucid Dreaming"],
+    "tip": "Neutral Sect adds shields to your party heals."
+  },
+  {
+    "job": "AST",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity II"],
+      "note": "Macrocosmos on big pulls; it heals when it ends."
+    },
+    "single": {
+      "steps": ["Combust III", "Fall Malefic"],
+      "note": "Oracle is ready after Divination."
+    },
+    "weave": ["Divination", "Oracle", "Earthly Star", "Astral Draw", "Play I", "Minor Arcana", "Lightspeed"],
+    "tip": "Exaltation on the tank before a big hit."
+  },
+  {
+    "job": "AST",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Gravity II"],
+      "note": "Macrocosmos on big pulls; it heals when it ends."
+    },
+    "single": {
+      "steps": ["Combust III", "Fall Malefic"],
+      "note": "Oracle is ready after Divination."
+    },
+    "weave": ["Divination", "Oracle", "Earthly Star", "Astral Draw", "Play I", "Minor Arcana", "Lightspeed"],
+    "tip": "Sun Sign follows Neutral Sect and cuts party damage."
+  },
+  {
+    "job": "SGE",
+    "minLevel": 70,
+    "maxLevel": 79,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Dyskrasia",
+        ["Phlegma II", "Phlegma"]
+      ],
+      "note": "Phlegma hits the whole pack. Use its charges on pulls."
+    },
+    "single": {
+      "steps": [
+        "Eukrasia",
+        ["Dosis II", "Dosis"],
+        ["Phlegma II", "Phlegma"]
+      ],
+      "note": "Eukrasia turns Dosis into a DoT. Refresh it every 30 seconds."
+    },
+    "weave": ["Kardia", "Toxikon", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Kardia on the tank heals them as you deal damage."
+  },
+  {
+    "job": "SGE",
+    "minLevel": 80,
+    "maxLevel": 89,
+    "pull": {
+      "threshold": 3,
+      "steps": [
+        "Eukrasia",
+        ["Dyskrasia II", "Dyskrasia"],
+        ["Phlegma III", "Phlegma II"],
+        ["Toxikon II", "Toxikon"]
+      ],
+      "note": "From 82, Eukrasia then Dyskrasia puts a DoT on the pack."
+    },
+    "single": {
+      "steps": [
+        "Eukrasia",
+        ["Dosis III", "Dosis II"],
+        ["Phlegma III", "Phlegma II"]
+      ],
+      "note": "Refresh the Eukrasian DoT every 30 seconds."
+    },
+    "weave": [
+      "Kardia",
+      ["Toxikon II", "Toxikon"],
+      "Lucid Dreaming",
+      "Swiftcast"
+    ],
+    "tip": "Kerachole and Panhaima cover big pulls."
+  },
+  {
+    "job": "SGE",
+    "minLevel": 90,
+    "maxLevel": 99,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Eukrasia", "Dyskrasia II", "Phlegma III", "Toxikon II"],
+      "note": "Eukrasia then Dyskrasia puts a DoT on the pack. Psyche from 92."
+    },
+    "single": {
+      "steps": ["Eukrasia", "Dosis III", "Phlegma III"],
+      "note": "Pneuma deals damage and heals the party."
+    },
+    "weave": ["Kardia", "Psyche", "Pneuma", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Taurochole and Haima on the tank for big pulls."
+  },
+  {
+    "job": "SGE",
+    "minLevel": 100,
+    "maxLevel": 100,
+    "pull": {
+      "threshold": 3,
+      "steps": ["Eukrasia", "Dyskrasia II", "Phlegma III", "Toxikon II"],
+      "note": "Eukrasia then Dyskrasia puts a DoT on the pack."
+    },
+    "single": {
+      "steps": ["Eukrasia", "Dosis III", "Phlegma III"],
+      "note": "Pneuma deals damage and heals the party."
+    },
+    "weave": ["Kardia", "Psyche", "Pneuma", "Lucid Dreaming", "Swiftcast"],
+    "tip": "Philosophia makes your damage heal the party."
   }
 ]

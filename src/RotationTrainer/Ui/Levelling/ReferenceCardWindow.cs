@@ -127,9 +127,10 @@ public sealed class ReferenceCardWindow : Window
         }
     }
 
-    private void Row(string label, string hint, IReadOnlyList<Ability> abilities, int level)
+    private void Row(string label, string hint, IReadOnlyList<CardStep> steps, int level)
     {
-        if (abilities.Count == 0) return;
+        if (steps.Count == 0) return;
+        var abilities = steps.Select(st => st.At(level)).ToList();
         var s = Scale;
         ImGui.TextColored(GlassTheme.Mute, label.ToUpperInvariant());
         ImGui.SameLine();
